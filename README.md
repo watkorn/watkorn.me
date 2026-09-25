@@ -119,6 +119,7 @@ DESIGN.md           The design system: tokens, components, rules
   ```
 
   [`release.yml`](.github/workflows/release.yml) builds the site and creates a GitHub Release. It uses that CHANGELOG section as the notes and attaches the built site as a zip.
+  No terminal handy? Use **Actions → Release → Run workflow** and type the version (e.g. `v1.1.0`). It creates the tag on `main` for you.
 
 ## Security
 
