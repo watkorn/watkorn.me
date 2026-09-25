@@ -198,6 +198,7 @@ Two kinds of depth, never mixed:
 - **Power switch** (`.power-switch`): a `role="switch"` theme toggle, with a ridged slider in a recessed track and a "light / dark" silkscreen legend.
 - **Bezel + LCD terminal:** history (↑/↓), Tab completion, `Ctrl+L`, tap-to-focus and quick-command chips. The prompt label is tied to the input.
 - **Quest list** (`.quest`): real links. A berry cursor appears on hover or focus (always visible on touch). It shows title, description, then mono meta.
+- **Yeti logo** (`Yeti.jsx`, `brand/yeti.svg`): the mascot as an 8-layer vector. Each layer is coloured by a `--yeti-*` variable. The default follows the theme (light is the *dandelion* palette on a bezel background; dark is *night* on a key background). Named palettes are `snow`, `dandelion`, `night`, `lcd`, `berry` and `ink`. Backgrounds are `none`, `circle`, `screen` (the handheld curve) and `square`. Crops are `full` and `head` (use `head` at 48px and below). Palette tables and the Logo Lab are in `brand/README.md`.
 - **RPG dialog** (`.dialog`): the About box, with a double-rule frame and the speaker name in berry.
 - **Achievement toast** (`.achievement`): a `role="status"` toast with a trophy and an A-key call to action to the writeups. It pauses on hover or focus and auto-hides after 9s. It sits at the top on mobile and bottom-right on desktop.
 - **Post chrome:** a back key, reading progress bar, copy buttons on `pre`, and an older/newer pager.

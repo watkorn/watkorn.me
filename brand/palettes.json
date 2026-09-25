@@ -1,0 +1,81 @@
+{
+  "viewBox": 436,
+  "layers": [
+    "fur",
+    "fur-shade",
+    "skin",
+    "skin-deep",
+    "face",
+    "face-shade",
+    "teeth",
+    "line"
+  ],
+  "palettes": {
+    "snow": {
+      "fur": "#F8F2DF",
+      "fur-shade": "#C6D3CB",
+      "skin": "#287191",
+      "skin-deep": "#115E7C",
+      "face": "#A7C4CC",
+      "face-shade": "#76A0B0",
+      "teeth": "#FFFBEF",
+      "line": "#06374B",
+      "bg": "#0E2F3E"
+    },
+    "dandelion": {
+      "fur": "#FFF8E1",
+      "fur-shade": "#EADFA8",
+      "skin": "#5B3A8E",
+      "skin-deep": "#3F2766",
+      "face": "#D8CCEE",
+      "face-shade": "#AE9CD6",
+      "teeth": "#FFFFFF",
+      "line": "#26183A",
+      "bg": "#F2D54C"
+    },
+    "night": {
+      "fur": "#4A4468",
+      "fur-shade": "#3A3454",
+      "skin": "#F2D54C",
+      "skin-deep": "#C7A72C",
+      "face": "#B7ACDB",
+      "face-shade": "#8C7FB8",
+      "teeth": "#FFF8E1",
+      "line": "#120C1F",
+      "bg": "#261A3A"
+    },
+    "lcd": {
+      "fur": "#9BBC0F",
+      "fur-shade": "#8BAC0F",
+      "skin": "#306230",
+      "skin-deep": "#0F380F",
+      "face": "#C4D96A",
+      "face-shade": "#306230",
+      "teeth": "#9BBC0F",
+      "line": "#0F380F",
+      "bg": "#8BAC0F"
+    },
+    "berry": {
+      "fur": "#FFF3F0",
+      "fur-shade": "#F2C4CC",
+      "skin": "#D12E55",
+      "skin-deep": "#9C1D3E",
+      "face": "#F7B9C8",
+      "face-shade": "#E4899F",
+      "teeth": "#FFFFFF",
+      "line": "#3A0F24",
+      "bg": "#D12E55"
+    },
+    "ink": {
+      "fur": "#FFFFFF",
+      "fur-shade": "#FFFFFF",
+      "skin": "#111111",
+      "skin-deep": "#111111",
+      "face": "#FFFFFF",
+      "face-shade": "#FFFFFF",
+      "teeth": "#FFFFFF",
+      "line": "#111111",
+      "bg": "#FFFFFF"
+    }
+  }
+}

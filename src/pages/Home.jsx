@@ -1,11 +1,9 @@
 // src/pages/Home.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "../theme";
 import PageWrapper from "../components/PageWrapper";
 import Icon from "../components/Icon";
-import logoDark from "../assets/profile-dark.png";
-import logoLight from "../assets/profile-light.png";
+import Yeti from "../components/Yeti";
 import github from "../assets/githubL.png";
 import linkedin from "../assets/linkedinL.png";
 import tryhackme from "../assets/tryhackmeL.png";
@@ -37,7 +35,6 @@ const prefersReducedMotion = () =>
   typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
 export default function Home() {
-  const { theme } = useTheme();
 
   // typing animation for initial whoami
   const [typedCommand, setTypedCommand] = useState("");
@@ -238,13 +235,12 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
     }
   };
 
-  const avatar = theme === "dark" ? logoDark : logoLight;
 
   return (
     <PageWrapper title="WATKORN.ME" className="page--home">
       <section className="console-hero" aria-labelledby="home-title">
         <div className="player">
-          <img src={avatar} alt="watkorn's mascot" className="player__avatar" width="176" height="176" />
+          <Yeti bg="screen" className="player__avatar" title="watkorn's yeti mascot" />
           <h1 id="home-title" className="player__title">
             find the flag.
           </h1>
@@ -355,7 +351,7 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
       </section>
 
       <section className="dialog" aria-labelledby="about-title">
-        <img src={avatar} alt="" className="dialog__face" width="72" height="72" />
+        <Yeti bg="circle" crop="head" className="dialog__face" />
         <div className="dialog__body">
           <h2 id="about-title" className="dialog__name">
             watkorn

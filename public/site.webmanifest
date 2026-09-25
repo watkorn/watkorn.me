@@ -1,0 +1,11 @@
+{
+  "name": "WATKORN.ME",
+  "short_name": "watkorn",
+  "icons": [
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ],
+  "theme_color": "#f2d54c",
+  "background_color": "#f2d54c",
+  "display": "standalone"
+}

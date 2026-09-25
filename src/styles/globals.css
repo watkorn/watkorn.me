@@ -3,6 +3,7 @@
  * design-system: DESIGN.md · designed-as-app
  */
 @import "./tokens.css";
+@import "./yeti.css";
 
 @tailwind base;
 @tailwind components;
@@ -234,12 +235,9 @@ kbd {
 .brand:hover {
   color: var(--color-ink-on-shell);
 }
-.brand img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 0 3px var(--color-key);
+.brand .yeti {
+  width: 42px;
+  height: 42px;
 }
 .brand__word {
   font-family: var(--font-display);
@@ -476,13 +474,10 @@ kbd {
   min-width: 0;
 }
 .player__avatar {
-  width: clamp(96px, 22vw, 176px);
+  width: clamp(104px, 22vw, 184px);
   height: auto;
   aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 50%;
-  background: var(--color-key);
-  box-shadow: 0 0 0 6px var(--color-key), 0 16px 32px -14px var(--color-shell-cast);
+  filter: drop-shadow(0 12px 14px var(--color-shell-cast));
 }
 .player__title {
   margin: var(--space-2xs) 0 0;
@@ -676,9 +671,6 @@ kbd {
 .dialog__face {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: var(--color-screen-2);
 }
 .dialog__name {
   margin: 0 0 var(--space-3xs);

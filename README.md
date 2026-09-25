@@ -95,7 +95,8 @@ screenshots:
 
 ```
 content/            Markdown for blogs and projects (edit these)
-public/             Static files: CNAME, images, favicon, theme-init.js
+public/             Static files: CNAME, images, icons, theme-init.js
+brand/              Yeti logo: master SVG, palettes, exports, Logo Lab
 scripts/            Build-time tools: content.mjs, csp.mjs, new-post.mjs, start.mjs
 src/
   components/       Header, Footer, QuestList, DetailTemplate, Icon, ...
@@ -129,6 +130,11 @@ DESIGN.md           The design system: tokens, components, rules
 - Everything in the frontend bundle is public, the terminal flag included (that's the game). Never put real secrets in `src/` or `content/`.
 
 Found a real issue? Please open a GitHub issue or email **fkub0011@gmail.com**.
+
+## Logo
+
+The yeti is a layered vector you can recolour, put on any background, or leave transparent.
+Open **[`brand/lab.html`](brand/lab.html)** to make your own version, or see [`brand/README.md`](brand/README.md) for palettes, exports and the `<Yeti>` component.
 
 ## Design
 

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yeti Logo Lab</title>
+<style>
+  :root { --bg:#f2d54c; --panel:#fffdf4; --ink:#26183a; --muted:#5b4d6b; --rule:#e6dcb5; --accent:#c42a50; --on-accent:#fff; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#261a3a; --panel:#1b1330; --ink:#f3effa; --muted:#bcb2d0; --rule:#3a2f55; --accent:#f2d54c; --on-accent:#26183a; } }
+  * { box-sizing: border-box; }
+  html, body { overflow-x: clip; }
+  body { margin:0; font:16px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  main { max-width:1080px; margin:0 auto; padding:24px 16px 48px; display:grid; gap:24px; grid-template-columns:minmax(0,1fr); }
+  @media (min-width: 860px) { main { grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); align-items:start; } .stage { position:sticky; top:16px; } }
+  h1 { margin:0 0 4px; font-size:2rem; line-height:1.1; }
+  p.lede { margin:0; color:var(--muted); }
+  .stage { display:grid; gap:12px; }
+  .canvas { aspect-ratio:1; border-radius:14px 14px 44px 14px; display:grid; place-items:center; padding:24px;
+    background-color:#fff; background-image:linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%);
+    background-size:24px 24px; background-position:0 0,12px 12px; }
+  .canvas > svg { width:100%; height:100%; }
+  .panel { background:var(--panel); border-radius:18px; padding:16px; display:grid; gap:18px; }
+  fieldset { border:0; margin:0; padding:0; display:grid; gap:8px; min-width:0; }
+  legend { font-weight:700; margin-bottom:6px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:6px 14px; border-radius:999px; border:2px solid var(--rule);
+    background:transparent; color:inherit; font:inherit; cursor:pointer; white-space:nowrap; }
+  .chip[aria-pressed="true"] { border-color:var(--accent); font-weight:700; }
+  .chip:focus-visible, input:focus-visible, select:focus-visible, button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .sw { width:18px; height:18px; border-radius:50%; border:1px solid #0003; }
+  .layers { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:8px; }
+  .layer { display:flex; align-items:center; gap:8px; min-height:44px; }
+  input[type=color] { width:44px; height:36px; border:0; padding:0; background:none; cursor:pointer; }
+  input[type=color]:disabled { opacity:.35; cursor:not-allowed; }
+  .actions { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+  .btn { min-height:44px; padding:8px 18px; border:0; border-radius:999px; font:inherit; font-weight:700; cursor:pointer;
+    background:var(--accent); color:var(--on-accent); box-shadow:0 4px 0 0 #0004; }
+  .btn:active { transform:translateY(3px); box-shadow:0 1px 0 0 #0004; }
+  .btn.alt { background:var(--ink); color:var(--panel); }
+  label.inline { display:flex; align-items:center; gap:8px; }
+  select { min-height:40px; font:inherit; border-radius:10px; padding:4px 8px; }
+  small { color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <section class="stage">
+    <div>
+      <h1>Yeti Logo Lab</h1>
+      <p class="lede">Recolour the watkorn yeti, pick a background (or none), and download SVG or PNG.</p>
+    </div>
+    <div class="canvas" id="canvas" role="img" aria-label="Logo preview"></div>
+    <div class="actions">
+      <button class="btn" id="dl-svg" type="button">Download SVG</button>
+      <button class="btn alt" id="dl-png" type="button">Download PNG</button>
+      <label class="inline"><small>PNG size</small>
+        <select id="png-size"><option>256</option><option>512</option><option selected>1024</option><option>2048</option></select></label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <fieldset><legend>Palette</legend><div class="chips" id="palettes"></div></fieldset>
+    <fieldset><legend>Background</legend><div class="chips" id="bgs"></div>
+      <label class="inline">Background colour <input type="color" id="bg-color" /></label></fieldset>
+    <fieldset><legend>Crop</legend><div class="chips" id="crops"></div></fieldset>
+    <fieldset><legend>Layer colours</legend><div class="layers" id="layers"></div>
+      <small>Tweak any layer after choosing a palette. Picking another palette resets the layers.</small></fieldset>
+  </section>
+</main>
+<script>
+const DATA = __DATA__;
+const SHAPES = {
+  none: null,
+  circle: "M50 0A50 50 0 1 1 50 100A50 50 0 1 1 50 0Z",
+  screen: "M10 0H90A10 10 0 0 1 100 10V70A30 30 0 0 1 70 100H10A10 10 0 0 1 0 90V10A10 10 0 0 1 10 0Z",
+  square: "M22 0H78A22 22 0 0 1 100 22V78A22 22 0 0 1 78 100H22A22 22 0 0 1 0 78V22A22 22 0 0 1 22 0Z",
+};
+const INSET = { none: 0, circle: 12, screen: 6, square: 8 };
+const CROP = { full: [0, 0, 436], head: [120, 20, 200] };
+const LAYERS = Object.keys(DATA.paths);
+const state = { palette: "dandelion", bg: "screen", crop: "full", colors: { ...DATA.palettes.dandelion } };
+
+function svgString(size) {
+  const c = state.colors;
+  const i = INSET[state.bg];
+  const inner = 100 - 2 * i;
+  const [cx, cy, cs] = CROP[state.crop];
+  const bg = SHAPES[state.bg] ? '<path fill="' + c.bg + '" d="' + SHAPES[state.bg] + '"/>' : "";
+  const paths = LAYERS.map((n) => '<path fill="' + c[n] + '" d="' + DATA.paths[n] + '"/>').join("");
+  const wh = size ? ' width="' + size + '" height="' + size + '"' : "";
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"' + wh + ">" + bg +
+    '<svg x="' + i + '" y="' + i + '" width="' + inner + '" height="' + inner + '" viewBox="' + cx + " " + cy + " " + cs + " " + cs + '">' +
+    paths + "</svg></svg>";
+}
+
+function render() {
+  document.getElementById("canvas").innerHTML = svgString();
+  const bgInput = document.getElementById("bg-color");
+  bgInput.value = state.colors.bg;
+  bgInput.disabled = state.bg === "none";
+  LAYERS.forEach((n) => (document.getElementById("c-" + n).value = state.colors[n]));
+  document.querySelectorAll("[data-group]").forEach((b) =>
+    b.setAttribute("aria-pressed", String(state[b.dataset.group] === b.dataset.value)));
+}
+
+function chips(id, group, values, swatch) {
+  const el = document.getElementById(id);
+  values.forEach((v) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.dataset.group = group;
+    b.dataset.value = v;
+    if (swatch) {
+      const s = document.createElement("span");
+      s.className = "sw";
+      s.style.background = swatch(v);
+      b.appendChild(s);
+    }
+    b.appendChild(document.createTextNode(v));
+    b.addEventListener("click", () => {
+      state[group] = v;
+      if (group === "palette") state.colors = { ...DATA.palettes[v] };
+      render();
+    });
+    el.appendChild(b);
+  });
+}
+
+chips("palettes", "palette", Object.keys(DATA.palettes), (v) => DATA.palettes[v].skin);
+chips("bgs", "bg", Object.keys(SHAPES));
+chips("crops", "crop", Object.keys(CROP));
+
+const layersEl = document.getElementById("layers");
+LAYERS.forEach((n) => {
+  const l = document.createElement("label");
+  l.className = "layer";
+  const input = document.createElement("input");
+  input.type = "color";
+  input.id = "c-" + n;
+  input.addEventListener("input", (e) => { state.colors[n] = e.target.value; render(); });
+  l.appendChild(input);
+  l.appendChild(document.createTextNode(n));
+  layersEl.appendChild(l);
+});
+document.getElementById("bg-color").addEventListener("input", (e) => { state.colors.bg = e.target.value; render(); });
+
+const fileBase = () => "watkorn-yeti-" + state.palette + "-" + state.bg + "-" + state.crop;
+function download(blob, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+document.getElementById("dl-svg").addEventListener("click", () =>
+  download(new Blob([svgString()], { type: "image/svg+xml" }), fileBase() + ".svg"));
+document.getElementById("dl-png").addEventListener("click", () => {
+  const px = +document.getElementById("png-size").value;
+  const img = new Image();
+  img.onload = () => {
+    const cv = document.createElement("canvas");
+    cv.width = cv.height = px;
+    cv.getContext("2d").drawImage(img, 0, 0, px, px);
+    cv.toBlob((b) => download(b, fileBase() + "-" + px + ".png"), "image/png");
+  };
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgString(px));
+});
+
+render();
+</script>
+</body>
+</html>

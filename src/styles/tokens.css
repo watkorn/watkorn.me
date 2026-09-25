@@ -98,6 +98,17 @@
   --dur-press: 70ms;
   --dur-short: 140ms;
   --dur-med: 260ms;
+
+  /* ---- Yeti logo (light = dandelion palette; see src/styles/yeti.css) ---- */
+  --yeti-fur: oklch(97.9% 0.031 93);
+  --yeti-fur-shade: oklch(89.9% 0.072 98);
+  --yeti-skin: oklch(43.0% 0.134 299);
+  --yeti-skin-deep: oklch(33.7% 0.107 298);
+  --yeti-face: oklch(86.6% 0.048 301);
+  --yeti-face-shade: oklch(72.9% 0.085 299);
+  --yeti-teeth: oklch(100.0% 0.000 90);
+  --yeti-line: oklch(24.6% 0.064 301);
+  --yeti-bg: var(--color-bezel);
 }
 
 /* Night play: grape shell, backlit LCD */
@@ -143,4 +154,15 @@
   --color-trophy: oklch(86% 0.16 95);
   --color-selection: oklch(66% 0.2 12);
   --color-selection-ink: oklch(99% 0.005 12);
+
+  /* Yeti logo: night palette */
+  --yeti-fur: oklch(40.8% 0.060 291);
+  --yeti-fur-shade: oklch(34.6% 0.055 292);
+  --yeti-skin: oklch(87.3% 0.154 97);
+  --yeti-skin-deep: oklch(73.6% 0.138 93);
+  --yeti-face: oklch(77.0% 0.067 296);
+  --yeti-face-shade: oklch(63.0% 0.085 294);
+  --yeti-teeth: oklch(97.9% 0.031 93);
+  --yeti-line: oklch(17.3% 0.039 297);
+  --yeti-bg: var(--color-key);
 }

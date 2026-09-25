@@ -5,6 +5,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+- **Yeti logo system:** the mascot is now a layered vector (`brand/yeti.svg`) that follows the site theme. It has 6 palettes (snow, dandelion, night, lcd, berry, ink), optional circle, handheld-screen or square backgrounds, and a head-only crop for small sizes.
+- `Yeti` React component, used in the header, the home avatar and the About dialog.
+- **Logo Lab** (`brand/lab.html`): recolour the yeti, pick a background, and download SVG or PNG.
+- Ready-made SVG and PNG exports in `brand/svg` and `brand/png`.
+- New favicon set: an SVG favicon that switches with light/dark mode, a 32px PNG, an Apple touch icon, a 512px icon and a web manifest.
+
+### Changed
+- Replaced the 1536×1024 `favicon.png` (674 KB) with properly sized icons.
+- Moved the original mascot PNGs to `brand/source/`.
+
 ## [1.0.0] - 2026-09-25
 
 First release in this repository.
