@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T17:31:50Z",
+  "title": "Design System: WATKORN.ME",
+  "extensions": {
+    "colorMeta": {
+      "shell": {
+        "role": "neutral",
+        "displayName": "Dandelion Shell (dark: Grape Shell)",
+        "canonical": "oklch(87% 0.15 92)",
+        "dark": "oklch(25% 0.07 300)"
+      },
+      "bezel": {
+        "role": "neutral",
+        "displayName": "Bezel",
+        "canonical": "oklch(29% 0.035 285)",
+        "dark": "oklch(10% 0.02 290)"
+      },
+      "screen": {
+        "role": "neutral",
+        "displayName": "Screen",
+        "canonical": "oklch(98.5% 0.004 250)",
+        "dark": "oklch(22% 0.035 290)"
+      },
+      "lcd": {
+        "role": "neutral",
+        "displayName": "Pea LCD (dark: backlit LCD)",
+        "canonical": "oklch(86% 0.085 128)",
+        "dark": "oklch(19% 0.035 110)"
+      },
+      "berry-a": {
+        "role": "primary",
+        "displayName": "Berry A",
+        "canonical": "oklch(56% 0.2 12)",
+        "dark": "oklch(66% 0.2 12)"
+      },
+      "grape-b": {
+        "role": "secondary",
+        "displayName": "Grape B (dark: Pear B)",
+        "canonical": "oklch(44% 0.15 300)",
+        "dark": "oklch(86% 0.16 95)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home dare only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page and post titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "List item titles, group headings."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose, ledes, dialog; max 65ch."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Terminal, code, dates, tags, kbd. Never decorative."
+      }
+    },
+    "shadows": [
+      {
+        "name": "key-edge",
+        "value": "0 4px 0 0 var(--key-edge), 0 7px 12px -4px var(--color-shell-cast)",
+        "purpose": "Pressables only; sinks to 0 1px 0 0 on :active."
+      },
+      {
+        "name": "static-cast",
+        "value": "0 16px 32px -14px var(--color-shell-cast)",
+        "purpose": "Bezels, dialog, toast, list screens."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default state transitions."
+      },
+      {
+        "name": "ease-press",
+        "value": "cubic-bezier(0.2, 0.7, 0.3, 1)",
+        "purpose": "Key hover/press (140ms / 70ms)."
+      },
+      {
+        "name": "lcd-win",
+        "value": "900ms steps(1) once",
+        "purpose": "The one authored moment: LCD flash on capturing the flag."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "480px"
+      },
+      {
+        "name": "stack",
+        "value": "600px"
+      },
+      {
+        "name": "console",
+        "value": "960px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Key",
+      "kind": "button",
+      "refersTo": "key",
+      "description": "The only button: rubber key that presses down.",
+      "html": "<button class=\"ds-key\">Load 5 more</button>",
+      "css": ".ds-key{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;padding:.55rem 1.15rem;font:600 1.0625rem Mali,system-ui,sans-serif;color:var(--color-ink);background:var(--color-key);border:0;border-radius:999px;box-shadow:0 4px 0 0 var(--color-key-edge);cursor:pointer;transition:transform 140ms cubic-bezier(.2,.7,.3,1),box-shadow 140ms cubic-bezier(.2,.7,.3,1)}.ds-key:hover{transform:translateY(-2px);box-shadow:0 6px 0 0 var(--color-key-edge)}.ds-key:active{transform:translateY(3px);box-shadow:0 1px 0 0 var(--color-key-edge)}.ds-key:focus-visible{outline:3px solid var(--color-focus);outline-offset:3px}"
+    },
+    {
+      "name": "A Key",
+      "kind": "button",
+      "refersTo": "key-a",
+      "description": "Primary action.",
+      "html": "<a class=\"ds-key-a\" href=\"#\"><span class=\"ds-badge\">A</span>Read the blogs</a>",
+      "css": ".ds-key-a{display:inline-flex;align-items:center;gap:.5rem;min-height:64px;padding:.8rem 1.6rem;font:700 1.25rem Mali,system-ui,sans-serif;color:var(--color-a-ink);background:var(--color-a);border-radius:999px;text-decoration:none;box-shadow:0 4px 0 0 var(--color-a-edge);transition:transform 140ms cubic-bezier(.2,.7,.3,1)}.ds-key-a:hover{transform:translateY(-2px)}.ds-key-a:active{transform:translateY(3px);box-shadow:0 1px 0 0 var(--color-a-edge)}.ds-key-a:focus-visible{outline:3px solid var(--color-focus);outline-offset:3px}.ds-badge{display:inline-grid;place-items:center;width:30px;height:30px;border:2px solid currentColor;border-radius:50%;font:600 .875rem 'JetBrains Mono',monospace}"
+    },
+    {
+      "name": "Pill Nav",
+      "kind": "nav",
+      "refersTo": "pill-nav",
+      "description": "Start/Select pills with labels below.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-item is-active\" href=\"#\"><span class=\"ds-pill\"></span>Home</a><a class=\"ds-nav-item\" href=\"#\"><span class=\"ds-pill\"></span>Blogs</a></nav>",
+      "css": ".ds-nav{display:flex;gap:1rem}.ds-nav-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;min-width:56px;color:var(--color-ink-on-shell-2);font:700 .875rem Mali,sans-serif;text-decoration:none}.ds-pill{width:38px;height:11px;background:var(--color-pill);border-radius:999px;box-shadow:0 3px 0 0 var(--color-pill-edge);transform:rotate(-22deg)}.ds-nav-item.is-active{color:var(--color-ink-on-shell)}.ds-nav-item.is-active .ds-pill{background:var(--color-pill-on);transform:rotate(-22deg) translateY(2px);box-shadow:0 1px 0 0 var(--color-pill-edge)}"
+    },
+    {
+      "name": "Bezel + Screen",
+      "kind": "card",
+      "refersTo": "bezel",
+      "description": "Every reading surface: a screen in a bezel with the handheld curve.",
+      "html": "<div class=\"ds-bezel\"><div class=\"ds-screen\">Preparing for CTF</div></div>",
+      "css": ".ds-bezel{background:var(--color-bezel);border-radius:22px 22px 64px 22px;padding:1rem 1rem 1.5rem;box-shadow:0 16px 32px -14px var(--color-shell-cast)}.ds-screen{background:var(--color-screen);color:var(--color-ink);border-radius:14px 14px 44px 14px;padding:1.5rem;font:700 1.625rem Mali,sans-serif}"
+    },
+    {
+      "name": "LCD Terminal",
+      "kind": "custom",
+      "refersTo": "lcd",
+      "description": "Dot-matrix LCD with mono text and a prompt.",
+      "html": "<div class=\"ds-lcd\"><span class=\"ds-prompt\">watkorn@me:~$</span> whoami<br>&nbsp;&nbsp;Watcharakorn Khambung</div>",
+      "css": ".ds-lcd{background-color:var(--color-lcd);background-image:radial-gradient(var(--color-lcd-2) .75px,transparent 1px);background-size:3px 3px;color:var(--color-lcd-ink);border-radius:14px 14px 44px 14px;padding:1rem;font:400 .875rem/1.65 'JetBrains Mono',monospace}.ds-prompt{font-weight:600;color:var(--color-lcd-prompt)}"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Mono hashtag chip in post meta.",
+      "html": "<span class=\"ds-tag\">#ctf</span>",
+      "css": ".ds-tag{display:inline-block;padding:0 .5em;font:400 .75rem 'JetBrains Mono',monospace;color:var(--color-ink-2);background:var(--color-screen-2);border-radius:999px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Handheld Quest",
+    "overview": "The site is a pocket game console you hold, not a portfolio you scroll. The page is shell plastic; content sits on screens in bezels with the handheld's big bottom-right curve; the terminal lives on an LCD; every control is a rubber key that presses down. Gen Z voice: lowercase dares, short lines.",
+    "keyCharacteristics": [
+      "Committed shell colour owns the page",
+      "One pressable key system",
+      "Asymmetric handheld screen corners",
+      "Mali voice, mono only for machine text",
+      "One authored motion moment: LCD flash on flag capture"
+    ],
+    "rules": [
+      {
+        "name": "The Surface Rule",
+        "body": "Content sits on a screen or LCD, never directly on the bezel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Button Rule",
+        "body": "Berry = A (go), grape/pear = B (alternative). No other action colours.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Costume Mono Rule",
+        "body": "Mono only for terminal, code, dates and data.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pressable-Edge Rule",
+        "body": "Solid bottom edge only on things you can press; static objects get a soft cast.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use tokens for every colour and spacing value",
+      "Do keep one authored motion moment per page",
+      "Do honour prefers-reduced-motion"
+    ],
+    "donts": [
+      "Don't use gradient text, glass, emoji/unicode icons, eyebrows or italic headings",
+      "Don't invent stats or testimonials",
+      "Don't add inline or third-party scripts"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+# Changelog
+
+All notable changes to this site are documented here.
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+## [1.0.0] - 2026-09-25
+
+First release in this repository.
+
+### Added
+- **Handheld Quest** design: console-shell theme in light (dandelion) and dark (grape), LCD terminal, rubber push buttons, Start/Select navigation, and a power-switch theme toggle.
+- Blog posts and projects written in **Markdown** (`content/blogs`, `content/projects`) with frontmatter, drafts, reading time, and syntax-highlighted code blocks.
+- `npm run new-post -- "Title"` to scaffold a post.
+- Terminal quality of life: command history (↑/↓), Tab completion, `Ctrl+L` to clear, tap-anywhere focus, and quick-command buttons for phones.
+- "Achievement unlocked" toast when you find the flag.
+- Copy buttons on code blocks, a reading progress bar, older/newer post navigation, and a 404 page.
+- Theme follows the OS setting on first visit, with no flash of the wrong theme.
+- GitHub Actions: build and deploy to the `gh-pages` branch on every push to `main`; create a GitHub Release when a `v*` tag is pushed.
+- Hallmark and Impeccable design skills for Claude Code in `.claude/skills/`, plus `PRODUCT.md` and `DESIGN.md`.
+
+### Changed
+- Responsive layouts for desktop and mobile: no horizontal scroll from 320 px up, 44 px touch targets, and no auto-opening keyboard on phones.
+- Blog and project lists are real links, so middle-click and keyboard navigation work.
+- The page scrolls to the top when you change page.
+
+### Security
+- The production build ships without source maps or inline scripts, with a strict `Content-Security-Policy`.
+- The site is fully static: no server, database, or third-party scripts.
+
+[Unreleased]: https://github.com/watkorn/watkorn.me/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/watkorn/watkorn.me/releases/tag/v1.0.0

@@ -1,0 +1,146 @@
+/* Hallmark · genre: playful · macrostructure: Console Hero (home) + Index-First (lists) + Long Document (posts)
+ * theme: custom "Handheld Quest" · vibe: "handheld console plastic, lcd, rubber buttons"
+ * paper: shell plastic (light oklch(87% 0.15 92) dandelion · dark oklch(25% 0.07 300) grape)
+ * accent: berry oklch(56% 0.2 12) (A) · grape/blue (B, links) · fonts: Mali + JetBrains Mono
+ * axes: light+dark / rounded-sans (Mali) / multi (berry · grape · pear)
+ * design-system: DESIGN.md · designed-as-app
+ */
+
+:root {
+  /* ---- Shell plastic (page ground) ---- */
+  --color-shell: oklch(87% 0.15 92);
+  --color-shell-2: oklch(83% 0.155 88);
+  --color-shell-edge: oklch(68% 0.14 78);
+  --color-shell-cast: oklch(55% 0.12 70 / 0.35);
+
+  /* ---- Screens ---- */
+  --color-bezel: oklch(29% 0.035 285);
+  --color-bezel-2: oklch(38% 0.04 285);
+  --color-bezel-ink: oklch(78% 0.03 285);
+  --color-screen: oklch(98.5% 0.004 250);
+  --color-screen-2: oklch(95% 0.008 250);
+  --color-rule: oklch(88% 0.012 260);
+
+  /* ---- LCD (terminal) ---- */
+  --color-lcd: oklch(86% 0.085 128);
+  --color-lcd-2: oklch(81% 0.09 130);
+  --color-lcd-ink: oklch(28% 0.07 145);
+  --color-lcd-ink-2: oklch(40% 0.08 140);
+  --color-lcd-prompt: oklch(36% 0.13 300);
+
+  /* ---- Ink ---- */
+  --color-ink: oklch(22% 0.03 285);
+  --color-ink-2: oklch(38% 0.03 285);
+  --color-ink-on-shell: oklch(22% 0.04 70);
+  --color-ink-on-shell-2: oklch(34% 0.06 70);
+
+  /* ---- Buttons / accents ---- */
+  --color-a: oklch(56% 0.2 12);          /* A button: berry */
+  --color-a-edge: oklch(42% 0.17 12);
+  --color-a-ink: oklch(99% 0.005 12);
+  --color-b: oklch(44% 0.15 300);        /* B button: grape */
+  --color-b-edge: oklch(32% 0.12 300);
+  --color-b-ink: oklch(98% 0.01 300);
+  --color-pill: oklch(45% 0.03 285);     /* start/select pills */
+  --color-pill-edge: oklch(30% 0.03 285);
+  --color-pill-on: oklch(56% 0.2 12);
+  --color-key: oklch(97% 0.01 95);       /* neutral rubber key */
+  --color-key-edge: oklch(74% 0.05 90);
+  --color-link: oklch(45% 0.17 258);
+  --color-link-hover: oklch(52% 0.2 12);
+  --color-focus: oklch(50% 0.21 258);
+  --color-led: oklch(62% 0.22 25);
+  --color-trophy: oklch(80% 0.16 85);
+  --color-selection: oklch(86% 0.16 95);
+  --color-selection-ink: oklch(22% 0.03 285);
+
+  /* ---- Type ---- */
+  --font-display: "Mali", ui-rounded, system-ui, sans-serif;
+  --font-body: "Mali", ui-rounded, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.625rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(2.75rem, 5.5vw + 0.5rem, 5.25rem);
+  --text-page: clamp(2.5rem, 4vw + 1rem, 4rem);
+  --text-headline: clamp(2rem, 3.5vw + 1rem, 3.25rem);
+  --text-input-touch: 16px; /* iOS won't zoom inputs at >= 16px */
+
+  /* ---- Space (4pt) ---- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 7rem;
+
+  /* ---- Shape ---- */
+  --radius-screen: 14px 14px 44px 14px;   /* the handheld's big bottom-right curve */
+  --radius-bezel: 22px 22px 64px 22px;
+  --radius-pill: 999px;
+  --radius-key: 12px;
+  --radius-chip: 6px;
+  --radius-panel: 18px;
+  --rule-hair: 1px;
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-press: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur-press: 70ms;
+  --dur-short: 140ms;
+  --dur-med: 260ms;
+}
+
+/* Night play: grape shell, backlit LCD */
+.dark {
+  --color-shell: oklch(25% 0.07 300);
+  --color-shell-2: oklch(21% 0.06 300);
+  --color-shell-edge: oklch(14% 0.045 300);
+  --color-shell-cast: oklch(8% 0.03 300 / 0.6);
+
+  --color-bezel: oklch(10% 0.02 290);
+  --color-bezel-2: oklch(19% 0.03 290);
+  --color-bezel-ink: oklch(74% 0.04 290);
+  --color-screen: oklch(22% 0.035 290);
+  --color-screen-2: oklch(27% 0.04 290);
+  --color-rule: oklch(34% 0.04 290);
+
+  --color-lcd: oklch(19% 0.035 110);
+  --color-lcd-2: oklch(23% 0.04 110);
+  --color-lcd-ink: oklch(90% 0.14 95);
+  --color-lcd-ink-2: oklch(80% 0.1 95);
+  --color-lcd-prompt: oklch(78% 0.14 20);
+
+  --color-ink: oklch(95% 0.015 300);
+  --color-ink-2: oklch(79% 0.03 300);
+  --color-ink-on-shell: oklch(95% 0.02 300);
+  --color-ink-on-shell-2: oklch(80% 0.04 300);
+
+  --color-a: oklch(66% 0.2 12);
+  --color-a-edge: oklch(46% 0.17 12);
+  --color-a-ink: oklch(16% 0.03 12);
+  --color-b: oklch(86% 0.16 95);
+  --color-b-edge: oklch(64% 0.14 85);
+  --color-b-ink: oklch(20% 0.04 85);
+  --color-pill: oklch(36% 0.05 300);
+  --color-pill-edge: oklch(16% 0.04 300);
+  --color-pill-on: oklch(86% 0.16 95);
+  --color-key: oklch(32% 0.06 300);
+  --color-key-edge: oklch(14% 0.04 300);
+  --color-link: oklch(82% 0.11 230);
+  --color-link-hover: oklch(86% 0.16 95);
+  --color-focus: oklch(86% 0.16 95);
+  --color-led: oklch(86% 0.16 95);
+  --color-trophy: oklch(86% 0.16 95);
+  --color-selection: oklch(66% 0.2 12);
+  --color-selection-ink: oklch(99% 0.005 12);
+}
