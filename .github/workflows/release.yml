@@ -1,0 +1,64 @@
+# Publish a GitHub Release whose notes come from the matching section of CHANGELOG.md.
+# Either push a tag (git tag v1.2.0 && git push origin v1.2.0)
+# or run it from Actions → Release → "Run workflow" and type the version (creates the tag on main).
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Version tag to create, e.g. v1.2.0"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    permissions:
+      contents: write # create the release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install and build
+        run: |
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: Package build
+        run: |
+          case "$TAG" in v[0-9]*) ;; *) echo "Tag must look like v1.2.3" >&2; exit 1 ;; esac
+          cd build && zip -qr "../watkorn.me-${TAG}.zip" .
+
+      - name: Extract release notes from CHANGELOG.md
+        run: |
+          version="${TAG#v}"
+          awk -v v="$version" '
+            $0 ~ "^## \\[" v "\\]" { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > notes.md
+          if [ ! -s notes.md ]; then echo "No CHANGELOG entry for $version" > notes.md; fi
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # tag push: the tag already exists; manual run: gh creates it on this commit
+          gh release create "$TAG" "watkorn.me-${TAG}.zip" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "$TAG" \
+            --notes-file notes.md \
+            --target "$GITHUB_SHA"

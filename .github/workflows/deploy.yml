@@ -1,0 +1,47 @@
+# Build เว็บจาก branch main แล้ว push เฉพาะไฟล์ static (build/) ไปที่ branch gh-pages
+# ตั้งค่า GitHub Pages: Settings → Pages → Source = "Deploy from a branch" → gh-pages / (root)
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-gh-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # ต้องใช้เพื่อ push ไป branch gh-pages
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Publish build/ to gh-pages branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # gh-pages' -u parser rejects the "[bot]" address, so set the identity via git config
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          npx gh-pages -d build --nojekyll \
+            -m "Deploy ${GITHUB_SHA::7}" \
+            -r "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
