@@ -1,8 +1,9 @@
 // src/components/Yeti.jsx
-// โลโก้เยติแบบเวกเตอร์ เปลี่ยนสีได้ทุกชั้นผ่าน CSS variables (--yeti-*)
+// โลโก้เยติแบบพิกเซล 32×32 (sprite 2 เฟรม) เปลี่ยนสีได้ทุกชั้นผ่าน CSS variables (--yeti-*)
 //   palette: ไม่ใส่ = ตามธีมเว็บ (light/dark) · "snow" | "dandelion" | "night" | "lcd" | "berry" | "ink"
 //   bg:      "none" (ไม่มีพื้นหลัง) | "circle" | "screen" (มุมล่างขวาโค้งแบบเครื่องเกม) | "square"
-//   crop:    "full" (ทั้งตัว) | "head" (เฉพาะหัว เหมาะกับไอคอนเล็ก)
+//   walk:    true = สลับเฟรมเดินวนไปเรื่อย ๆ (ปิดเองเมื่อผู้ใช้ตั้ง reduce motion)
+// แก้หน้าตาตัวละคร: brand/yeti_sprite.py แล้วรัน `python3 brand/build.py`
 import React from "react";
 import yetiUrl from "../assets/yeti.svg";
 
@@ -16,21 +17,18 @@ const SHAPES = {
   ),
   square: <rect width="100" height="100" rx="22" className="yeti__bg" />,
 };
-const INSET = { none: 0, circle: 12, screen: 6, square: 8 };
-// พื้นที่ของสัญลักษณ์ #yeti (436×436) ที่จะแสดง
-const CROP = { full: [0, 0, 436], head: [120, 20, 200] };
+const INSET = { none: 0, circle: 14, screen: 8, square: 10 };
 
-export default function Yeti({ palette, bg = "none", crop = "full", size, title, className = "", ...rest }) {
+export default function Yeti({ palette, bg = "none", walk = false, size, title, className = "", ...rest }) {
   const inset = INSET[bg] ?? 0;
   const inner = 100 - inset * 2;
-  const [cx, cy, cs] = CROP[crop] ?? CROP.full;
 
   return (
     <svg
       viewBox="0 0 100 100"
       width={size}
       height={size}
-      className={`yeti${palette ? ` yeti--${palette}` : ""} ${className}`}
+      className={`yeti${palette ? ` yeti--${palette}` : ""}${walk ? " is-walking" : ""} ${className}`}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
       focusable="false"
@@ -38,8 +36,9 @@ export default function Yeti({ palette, bg = "none", crop = "full", size, title,
     >
       {title && <title>{title}</title>}
       {SHAPES[bg]}
-      <svg x={inset} y={inset} width={inner} height={inner} viewBox={`${cx} ${cy} ${cs} ${cs}`} overflow="hidden">
-        <use href={`${yetiUrl}#yeti`} width="436" height="436" />
+      <svg x={inset} y={inset} width={inner} height={inner} viewBox="0 0 32 32" shapeRendering="crispEdges">
+        <use className="yeti__f1" href={`${yetiUrl}#yeti`} />
+        <use className="yeti__f2" href={`${yetiUrl}#yeti-step`} />
       </svg>
     </svg>
   );

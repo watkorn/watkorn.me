@@ -240,7 +240,7 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
     <PageWrapper title="WATKORN.ME" className="page--home">
       <section className="console-hero" aria-labelledby="home-title">
         <div className="player">
-          <Yeti bg="screen" className="player__avatar" title="watkorn's yeti mascot" />
+          <Yeti bg="screen" walk={achievement} className="player__avatar" title="watkorn's yeti mascot" />
           <h1 id="home-title" className="player__title">
             find the flag.
           </h1>
@@ -351,7 +351,7 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
       </section>
 
       <section className="dialog" aria-labelledby="about-title">
-        <Yeti bg="circle" crop="head" className="dialog__face" />
+        <Yeti bg="circle" className="dialog__face" />
         <div className="dialog__body">
           <h2 id="about-title" className="dialog__name">
             watkorn

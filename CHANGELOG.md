@@ -6,10 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ## [Unreleased]
 
 ### Added
-- **Yeti logo system:** the mascot is now a layered vector (`brand/yeti.svg`) that follows the site theme. It has 6 palettes (snow, dandelion, night, lcd, berry, ink), optional circle, handheld-screen or square backgrounds, and a head-only crop for small sizes.
+- **New pixel yeti:** the mascot redrawn as a 32×32 handheld-game sprite whose face is a little screen. It has a 2-frame walk cycle and follows the site theme, and it walks on hover and when you find the flag. 6 palettes (snow, dandelion, night, lcd, berry, ink) and optional circle, handheld-screen or square backgrounds.
 - `Yeti` React component, used in the header, the home avatar and the About dialog.
-- **Logo Lab** (`brand/lab.html`): recolour the yeti, pick a background, and download SVG or PNG.
-- Ready-made SVG and PNG exports in `brand/svg` and `brand/png`.
+- `brand/yeti_sprite.py` + `brand/build.py`: one command regenerates the master SVG, icons, exports and Logo Lab.
+- **Logo Lab** (`brand/lab.html`): recolour the yeti, pick a background, preview the walk, and download SVG or PNG.
+- Ready-made SVG and PNG exports and animated walk GIFs in `brand/svg` and `brand/png`.
+- The previous yeti, as a recolourable traced vector, kept in `brand/classic/`.
 - New favicon set: an SVG favicon that switches with light/dark mode, a 32px PNG, an Apple touch icon, a 512px icon and a web manifest.
 
 ### Changed

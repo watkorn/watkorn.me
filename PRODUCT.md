@@ -31,7 +31,7 @@ The site is itself a tiny CTF: the Home page is an interactive fake shell (`whoa
 ## Brand Commitments
 - Keep the Home terminal and its commands and flag behaviour (styling may change).
 - Keep the dark/light theme toggle; both themes must be first-class.
-- Keep the yeti mascot. Since v1.1 it is a layered vector (`brand/yeti.svg`, traced from the original artwork in `brand/source/`) that can be recoloured and placed on any background.
+- Keep the yeti mascot. It is now a recolourable 32×32 pixel sprite (`brand/yeti.svg`, source `brand/yeti_sprite.py`) redesigned to fit the handheld theme, with the owner's approval. The original artwork is kept in `brand/source/`.
 - Keep the **Mali** typeface.
 - Tone: Gen Z (confirmed by the owner).
 - Footer line: "Flags don't hide. You just haven't looked hard enough."

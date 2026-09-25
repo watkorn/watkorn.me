@@ -479,6 +479,17 @@ kbd {
   aspect-ratio: 1;
   filter: drop-shadow(0 12px 14px var(--color-shell-cast));
 }
+/* hover the mascot (or the brand in the header) and it walks */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .player__avatar:hover .yeti__f1,
+  .brand:hover .yeti__f1 {
+    animation: yeti-step-a 560ms steps(1) infinite;
+  }
+  .player__avatar:hover .yeti__f2,
+  .brand:hover .yeti__f2 {
+    animation: yeti-step-b 560ms steps(1) infinite;
+  }
+}
 .player__title {
   margin: var(--space-2xs) 0 0;
   font-family: var(--font-display);

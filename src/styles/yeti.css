@@ -7,6 +7,32 @@
 .yeti__bg {
   fill: var(--yeti-bg);
 }
+/* 2-frame walk cycle: frame 2 is hidden unless walking */
+.yeti__f2 {
+  visibility: hidden;
+}
+.yeti.is-walking .yeti__f1 {
+  animation: yeti-step-a 560ms steps(1) infinite;
+}
+.yeti.is-walking .yeti__f2 {
+  animation: yeti-step-b 560ms steps(1) infinite;
+}
+@keyframes yeti-step-a {
+  50% {
+    visibility: hidden;
+  }
+}
+@keyframes yeti-step-b {
+  50% {
+    visibility: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .yeti.is-walking .yeti__f1,
+  .yeti.is-walking .yeti__f2 {
+    animation: none;
+  }
+}
 .yeti--snow {
   --yeti-fur: oklch(96.1% 0.026 92);
   --yeti-fur-shade: oklch(85.5% 0.018 159);

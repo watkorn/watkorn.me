@@ -18,7 +18,7 @@ export default function Header() {
       </a>
       <div className="site-header__inner">
         <Link to="/" className="brand" aria-label="WATKORN.ME home">
-          <Yeti bg="circle" crop="head" />
+          <Yeti bg="circle" />
           <span className="brand__word">WATKORN.ME</span>
         </Link>
 
