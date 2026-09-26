@@ -1,5 +1,5 @@
 // scripts/start.mjs
-// dev server: build content + watch content/ แล้วรัน react-scripts start
+// dev server: build content + watch content/ แล้วรัน vite
 // (ใช้ได้ทั้ง PowerShell, macOS และ Linux)
 import { spawn } from "node:child_process";
 import { buildContent, watchContent } from "./content.mjs";
@@ -8,5 +8,5 @@ import { buildContent, watchContent } from "./content.mjs";
 buildContent({ drafts: true });
 watchContent({ drafts: true });
 
-const child = spawn("react-scripts", ["start"], { stdio: "inherit", shell: true });
+const child = spawn("vite", [], { stdio: "inherit", shell: true });
 child.on("exit", (code) => process.exit(code ?? 0));

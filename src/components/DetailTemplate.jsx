@@ -1,13 +1,21 @@
 // src/components/DetailTemplate.jsx
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { PreloadedContent } from "../content-context";
 import PageWrapper from "./PageWrapper";
 import Icon from "./Icon";
 import "highlight.js/styles/github-dark.css";
 
 // รองรับรูปที่อ้างอิงแบบ /xxx.png จากโฟลเดอร์ public/
 const withPublicUrl = (src) =>
-  src?.startsWith("/") && !src.startsWith("//") ? `${process.env.PUBLIC_URL}${src}` : src;
+  src?.startsWith("/") && !src.startsWith("//") ? `${import.meta.env.BASE_URL.replace(/\/$/, "")}${src}` : src;
+
+// เนื้อหาแต่ละโพสต์แยกเป็น chunk ของตัวเอง (โหลดเมื่อเปิดหน้านั้น)
+const loaders = import.meta.glob(["../generated/*/*.json", "!../generated/*/index.json"], { import: "default" });
+const loadBody = (type, slug) => {
+  const load = loaders[`../generated/${type}s/${slug}.json`];
+  return load ? load() : Promise.reject(new Error(`No content for ${type}/${slug}`));
+};
 
 const formatDate = (iso) =>
   new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -84,8 +92,11 @@ function ReadingProgress({ targetRef }) {
 }
 
 export default function DetailTemplate({ meta, type, allMeta }) {
-  const [content, setContent] = useState(null);
-  const [loading, setLoading] = useState(Boolean(meta));
+  const preloaded = useContext(PreloadedContent);
+  const key = meta ? `${type}/${meta.slug}` : null;
+  const initial = key && preloaded[key] != null ? { html: preloaded[key] } : null;
+  const [content, setContent] = useState(initial);
+  const [loading, setLoading] = useState(Boolean(meta) && !initial);
   const [error, setError] = useState(null);
   const articleRef = useRef(null);
   const screenRef = useRef(null);
@@ -95,18 +106,22 @@ export default function DetailTemplate({ meta, type, allMeta }) {
 
   useEffect(() => {
     if (!meta) return;
+    if (preloaded[`${type}/${meta.slug}`] != null) {
+      setContent({ html: preloaded[`${type}/${meta.slug}`] });
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     setError(null);
-    // เนื้อหาแต่ละโพสต์ถูกแยกเป็น chunk ของตัวเอง (โหลดเมื่อเปิดหน้านั้น)
-    import(`../generated/${type}s/${meta.slug}.json`)
-      .then((mod) => setContent(mod.default ?? mod))
+    loadBody(type, meta.slug)
+      .then((data) => setContent(data))
       .catch((err) => {
         console.error("Failed to load content:", err);
         setError("Couldn't load this page. Check your connection and refresh.");
         setContent(null);
       })
       .finally(() => setLoading(false));
-  }, [meta, type]);
+  }, [meta, type, preloaded]);
 
   useCopyButtons(articleRef, content?.html);
 
@@ -136,7 +151,14 @@ export default function DetailTemplate({ meta, type, allMeta }) {
   const nextLabel = type === "blog" ? "Newer" : "Next";
 
   return (
-    <PageWrapper title={meta.title} description={meta.desc} className="page--read">
+    <PageWrapper
+      title={meta.title}
+      description={meta.desc}
+      path={`${listPath}/${meta.slug}`}
+      type="article"
+      published={meta.date}
+      className="page--read"
+    >
       {type === "blog" && <ReadingProgress targetRef={screenRef} />}
 
       <Link to={listPath} className="key key--sm back-link">
@@ -150,6 +172,9 @@ export default function DetailTemplate({ meta, type, allMeta }) {
             <h1 className="post-head__title">{meta.title}</h1>
             {meta.desc && <p className="post-head__desc">{meta.desc}</p>}
             <p className="post-head__meta">
+              {meta.event && <span>{meta.event}</span>}
+              {meta.category && type === "blog" && <span className="badge">{meta.category}</span>}
+              {meta.difficulty && <span className={`badge badge--${meta.difficulty}`}>{meta.difficulty}</span>}
               {meta.date && <time dateTime={meta.date}>{formatDate(meta.date)}</time>}
               {meta.readingMinutes ? <span>{meta.readingMinutes} min read</span> : null}
               {meta.category && <span>{meta.category}</span>}
@@ -185,6 +210,7 @@ export default function DetailTemplate({ meta, type, allMeta }) {
           ) : content?.html ? (
             <div
               ref={articleRef}
+              data-content-key={key}
               className="markdown prose md:prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: content.html }}
             />

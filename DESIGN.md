@@ -201,6 +201,8 @@ Two kinds of depth, never mixed:
 - **Yeti logo** (`Yeti.jsx`, `brand/yeti.svg`, source `brand/yeti_sprite.py`): a 32×32 pixel sprite with a 2-frame walk, always rendered with `shape-rendering: crispEdges`. It has 8 layers, each coloured by a `--yeti-*` variable. The default follows the theme (light is *dandelion* on a bezel; dark is *night* on a key background). Named palettes are `snow`, `dandelion`, `night`, `lcd`, `berry` and `ink`. Backgrounds are `none`, `circle`, `screen` and `square`. It walks on hover and after the flag capture, and stays still with reduced motion. Scale it by whole multiples of 32px where you can.
 - **RPG dialog** (`.dialog`): the About box, with a double-rule frame and the speaker name in berry.
 - **Achievement toast** (`.achievement`): a `role="status"` toast with a trophy and an A-key call to action to the writeups. It pauses on hover or focus and auto-hides after 9s. It sits at the top on mobile and bottom-right on desktop.
+- **Achievements** (`/achievements`, `.ach*`): the CTF progress screen. It has a score line, a flag submit form (a LCD-style input plus the A key), and a numbered level list where solved levels turn berry. Hints sit behind `<details>`. Reset takes two taps.
+- **Filters** (`.chip-filter`): outline pills on the shell; the active one fills with the B colour. **Badges** (`.badge`) show category (B colour) and difficulty (easy is LCD green, medium is pear, hard/insane are berry).
 - **Post chrome:** a back key, reading progress bar, copy buttons on `pre`, and an older/newer pager.
 
 ## Do's and Don'ts

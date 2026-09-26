@@ -1,11 +1,15 @@
 // src/pages/NotFound.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import PageWrapper from "../components/PageWrapper";
 
 export default function NotFound() {
   return (
     <PageWrapper title="404" className="page--narrow">
+      <Helmet>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <div className="bezel">
         <div className="lcd lcd--center">
           <p className="lcd__big">GAME OVER</p>

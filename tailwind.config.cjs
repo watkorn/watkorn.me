@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 // สี/ฟอนต์ทั้งหมดอยู่ใน src/styles/tokens.css (CSS variables) — Tailwind ใช้แค่ reset + typography plugin
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   darkMode: "class",
   theme: {
     extend: {

@@ -39,3 +39,15 @@ src/generated/
 # Design review captures (regenerated locally)
 .impeccable/review/
 .impeccable/mocks/
+
+# Vite SSR bundle used only for prerendering
+build-ssr/
+
+# Fonts downloaded by brand/build.py for rendering the OG image (not redistributed)
+brand/fonts/
+
+# Lighthouse CI + Playwright output
+lhci-report/
+.lighthouseci/
+test-results/
+playwright-report/

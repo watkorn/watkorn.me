@@ -49,11 +49,7 @@ export default function ResponsiveLeftNav({ items = [] }) {
         >
           <nav className="leftnav-nav">
             {items.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToIdWithOffset(item.id)}
-                className="leftnav-btn"
-              >
+              <button key={item.id} onClick={() => scrollToIdWithOffset(item.id)} className="leftnav-btn">
                 {item.label}
               </button>
             ))}
@@ -62,11 +58,7 @@ export default function ResponsiveLeftNav({ items = [] }) {
       </div>
 
       {/* Mobile floating button */}
-      <button
-        className="leftnav-mobile-btn lg:hidden"
-        onClick={() => setOpen(true)}
-        aria-label="Open menu"
-      >
+      <button className="leftnav-mobile-btn lg:hidden" onClick={() => setOpen(true)} aria-label="Open menu">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -79,10 +71,7 @@ export default function ResponsiveLeftNav({ items = [] }) {
       />
 
       {/* Mobile drawer */}
-      <aside
-        className={`leftnav-drawer ${open ? "open" : "closed"}`}
-        style={{ paddingTop: headerHeight }}
-      >
+      <aside className={`leftnav-drawer ${open ? "open" : "closed"}`} style={{ paddingTop: headerHeight }}>
         <div className="leftnav-drawer-header">
           <h3 className="text-lg font-semibold">Menu</h3>
           <button

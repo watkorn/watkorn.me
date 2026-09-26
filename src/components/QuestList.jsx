@@ -20,6 +20,9 @@ export default function QuestList({ items, basePath }) {
               <span className="quest__title">{item.title}</span>
               {item.desc && <span className="quest__desc">{item.desc}</span>}
               <span className="quest__meta">
+                {item.event && <span>{item.event}</span>}
+                {item.category && <span className="badge">{item.category}</span>}
+                {item.difficulty && <span className={`badge badge--${item.difficulty}`}>{item.difficulty}</span>}
                 {item.date && <time dateTime={item.date}>{formatDate(item.date)}</time>}
                 {item.readingMinutes ? <span>{item.readingMinutes} min read</span> : null}
                 {item.tags?.map((t) => (

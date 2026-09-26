@@ -1,12 +1,13 @@
 # WATKORN.ME
 
 [![Deploy](https://github.com/watkorn/watkorn.me/actions/workflows/deploy.yml/badge.svg)](https://github.com/watkorn/watkorn.me/actions/workflows/deploy.yml)
+[![CI](https://github.com/watkorn/watkorn.me/actions/workflows/ci.yml/badge.svg)](https://github.com/watkorn/watkorn.me/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/watkorn/watkorn.me)](https://github.com/watkorn/watkorn.me/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Live site](https://img.shields.io/badge/live-watkorn.me-f2d54c)](https://watkorn.me)
 
 > The personal site of **Watcharakorn Khambung (watkorn)**: CTF writeups, security side projects,
-> and a terminal on the home page with a flag hidden in it. Go find it.
+> and a terminal on the home page with **five flags** hidden around the site. Go find them.
 
 | Light | Dark |
 |---|---|
@@ -16,11 +17,11 @@
 
 ## Features
 
-- **A terminal you can play with.** `whoami`, `ls -la`, `cat`, `echo`, `help`… and a flag. It has history (↑/↓), Tab completion, `Ctrl+L`, and tap-to-run buttons on phones.
-- **Blogs and projects in Markdown.** Drop a `.md` file in `content/` and push; no React code to touch.
-- **Handheld Quest design.** Console-shell light and dark themes, an LCD terminal and rubber push buttons. Works from 320 px phones up to wide desktops.
-- **Reading comforts.** Syntax highlighting, copy buttons on code blocks, reading time, a progress bar, and older/newer navigation.
-- **Static and locked down.** Plain HTML/CSS/JS on GitHub Pages: no server, no database, no third-party scripts, a strict CSP, and no source maps.
+- **A mini CTF.** The home terminal (`ls`, `cd`, `cat`, `open`, `hint`, `submit`…) is the entry point to five flags hidden around the site. Flags are checked by SHA-256 hash, so reading the JavaScript won't hand you the answers. Progress lives on [`/achievements`](https://watkorn.me/achievements/), stored only in the visitor's browser.
+- **Blogs and projects in Markdown**, with a CTF writeup template, category/difficulty badges and tag filters.
+- **Real URLs and pre-rendered pages.** Every page is built to its own HTML file, so posts are indexable and show proper link previews (Open Graph + Twitter cards). There's also a sitemap and an RSS feed.
+- **Handheld Quest design** with a pixel yeti mascot, light and dark themes, from 320 px phones to wide desktops. See [`DESIGN.md`](DESIGN.md) and [`brand/`](brand/README.md).
+- **Static and locked down.** Plain files on GitHub Pages behind Cloudflare: no server, no database, no third-party scripts, a strict CSP, and no source maps.
 
 ## Quick start
 
@@ -28,121 +29,105 @@ Requires **Node 20+**.
 
 ```bash
 npm install
-npm start        # http://localhost:3000 (drafts are visible in dev)
+npm start              # http://localhost:3000 (drafts are visible in dev)
 ```
 
 | Command | What it does |
 |---|---|
-| `npm start` | Dev server; rebuilds content when any `.md` changes |
-| `npm run new-post -- "My Title"` | Creates `content/blogs/my-title.md` as a draft |
-| `npm run build` | Production build in `build/` (drafts excluded, CSP added, no source maps) |
-| `npm run deploy` | Manual deploy of `build/` to `gh-pages` (CI normally does this) |
+| `npm start` | Vite dev server; rebuilds content when any `.md` changes |
+| `npm run new-post -- "My Title"` | New blog post in `content/blogs/` (as a draft) |
+| `npm run new-post -- --writeup "Challenge"` | New **CTF writeup** from the template |
+| `npm run build` | Production build in `build/`: prerendered pages, 404, sitemap, RSS, CSP |
+| `npm run preview` | Serve the production build at http://localhost:4173 |
+| `npm test` | Playwright smoke tests against the build (run `npm run build` first; first time also `npx playwright install chromium`) |
 
 ## Writing a post
 
 ```bash
-npm run new-post -- "HTB Machine Writeup"
+npm run new-post -- --writeup "Baby ROP"       # or without --writeup for a normal post
 ```
 
-This creates `content/blogs/htb-machine-writeup.md`. The file name becomes the URL (`/#/blogs/htb-machine-writeup`).
+That creates `content/blogs/baby-rop.md`. The file name becomes the URL: `https://watkorn.me/blogs/baby-rop/`.
 
 ````markdown
 ---
-title: HTB Machine Writeup
-description: One line shown in the list
-date: 2026-09-25          # the post is grouped by this year
-tags: [htb, web]
-draft: true               # delete this line to publish
+title: Baby ROP
+description: One line shown in the list and in link previews
+date: 2026-09-26
+event: "Some CTF 2026"      # optional, writeups only
+category: pwn               # web | pwn | crypto | forensics | rev | osint | misc
+difficulty: easy            # easy | medium | hard | insane
+tags: [ctf, rop]
+draft: true                 # delete this line to publish
 ---
 
 ## Recon
-
 ```bash
-nmap -sC -sV 10.10.10.10
+checksec ./chall
 ```
-
-![Burp request](/images/blogs/burp.png)
 ````
 
 - Images go in `public/images/blogs/`; reference them as `/images/blogs/<file>`.
-- Code blocks get syntax highlighting at build time, and external links open in a new tab.
-- Commit and push to `main`; the site redeploys by itself.
+- Code blocks are syntax-highlighted at build time and get a copy button.
+- Commit and push to `main`. CI builds, tests and deploys by itself.
 
-**Projects** work the same way in `content/projects/*.md`, with a few extra fields:
-
-```yaml
----
-title: My Tool
-description: What it does
-category: Security Tools     # projects are grouped by this
-order: 1                     # sort order inside the category
-github: https://github.com/watkorn/my-tool
-screenshots:
-  - { src: /images/projects/my-tool.png, alt: Main screen, label: Main screen }
----
-```
+**Projects** work the same way in `content/projects/*.md`, with `category`, `order`, `github` and `screenshots` fields.
 
 <details>
 <summary>ภาษาไทย: เขียนบล็อกใหม่ใน 3 ขั้น</summary>
 
-1. `npm run new-post -- "ชื่อเรื่องภาษาอังกฤษ"` (ชื่อไฟล์/URL ต้องเป็น a-z, 0-9, -)
-2. เขียนเนื้อหาด้วย Markdown ใน `content/blogs/<ชื่อ>.md` แล้วดูตัวอย่างด้วย `npm start`
-3. ลบบรรทัด `draft: true` แล้ว commit + push ขึ้น `main` เว็บจะ build และ deploy เองอัตโนมัติ
+1. `npm run new-post -- --writeup "ชื่อโจทย์ภาษาอังกฤษ"` (หรือไม่ใส่ `--writeup` สำหรับโพสต์ทั่วไป)
+2. เขียนเนื้อหาใน `content/blogs/<ชื่อ>.md` แล้วดูตัวอย่างด้วย `npm start`
+3. ลบบรรทัด `draft: true` แล้ว commit + push ขึ้น `main` เว็บจะ build, test และ deploy เองอัตโนมัติ
 
 </details>
+
+## The CTF (for maintainers)
+
+- The levels, points, hints and **SHA-256 hashes** of the flags are in [`src/ctf/ctf.js`](src/ctf/ctf.js). The plaintext flags exist only in their hiding places on the site.
+- [`tests/ctf-integrity.spec.js`](tests/ctf-integrity.spec.js) proves every flag can be found on the built site and matches its hash. If you move or change a flag, update both the hiding place and the hash, and this test will tell you if they disagree.
+- Heads-up: this repo is public, so a determined player can read the source. That's fine for a warm-up CTF; for harder challenges, keep the hiding places outside this repo.
 
 ## Project structure
 
 ```
-content/            Markdown for blogs and projects (edit these)
-public/             Static files: CNAME, images, icons, theme-init.js
-brand/              Yeti logo: master SVG, palettes, exports, Logo Lab
-scripts/            Build-time tools: content.mjs, csp.mjs, new-post.mjs, start.mjs
+content/             Markdown for blogs and projects (edit these)
+index.html           Page template (Vite)
+public/              Static files: CNAME, robots.txt, icons, og.png, theme-init.js
+scripts/
+  content.mjs        content/*.md → src/generated/*.json
+  prerender.mjs      renders every route to HTML + 404.html, sitemap.xml, rss.xml
+  csp.mjs            adds the Content-Security-Policy to every HTML file
+  new-post.mjs       scaffolds posts / writeups
 src/
-  components/       Header, Footer, QuestList, DetailTemplate, Icon, ...
-  pages/            Home, Blogs, Projects, detail pages, 404
-  styles/           tokens.css (design tokens) + globals.css
-  generated/        Built from content/ (git-ignored, never edit)
-.github/workflows/  deploy.yml (Pages) · release.yml (Releases)
-.claude/skills/     Hallmark + Impeccable design skills for Claude Code
-PRODUCT.md          Who the site is for and what it must keep
-DESIGN.md           The design system: tokens, components, rules
+  components/ pages/ ctf/ data/ styles/ theme/
+  entry-server.jsx   server entry used only for prerendering
+  generated/         built from content/ (git-ignored)
+tests/               Playwright smoke tests + CTF integrity test
+brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
+.github/             deploy.yml, ci.yml, release.yml, dependabot.yml
 ```
 
-## Deployment and releases
+## Deployment, CI and releases
 
-- **`main`** holds the source. Every push runs [`deploy.yml`](.github/workflows/deploy.yml), which builds and publishes `build/` to the **`gh-pages`** branch.
-- In **Settings → Pages**, set Source to *Deploy from a branch* → `gh-pages` / `(root)`. The custom domain comes from `public/CNAME`.
-- **Releases:** add a section to [`CHANGELOG.md`](CHANGELOG.md), bump `version` in `package.json`, then:
-
-  ```bash
-  git tag v1.1.0 && git push origin v1.1.0
-  ```
-
-  [`release.yml`](.github/workflows/release.yml) builds the site and creates a GitHub Release. It uses that CHANGELOG section as the notes and attaches the built site as a zip.
-  No terminal handy? Use **Actions → Release → Run workflow** and type the version (e.g. `v1.1.0`). It creates the tag on `main` for you.
+- **Every push to `main`** runs [`deploy.yml`](.github/workflows/deploy.yml): install → build → Playwright tests → publish `build/` to the **`gh-pages`** branch. If a test fails, nothing is published.
+- **Branches and pull requests** run [`ci.yml`](.github/workflows/ci.yml): build, tests and **Lighthouse** (accessibility and SEO must score ≥ 90).
+- **Dependabot** opens weekly PRs for npm packages and GitHub Actions; CI checks each one. All Actions are pinned to commit SHAs.
+- **Releases:** add a section to [`CHANGELOG.md`](CHANGELOG.md), bump `version` in `package.json`, then run **Actions → Release → Run workflow** with the version (e.g. `v1.2.0`), or push a tag. [`release.yml`](.github/workflows/release.yml) builds the site and creates the GitHub Release.
+- Hosting: GitHub Pages (`gh-pages`, custom domain from `public/CNAME`), proxied through **Cloudflare** (SSL Full (strict), security headers).
 
 ## Security
 
 - The live site is static files only; there is nothing server-side to exploit.
-- Production HTML carries a `Content-Security-Policy` (`script-src 'self'`, no inline scripts). The theme bootstrap lives in `public/theme-init.js` for that reason.
+- Every HTML page carries a `Content-Security-Policy` (`script-src 'self'`, no inline scripts; the theme bootstrap lives in `public/theme-init.js` for that reason). Cloudflare adds HSTS and the other security headers GitHub Pages can't set.
 - Markdown is rendered at build time from files in this repo; visitor input is never rendered as HTML.
-- Everything in the frontend bundle is public, the terminal flag included (that's the game). Never put real secrets in `src/` or `content/`.
+- Everything in the frontend bundle is public. Never put real secrets in `src/` or `content/`.
 
 Found a real issue? Please open a GitHub issue or email **fkub0011@gmail.com**.
 
-## Logo
-
-The yeti is a layered vector you can recolour, put on any background, or leave transparent.
-Open **[`brand/lab.html`](brand/lab.html)** to make your own version, or see [`brand/README.md`](brand/README.md) for palettes, exports and the `<Yeti>` component.
-
-## Design
-
-The UI follows the **Handheld Quest** system documented in [`DESIGN.md`](DESIGN.md). All colours, fonts, spacing and motion come from the tokens in [`src/styles/tokens.css`](src/styles/tokens.css). It was designed with the [Hallmark](https://github.com/Nutlope/hallmark) (MIT) and [Impeccable](https://github.com/pbakaus/impeccable) (Apache-2.0) skills, which ship in `.claude/skills/` under their own licenses.
-
 ## Tech
 
-React 18 · React Router 6 · Tailwind CSS 3 (+ typography) · gray-matter · marked · highlight.js · GitHub Actions · GitHub Pages
+React 18 · React Router 7 · Vite · Tailwind CSS 3 (+ typography) · gray-matter · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
 
 ## License
 

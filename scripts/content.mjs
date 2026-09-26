@@ -54,7 +54,7 @@ const marked = new Marked(
         return `<img ${attrs.join(" ")}>`;
       },
     },
-  }
+  },
 );
 
 const toISODate = (value, file) => {
@@ -83,7 +83,10 @@ function readCollection(type, { drafts }) {
       if (!data.title) throw new Error(`${rel}: ต้องมี "title" ใน frontmatter`);
       if (data.draft && !drafts) return null;
 
-      const words = content.replace(/```[\s\S]*?```/g, " ").split(/\s+/).filter(Boolean).length;
+      const words = content
+        .replace(/```[\s\S]*?```/g, " ")
+        .split(/\s+/)
+        .filter(Boolean).length;
       return { slug, data, html: marked.parse(content), rel, readingMinutes: Math.max(1, Math.round(words / 200)) };
     })
     .filter(Boolean);
@@ -102,6 +105,10 @@ function buildBlogs(opts) {
           year: Number(date.slice(0, 4)),
           tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
           readingMinutes,
+          // CTF writeup fields (optional)
+          category: data.category ? String(data.category).toLowerCase() : null,
+          difficulty: data.difficulty ? String(data.difficulty).toLowerCase() : null,
+          event: data.event ? String(data.event) : null,
         },
         html,
       };
@@ -135,7 +142,14 @@ function writeCollection(type, items) {
   fs.rmSync(dir, { recursive: true, force: true });
   fs.mkdirSync(dir, { recursive: true });
 
-  fs.writeFileSync(path.join(dir, "index.json"), JSON.stringify(items.map((i) => i.meta), null, 2));
+  fs.writeFileSync(
+    path.join(dir, "index.json"),
+    JSON.stringify(
+      items.map((i) => i.meta),
+      null,
+      2,
+    ),
+  );
   for (const { meta, html } of items) {
     fs.writeFileSync(path.join(dir, `${meta.slug}.json`), JSON.stringify({ html }));
   }

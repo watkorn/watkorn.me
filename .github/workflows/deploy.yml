@@ -1,5 +1,6 @@
-# Build เว็บจาก branch main แล้ว push เฉพาะไฟล์ static (build/) ไปที่ branch gh-pages
-# ตั้งค่า GitHub Pages: Settings → Pages → Source = "Deploy from a branch" → gh-pages / (root)
+# Build main, run the smoke tests, then publish only build/ to the gh-pages branch.
+# If any test fails, nothing is published and the live site stays as it was.
+# GitHub Pages: Settings → Pages → Source = "Deploy from a branch" → gh-pages / (root)
 name: Deploy to GitHub Pages
 
 on:
@@ -18,13 +19,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # ต้องใช้เพื่อ push ไป branch gh-pages
+      contents: write # push to the gh-pages branch
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
@@ -32,8 +33,13 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Build static site
+      - name: Build static site (prerendered pages, sitemap, RSS, CSP)
         run: npm run build
+
+      - name: Smoke tests
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright test
 
       - name: Publish build/ to gh-pages branch
         env:

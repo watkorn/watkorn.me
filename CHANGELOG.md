@@ -5,7 +5,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-26
+
 ### Added
+- **Mini CTF:** five flags hidden around the site (terminal, hidden files, page source, robots.txt, the yeti sprite). They are checked by SHA-256 hash with `submit <flag>`, with `hint`, `achievements` and a new **/achievements** page that records progress in the browser.
+- Terminal navigation: `cd`, `ls blogs`, `ls projects`, `open <post>`, `cd blogs`. The prompt now shows on every line, with the current folder.
+- **CTF writeup template** (`npm run new-post -- --writeup "Name"`), with `event`, `category` and `difficulty` fields shown as badges. Tag and category **filters** on the Blogs page (shareable via `?tag=`).
+- **Pre-rendered pages** with real URLs (`/blogs/<slug>/`), plus Open Graph/Twitter tags, canonical links, an OG image, `sitemap.xml`, `rss.xml` and `robots.txt`.
+- Playwright smoke tests (desktop + mobile) and a CTF integrity test; **CI** workflow with Lighthouse; **Dependabot**; the deploy now runs the tests first.
 - **New pixel yeti:** the mascot redrawn as a 32×32 handheld-game sprite whose face is a little screen. It has a 2-frame walk cycle and follows the site theme, and it walks on hover and when you find the flag. 6 palettes (snow, dandelion, night, lcd, berry, ink) and optional circle, handheld-screen or square backgrounds.
 - `Yeti` React component, used in the header, the home avatar and the About dialog.
 - `brand/yeti_sprite.py` + `brand/build.py`: one command regenerates the master SVG, icons, exports and Logo Lab.
@@ -17,6 +24,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ### Changed
 - Replaced the 1536×1024 `favicon.png` (674 KB) with properly sized icons.
 - Moved the original mascot PNGs to `brand/source/`.
+- Moved from Create React App to **Vite**; React Router 6 → 7. `npm audit` went from 62 vulnerabilities to 0.
+- Old `/#/…` links redirect to the new URLs.
+- GitHub Actions pinned to commit SHAs and upgraded to their Node 24 versions.
+- Social icons resized to 48 px (the GitHub one was 512 px); the theme switch's label now matches its accessible name.
+
+### Removed
+- Unused `react-helmet` and `react-infinite-scroll-component` dependencies.
 
 ## [1.0.0] - 2026-09-25
 
@@ -42,5 +56,6 @@ First release in this repository.
 - The production build ships without source maps or inline scripts, with a strict `Content-Security-Policy`.
 - The site is fully static: no server, database, or third-party scripts.
 
-[Unreleased]: https://github.com/watkorn/watkorn.me/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/watkorn/watkorn.me/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/watkorn/watkorn.me/releases/tag/v1.1.0
 [1.0.0]: https://github.com/watkorn/watkorn.me/releases/tag/v1.0.0

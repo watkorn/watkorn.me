@@ -11,6 +11,7 @@ Writes:
   brand/png/*.png, *.gif      1024px PNGs + animated walk GIFs per palette
   public/favicon.svg          theme-aware favicon (light/dark)
   public/favicon-32.png, apple-touch-icon.png, icon-512.png
+  public/og.png               1200x630 link-preview image (Open Graph / Twitter)
   brand/lab.html              the Logo Lab (from lab.template.html)
 """
 import json
@@ -18,7 +19,9 @@ import pathlib
 import sys
 
 import numpy as np
-from PIL import Image, ImageDraw
+import urllib.request
+
+from PIL import Image, ImageDraw, ImageFont
 
 BRAND = pathlib.Path(__file__).resolve().parent
 ROOT = BRAND.parent
@@ -95,7 +98,10 @@ def master_svg():
     )
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {N} {N}" width="512" height="512" '
-        f'shape-rendering="crispEdges" role="img" aria-label="watkorn yeti"><desc>{desc}</desc>{syms}<use href="#yeti"/></svg>'
+        f'shape-rendering="crispEdges" role="img" aria-label="watkorn yeti"><desc>{desc}</desc>'
+        # CTF level 5 ("Pixel secrets"): a base64 flag rides along in the sprite's metadata
+        '<metadata>yeti-says: d2F0a29ybntwMXgzbHNfYzRuX2gxZDNfc3Q0ZmZfdDAwfQ==</metadata>'
+        f'{syms}<use href="#yeti"/></svg>'
     )
 
 
@@ -158,6 +164,40 @@ def walk_gif(palette, path, scale=16):
     frames[0].save(path, save_all=True, append_images=frames[1:], duration=280, loop=0, disposal=2)
 
 
+# ---------- Open Graph image ----------
+FONT_CACHE = BRAND / "fonts" / "Mali-Bold.ttf"  # gitignored; Mali is SIL OFL 1.1
+
+
+def mali_bold():
+    if not FONT_CACHE.exists():
+        FONT_CACHE.parent.mkdir(exist_ok=True)
+        css = urllib.request.urlopen(
+            urllib.request.Request(
+                "https://fonts.googleapis.com/css2?family=Mali:wght@700", headers={"User-Agent": "Mozilla/4.0"}
+            ),
+            timeout=30,
+        ).read().decode()
+        url = css.split("url(")[1].split(")")[0]
+        FONT_CACHE.write_bytes(urllib.request.urlopen(url, timeout=30).read())
+    return str(FONT_CACHE)
+
+
+def og_image():
+    W, H = 1200, 630
+    shell, bezel, ink, berry = "#F2D54C", "#2A2E45", "#2A1B0E", "#C42A50"
+    img = Image.new("RGBA", (W, H), hex_rgba(shell))
+    # the yeti on a handheld "screen" on the left
+    card = 470
+    img.alpha_composite(raster("dandelion", card, 13, "screen", bezel), (70, (H - card) // 2))
+    d = ImageDraw.Draw(img)
+    font = mali_bold()
+    d.text((600, 150), "find the", font=ImageFont.truetype(font, 104), fill=hex_rgba(ink))
+    d.text((600, 262), "flag.", font=ImageFont.truetype(font, 104), fill=hex_rgba(ink))
+    d.text((604, 408), "CTF writeups · security tools", font=ImageFont.truetype(font, 34), fill=hex_rgba(ink))
+    d.text((604, 470), "WATKORN.ME", font=ImageFont.truetype(font, 40), fill=hex_rgba(berry))
+    img.convert("RGB").save(ROOT / "public/og.png", optimize=True)
+
+
 # ---------- lab ----------
 def build_lab():
     data = {"size": N, "order": ORDER, "frames": LAYER_PATHS, "palettes": PALETTES}
@@ -177,6 +217,7 @@ def main():
     raster("dandelion", 32, 1).save(ROOT / "public/favicon-32.png")
     raster("dandelion", 180, 5, "square", SITE_BG).save(ROOT / "public/apple-touch-icon.png")
     raster("dandelion", 512, 14, "screen", SITE_BG).save(ROOT / "public/icon-512.png")
+    og_image()
 
     for name in PALETTES:
         (BRAND / f"svg/yeti-{name}.svg").write_text(baked_svg(name))
