@@ -370,6 +370,39 @@ kbd {
   text-underline-offset: 3px;
 }
 
+/* Language switch: a globe key that links to this page in the other language */
+.lang-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-width: 44px;
+  min-height: 48px;
+  padding: 0.3rem 0.25rem;
+  color: var(--color-ink-on-shell-2);
+  text-decoration: none;
+  border-radius: var(--radius-key);
+}
+.lang-switch:hover {
+  color: var(--color-ink-on-shell);
+}
+.lang-switch__icon {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lang-switch:hover .lang-switch__icon {
+    transform: rotate(-20deg);
+  }
+}
+.lang-switch__label {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 @media (max-width: 479px) {
   .brand__word {
     position: absolute;
@@ -383,6 +416,15 @@ kbd {
     gap: var(--space-2xs);
   }
 }
+@media (max-width: 419px) {
+  .pill-nav__item--home {
+    display: none;
+  }
+  .pill-nav__item {
+    min-width: 48px;
+    padding-inline: 0.25rem;
+  }
+}
 
 /* ===============================
    Footer: quote strip
@@ -391,6 +433,7 @@ kbd {
   padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
 }
 .site-footer__quote {
+  text-wrap: balance;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1434,6 +1477,62 @@ kbd {
 .badge--insane {
   color: var(--color-a-ink);
   background: var(--color-a);
+}
+.badge--lang {
+  font-family: var(--font-body);
+  text-transform: none;
+  color: var(--color-ink);
+  background: var(--color-shell-2);
+}
+
+/* "not translated yet" note above a post shown in its original language */
+.post-fallback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-2xs) var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--color-ink-2);
+  background: var(--color-shell-2);
+  border-radius: var(--radius-chip);
+}
+.post-fallback svg {
+  flex: none;
+}
+
+/* ===============================
+   Thai: tone marks and vowels stack above and below the line, so Thai text needs
+   more line height than Latin, and negative tracking breaks the glyph clusters
+================================ */
+:lang(th) {
+  --thai-lead: 1.8;
+}
+body:lang(th),
+.markdown:lang(th) {
+  line-height: var(--thai-lead);
+}
+:lang(th) .player__title,
+:lang(th) .page-head__title,
+:lang(th) .post-head__title,
+:lang(th) .group__title,
+:lang(th) .quest__title {
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+:lang(th) .pill-nav__label,
+:lang(th) .lang-switch__label,
+:lang(th) .power-switch__legend {
+  line-height: 1.2;
+}
+/* the tilted Start/Select pill overhangs its box; leave room for tone marks above the label */
+:lang(th) .pill-nav__item {
+  gap: 0.7rem;
+}
+/* Thai wraps at word boundaries without spaces, so keep lines from ending on one short word */
+:lang(th) p,
+:lang(th) li {
+  text-wrap: pretty;
 }
 
 /* wide markdown tables scroll inside themselves instead of widening the page */

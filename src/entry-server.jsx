@@ -7,6 +7,7 @@ import App from "./App";
 import { PreloadedContent } from "./content-context";
 import { blogs } from "./data/blogs";
 import { projects } from "./data/projects";
+import { LANGS, localizePath } from "./i18n";
 
 const bodies = import.meta.glob(["./generated/*/*.json", "!./generated/*/index.json"], {
   eager: true,
@@ -18,15 +19,20 @@ for (const [path, mod] of Object.entries(bodies)) {
   if (m && m[2] !== "index") preloaded[`${m[1]}/${m[2]}`] = mod.html;
 }
 
-export const routes = [
-  "/",
-  "/blogs",
-  "/projects",
-  "/achievements",
-  ...blogs.map((b) => `/blogs/${b.slug}`),
-  ...projects.map((p) => `/projects/${p.slug}`),
+// every page once per language. `langs` = languages the page really exists in
+// (an untranslated post still gets a page on the other site, pointing its canonical at the original)
+const pages = [
+  { path: "/", langs: LANGS },
+  { path: "/blogs", langs: LANGS },
+  { path: "/projects", langs: LANGS },
+  { path: "/achievements", langs: LANGS },
+  ...blogs.map((b) => ({ path: `/blogs/${b.slug}`, langs: b.langs, date: b.date })),
+  ...projects.map((p) => ({ path: `/projects/${p.slug}`, langs: p.langs })),
 ];
-export { blogs, projects };
+export const routes = LANGS.flatMap((lang) =>
+  pages.map((page) => ({ ...page, lang, url: localizePath(page.path, lang), original: page.langs.includes(lang) })),
+);
+export { blogs, projects, LANGS, localizePath };
 
 export function render(url) {
   const helmetContext = {};

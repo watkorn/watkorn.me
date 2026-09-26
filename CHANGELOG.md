@@ -6,6 +6,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ## [Unreleased]
 
 ### Added
+- **Thai language** (ภาษาไทย): every page now also exists under `/th/`, with a globe key in the header that switches to the same page in the other language. The choice is remembered, and Thai browsers opening the home page land on `/th/`.
+  - All UI text, the terminal's help, README, hints and messages, and the CTF level names and hints are translated (commands, file names and flags stay English).
+  - Thai translations of "Preparing for CTF", the mini CTF writeup and "My Website". A translation is a `<slug>.th.md` next to the original; untranslated posts show the original with a note.
+  - `hreflang` alternates on every page and in the sitemap, `og:locale`, `<html lang>` per page, Thai dates (Buddhist era), Thai word counts for reading time, and a Thai RSS feed at `/th/rss.xml`.
+  - `npm run new-post -- --th <slug>` starts a translation from a copy of the original.
+  - Thai typography: more line height, no negative tracking, Mali as the Thai fallback in the terminal.
+  - Playwright tests for the Thai pages, the switch, the remembered choice and the Thai terminal; Lighthouse now also checks `/th/`.
 - **"Writeup: the watkorn.me mini CTF"** blog post with every solution (each flag folded behind a "Show flag" toggle), linked from the Achievements page.
 - Spoiler folds (`<details>`) styled for posts.
 
@@ -13,6 +20,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Checklist items in posts are now `<label>`s, so each checkbox has an accessible name (Lighthouse accessibility back to 100).
 
 ### Changed
+- Below 420px the Home pill hides (the yeti logo links home) to make room for the language key; the terminal's `achievements` list now prints points before level names so it lines up in both languages.
 - Rewrote the site copy: the home page now says "find the flags." and "Five of them are hiding around this site", with a new About section, A/B buttons, `cat README.md`, `blogs`/`projects` output and "command not found" message, plus new text on the Achievements, Blogs, Projects and 404 pages, hints, the footer credit, meta descriptions and the noscript notice. The OG image now reads "find the flags."
 - Rewrote the "Preparing for CTF" post into a practical starter guide and "My Website" into a full case study (architecture, security, the CTF, design, numbers, lessons).
 - Refreshed the README screenshots with the pixel yeti and the real Mali font.

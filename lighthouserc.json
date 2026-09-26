@@ -2,7 +2,13 @@
   "ci": {
     "collect": {
       "staticDistDir": "./build",
-      "url": ["http://localhost/", "http://localhost/blogs/", "http://localhost/blogs/preparing-for-ctf/"],
+      "url": [
+        "http://localhost/",
+        "http://localhost/blogs/",
+        "http://localhost/blogs/preparing-for-ctf/",
+        "http://localhost/th/",
+        "http://localhost/th/blogs/preparing-for-ctf/"
+      ],
       "numberOfRuns": 1,
       "settings": { "chromeFlags": "--no-sandbox" }
     },

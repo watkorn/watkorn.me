@@ -12,15 +12,27 @@ import ProjectDetail from "./pages/ProjectDetail";
 import NotFound from "./pages/NotFound";
 import Achievements from "./pages/Achievements";
 import { ThemeProvider } from "./theme";
+import { LANGS, langFromPath, localizePath } from "./i18n";
 
-// เปลี่ยนหน้าแล้วเลื่อนกลับบนสุด
+// เปลี่ยนหน้าแล้วเลื่อนกลับบนสุด + ตั้ง <html lang> ตามภาษาของ URL
 function ResetScrollOnNavigate() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.documentElement.lang = langFromPath(pathname);
   }, [pathname]);
   return null;
 }
+
+// every page exists once per language: /blogs and /th/blogs
+const pages = [
+  ["/", <Home />],
+  ["/blogs", <Blogs />],
+  ["/blogs/:slug", <BlogDetail />],
+  ["/projects", <Projects />],
+  ["/projects/:slug", <ProjectDetail />],
+  ["/achievements", <Achievements />],
+];
 
 function App() {
   return (
@@ -30,12 +42,11 @@ function App() {
         <Header />
         <main id="main" className="app__main" tabIndex={-1}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/blogs/:slug" element={<BlogDetail />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:slug" element={<ProjectDetail />} />
-            <Route path="/achievements" element={<Achievements />} />
+            {LANGS.flatMap((lang) =>
+              pages.map(([path, element]) => (
+                <Route key={`${lang}${path}`} path={localizePath(path, lang)} element={element} />
+              )),
+            )}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

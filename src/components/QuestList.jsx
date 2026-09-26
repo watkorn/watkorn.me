@@ -3,28 +3,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Icon from "./Icon";
+import { LANG_NAMES, useLang } from "../i18n";
 
-const formatDate = (iso) =>
-  new Date(`${iso}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
-
+// items are already localized (src/data/localize.js); an untranslated one gets a language badge
 export default function QuestList({ items, basePath }) {
+  const { t, to, date } = useLang();
   return (
     <ul className="quest-list" role="list">
       {items.map((item) => (
         <li key={item.slug}>
-          <Link to={`${basePath}/${item.slug}`} className="quest">
+          <Link to={to(`${basePath}/${item.slug}`)} className="quest">
             <span className="quest__cursor" aria-hidden="true">
               <Icon name="pointer" size={16} />
             </span>
             <span className="quest__body">
-              <span className="quest__title">{item.title}</span>
-              {item.desc && <span className="quest__desc">{item.desc}</span>}
+              <span className="quest__title" lang={item.translated === false ? item.lang : undefined}>
+                {item.title}
+              </span>
+              {item.desc && (
+                <span className="quest__desc" lang={item.translated === false ? item.lang : undefined}>
+                  {item.desc}
+                </span>
+              )}
               <span className="quest__meta">
+                {item.translated === false && (
+                  <span className="badge badge--lang" lang={item.lang}>
+                    {LANG_NAMES[item.lang]}
+                  </span>
+                )}
                 {item.event && <span>{item.event}</span>}
                 {item.category && <span className="badge">{item.category}</span>}
                 {item.difficulty && <span className={`badge badge--${item.difficulty}`}>{item.difficulty}</span>}
-                {item.date && <time dateTime={item.date}>{formatDate(item.date)}</time>}
-                {item.readingMinutes ? <span>{item.readingMinutes} min read</span> : null}
+                {item.date && <time dateTime={item.date}>{date(item.date)}</time>}
+                {item.readingMinutes ? <span>{t("list.minRead", { n: item.readingMinutes })}</span> : null}
                 {item.tags?.map((t) => (
                   <span key={t} className="tag">
                     #{t}

@@ -9,7 +9,9 @@ import linkedin from "../assets/linkedinL.png";
 import tryhackme from "../assets/tryhackmeL.png";
 import { blogs } from "../data/blogs";
 import { projects } from "../data/projects";
-import { LEVELS, TOTAL_POINTS, checkFlag, loadSolved, saveSolved, score } from "../ctf/ctf";
+import { LEVELS, TOTAL_POINTS, checkFlag, levelText, loadSolved, saveSolved, score } from "../ctf/ctf";
+import { useLang } from "../i18n";
+import { rich } from "../i18n/rich";
 
 // คำสั่งที่ Tab เติมให้ได้ (ไม่รวมคำใบ้ flag)
 const COMPLETIONS = [
@@ -49,6 +51,8 @@ const prefersReducedMotion = () =>
 
 export default function Home() {
   const navigate = useNavigate();
+  const { lang, t, to } = useLang();
+  const title = (level) => levelText(level, lang).title;
   const [cwd, setCwd] = useState("~");
   const [solved, setSolved] = useState([]);
   useEffect(() => setSolved(loadSolved()), []);
@@ -148,19 +152,19 @@ export default function Home() {
     const c = cmd.toLowerCase();
 
     if (c === "cd") {
-      const t = arg.replace(/\/+$/, "");
-      if (!t || t === "~" || t === "/home/watkorn" || (t === ".." && cwd !== "~")) {
+      const target = arg.replace(/\/+$/, "");
+      if (!target || target === "~" || target === "/home/watkorn" || (target === ".." && cwd !== "~")) {
         setCwd("~");
         return "";
       }
-      if (t === ".secret" || t === "~/.secret" || t === "/home/watkorn/.secret") {
+      if (target === ".secret" || target === "~/.secret" || target === "/home/watkorn/.secret") {
         setCwd("~/.secret");
         return "";
       }
-      if (["blogs", "projects", "achievements"].includes(t.replace(/^\//, ""))) {
-        const to = `/${t.replace(/^\//, "")}`;
-        setTimeout(() => navigate(to), 350);
-        return `opening ${to} …`;
+      if (["blogs", "projects", "achievements"].includes(target.replace(/^\//, ""))) {
+        const path = to(`/${target.replace(/^\//, "")}`);
+        setTimeout(() => navigate(path), 350);
+        return t("term.opening", { to: path });
       }
       return `cd: no such file or directory: ${arg}`;
     }
@@ -168,9 +172,9 @@ export default function Home() {
       const post = blogs.find((b) => b.slug === arg) || projects.find((p) => p.slug === arg);
       if (!arg) return "usage: open <name>   (try: ls blogs)";
       if (!post) return `open: ${arg}: not found (try: ls blogs, ls projects)`;
-      const to = `/${blogs.includes(post) ? "blogs" : "projects"}/${post.slug}`;
-      setTimeout(() => navigate(to), 350);
-      return `opening ${to} …`;
+      const path = to(`/${blogs.includes(post) ? "blogs" : "projects"}/${post.slug}`);
+      setTimeout(() => navigate(path), 350);
+      return t("term.opening", { to: path });
     }
     if (lc === "ls blogs")
       return blogs.length
@@ -183,26 +187,21 @@ export default function Home() {
     if (c === "hint") {
       const n = parseInt(arg, 10);
       const level = n ? LEVELS[n - 1] : LEVELS.find((l) => !solved.includes(l.id));
-      if (!level)
-        return n ? `hint: no level ${n} (there are ${LEVELS.length})` : "No hints left. You found every flag. Respect.";
-      return `[level ${LEVELS.indexOf(level) + 1}: ${level.title}] ${level.hint}`;
+      if (!level) return n ? t("term.noLevel", { n, total: LEVELS.length }) : t("term.noHints");
+      const text = levelText(level, lang);
+      return t("term.level", { n: LEVELS.indexOf(level) + 1, title: text.title, hint: text.hint });
     }
     if (c === "achievements" || c === "score") {
       return [
+        // points before the title, so the columns line up in any language
         ...LEVELS.map(
-          (l, i) => `[${solved.includes(l.id) ? "x" : " "}] ${i + 1}. ${l.title.padEnd(22)} ${l.points} pts`,
+          (l, i) =>
+            `[${solved.includes(l.id) ? "x" : " "}] ${i + 1}. ${t("pts", { n: String(l.points).padStart(2) })}  ${title(l)}`,
         ),
-        `score: ${score(solved)}/${TOTAL_POINTS}  ·  details: cd achievements`,
+        t("term.score", { score: score(solved), total: TOTAL_POINTS }),
       ];
     }
-    if (lc === "help") {
-      return [
-        "files:  ls, ls -la, cat <file>, cd <dir>, pwd",
-        "site:   ls blogs, ls projects, open <name>, cd blogs, cd projects",
-        "ctf:    submit <flag>, hint [n], achievements",
-        "misc:   whoami, date, echo, clear",
-      ];
-    }
+    if (lc === "help") return t("term.help");
     if (cwd === "~/.secret") {
       if (lc === "ls") return "note.b64";
       if (lc === "ls -la")
@@ -233,7 +232,7 @@ export default function Home() {
     setSolved(next);
     saveSolved(next);
     setWin(true);
-    setAchievement({ title: level.title, points: level.points, count: next.length });
+    setAchievement({ level, count: next.length });
     return true;
   };
 
@@ -251,19 +250,13 @@ export default function Home() {
     }
 
     // typo "car flag.txt"
-    if (/^car\s+flag\.txt$/i.test(input)) return "Did you mean: cat flag.txt ?";
+    if (/^car\s+flag\.txt$/i.test(input)) return t("term.didYouMean");
 
     // cat flag
     if (/^cat\s+flag\.txt$/i.test(input)) return FLAG;
 
     // cat README.md
-    if (/^cat\s+README\.md$/i.test(input)) {
-      return `# watkorn
-security hobbyist · CTF player · tool builder
-
-5 flags are hidden on this site. flag.txt is the free one.
-next: hint · achievements · ls blogs`;
-    }
+    if (/^cat\s+README\.md$/i.test(input)) return t("term.readme");
 
     // simple commands
     const lc = input.toLowerCase();
@@ -279,10 +272,8 @@ next: hint · achievements · ls blogs`;
       ];
     }
     if (lc === "date") return new Date().toString();
-    if (lc === "help")
-      return "Available commands: whoami, pwd, ls, ls -la, cat README.md, cat flag.txt, date, echo, help, clear, projects, blogs";
-    if (lc === "projects") return `${projects.map((p) => p.slug).join("  ")}\n(open <name> to read one)`;
-    if (lc === "blogs") return `${[...blogs].reverse().map((b) => b.slug).join("  ")}\n(open <name> to read one)`;
+    if (lc === "projects") return `${projects.map((p) => p.slug).join("  ")}\n${t("term.open")}`;
+    if (lc === "blogs") return `${[...blogs].reverse().map((b) => b.slug).join("  ")}\n${t("term.open")}`;
 
     // composite simple "&&" support
     if (input.includes("&&")) {
@@ -294,7 +285,7 @@ next: hint · achievements · ls blogs`;
       return outs.join("\n");
     }
 
-    return `watkorn: command not found: ${input.split(/\s+/)[0]}  (try: help)`;
+    return t("term.notFound", { cmd: input.split(/\s+/)[0] });
   };
 
   const runCommand = (cmdText) => {
@@ -323,15 +314,15 @@ next: hint · achievements · ls blogs`;
         return;
       }
       const id = Date.now();
-      setHistory((h) => [...h, { id, prompt: entryPrompt, command: cmdText, output: "checking…" }]);
+      setHistory((h) => [...h, { id, prompt: entryPrompt, command: cmdText, output: t("term.checking") }]);
       checkFlag(submit[1]).then((level) => {
         let out;
-        if (!level) out = "[-] nope. That's not a flag (yet). Try: hint";
-        else if (solved.includes(level.id)) out = `[=] already solved: ${level.title}`;
+        if (!level) out = t("term.nope");
+        else if (solved.includes(level.id)) out = t("term.already", { title: title(level) });
         else {
           unlock(level);
           const s2 = score([...solved, level.id]);
-          out = `[+] correct! ${level.title} (+${level.points} pts)  ·  score ${s2}/${TOTAL_POINTS}`;
+          out = t("term.correct", { title: title(level), points: level.points, score: s2, total: TOTAL_POINTS });
         }
         setHistory((h) => h.map((e) => (e.id === id ? { ...e, output: out } : e)));
       });
@@ -375,16 +366,14 @@ next: hint · achievements · ls blogs`;
   };
 
   return (
-    <PageWrapper title="WATKORN.ME" path="/" className="page--home">
+    <PageWrapper path="/" className="page--home">
       <section className="console-hero" aria-labelledby="home-title">
         <div className="player">
-          <Yeti bg="screen" walk={Boolean(achievement)} className="player__avatar" title="watkorn's yeti mascot" />
+          <Yeti bg="screen" walk={Boolean(achievement)} className="player__avatar" title={t("home.yeti")} />
           <h1 id="home-title" className="player__title">
-            find the flags.
+            {t("home.title")}
           </h1>
-          <p className="player__dare">
-            Five of them are hiding around this site. Start with <kbd>ls</kbd>. Stuck? Type <kbd>hint</kbd>.
-          </p>
+          <p className="player__dare">{rich(t("home.dare"), { ls: <kbd key="ls">ls</kbd>, hint: <kbd key="hint">hint</kbd> })}</p>
           <ul className="socials" role="list">
             {socials.map((s) => (
               <li key={s.label}>
@@ -401,8 +390,8 @@ next: hint · achievements · ls blogs`;
           <div className="bezel bezel--console">
             <div className="bezel__strip">
               <span className="led" aria-hidden="true" />
-              <span>power</span>
-              <span className="bezel__label">watkorn@me · ctf edition</span>
+              <span>{t("home.power")}</span>
+              <span className="bezel__label">{t("home.edition")}</span>
             </div>
 
             {/* แตะตรงไหนของจอก็ได้เพื่อพิมพ์ (คีย์บอร์ดใช้ input ได้ตรง ๆ อยู่แล้ว) */}
@@ -443,7 +432,7 @@ next: hint · achievements · ls blogs`;
                       onChange={(e) => setCurrentInput(e.target.value)}
                       onKeyDown={onKeyDown}
                       className="terminal__input"
-                      placeholder="try: help"
+                      placeholder={t("home.placeholder")}
                       autoComplete="off"
                       autoCapitalize="off"
                       autoCorrect="off"
@@ -455,7 +444,7 @@ next: hint · achievements · ls blogs`;
               </div>
             </div>
 
-            <div className="quick" aria-label="Quick commands">
+            <div className="quick" role="group" aria-label={t("home.quick")}>
               {QUICK.map((q) => (
                 <button
                   key={q}
@@ -469,19 +458,24 @@ next: hint · achievements · ls blogs`;
               ))}
             </div>
             <p className="bezel__hint">
-              <kbd>↑</kbd>
-              <kbd>↓</kbd> history · <kbd>Tab</kbd> complete · <kbd>Ctrl</kbd>+<kbd>L</kbd> clear
+              {rich(t("home.keys"), {
+                up: <kbd key="u">↑</kbd>,
+                down: <kbd key="d">↓</kbd>,
+                tab: <kbd key="t">Tab</kbd>,
+                ctrl: <kbd key="c">Ctrl</kbd>,
+                l: <kbd key="l">L</kbd>,
+              })}
             </p>
           </div>
 
-          <nav className="ab-row" aria-label="Continue">
-            <Link to="/blogs" className="key key--a key--lg">
+          <nav className="ab-row" aria-label={t("home.continue")}>
+            <Link to={to("/blogs")} className="key key--a key--lg">
               <span className="key__badge">A</span>
-              Read the writeups
+              {t("home.a")}
             </Link>
-            <Link to="/projects" className="key key--b key--lg">
+            <Link to={to("/projects")} className="key key--b key--lg">
               <span className="key__badge">B</span>
-              See what I built
+              {t("home.b")}
             </Link>
           </nav>
         </div>
@@ -493,9 +487,9 @@ next: hint · achievements · ls blogs`;
           <h2 id="about-title" className="dialog__name">
             watkorn
           </h2>
-          <p>hey, I'm Watcharakorn. Online I'm watkorn. I break things for fun: CTFs, TryHackMe rooms, and whatever tool I'm building this week.</p>
-          <p>When something finally clicks, I write it up here so future-me (and you) can skip the painful part.</p>
-          <p>Want to say hi? LinkedIn and GitHub are up top. Or skip the small talk and go find the flags.</p>
+          <p>{t("home.about1")}</p>
+          <p>{t("home.about2")}</p>
+          <p>{t("home.about3")}</p>
         </div>
         <span className="dialog__next" aria-hidden="true">
           <Icon name="caret" size={18} />
@@ -517,20 +511,25 @@ next: hint · achievements · ls blogs`;
               <Icon name="trophy" size={24} />
             </span>
             <span className="achievement__text">
-              <strong>Achievement unlocked</strong>
+              <strong>{t("toast.title")}</strong>
               <span className="achievement__sub">
-                {achievement.title} · +{achievement.points} pts · {achievement.count}/{LEVELS.length} flags found
+                {t("toast.sub", {
+                  title: title(achievement.level),
+                  points: achievement.level.points,
+                  count: achievement.count,
+                  total: LEVELS.length,
+                })}
               </span>
-              <Link to="/achievements" className="key key--a key--sm achievement__cta">
+              <Link to={to("/achievements")} className="key key--a key--sm achievement__cta">
                 <span className="key__badge key__badge--sm">A</span>
-                Next level
+                {t("toast.next")}
               </Link>
             </span>
             <button
               type="button"
               className="achievement__close"
               onClick={() => setAchievement(null)}
-              aria-label="Dismiss"
+              aria-label={t("toast.dismiss")}
             >
               <Icon name="close" size={16} />
             </button>

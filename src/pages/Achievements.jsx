@@ -2,10 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
+import { rich } from "../i18n/rich";
 import Yeti from "../components/Yeti";
-import { LEVELS, TOTAL_POINTS, checkFlag, loadSolved, resetSolved, saveSolved, score } from "../ctf/ctf";
+import { LEVELS, TOTAL_POINTS, checkFlag, levelText, loadSolved, resetSolved, saveSolved, score } from "../ctf/ctf";
+import { useLang } from "../i18n";
 
 export default function Achievements() {
+  const { lang, t, to } = useLang();
   const [solved, setSolved] = useState([]);
   const [flag, setFlag] = useState("");
   const [status, setStatus] = useState(null); // { kind: "ok" | "err" | "info", text }
@@ -17,13 +20,14 @@ export default function Achievements() {
     e.preventDefault();
     if (!flag.trim()) return;
     const level = await checkFlag(flag);
-    if (!level) setStatus({ kind: "err", text: "Nope, not a flag. Yet." });
-    else if (solved.includes(level.id)) setStatus({ kind: "info", text: `Already solved: ${level.title}.` });
+    if (!level) setStatus({ kind: "err", text: t("ach.nope") });
+    else if (solved.includes(level.id))
+      setStatus({ kind: "info", text: t("ach.already", { title: levelText(level, lang).title }) });
     else {
       const next = [...solved, level.id];
       setSolved(next);
       saveSolved(next);
-      setStatus({ kind: "ok", text: `Correct! ${level.title}, +${level.points} pts. Nice.` });
+      setStatus({ kind: "ok", text: t("ach.correct", { title: levelText(level, lang).title, points: level.points }) });
       setFlag("");
     }
   };
@@ -36,38 +40,29 @@ export default function Achievements() {
     resetSolved();
     setSolved([]);
     setArmReset(false);
-    setStatus({ kind: "info", text: "Progress wiped. Fresh start." });
+    setStatus({ kind: "info", text: t("ach.wiped") });
   };
 
   const done = solved.length === LEVELS.length;
 
   return (
-    <PageWrapper
-      title="Achievements"
-      path="/achievements"
-      description="Five flags are hidden around watkorn.me. How many can you find?"
-    >
+    <PageWrapper title={t("ach.title")} path="/achievements" description={t("ach.desc")}>
       <header className="page-head ach-head">
         <div>
-          <h1 className="page-head__title">Achievements</h1>
-          <p className="page-head__lede">
-            Five flags are hiding around this site. Found one? Submit it here, or in the terminal with{" "}
-            <kbd>submit</kbd>.
-          </p>
+          <h1 className="page-head__title">{t("ach.title")}</h1>
+          <p className="page-head__lede">{rich(t("ach.lede"), { submit: <kbd key="k">submit</kbd> })}</p>
         </div>
         <Yeti bg="circle" walk={done} className="ach-head__yeti" />
       </header>
 
       <p className="ach-score" aria-live="polite">
-        <strong>
-          {score(solved)}/{TOTAL_POINTS} pts
-        </strong>{" "}
-        · {solved.length} of {LEVELS.length} flags {done && "· all five. legend."}
+        <strong>{t("pts", { n: `${score(solved)}/${TOTAL_POINTS}` })}</strong> ·{" "}
+        {t("ach.score", { found: solved.length, total: LEVELS.length })} {done && `· ${t("ach.legend")}`}
       </p>
 
       <form className="ach-submit" onSubmit={onSubmit}>
         <label htmlFor="flag-input" className="ach-submit__label">
-          Submit a flag
+          {t("ach.submitLabel")}
         </label>
         <div className="ach-submit__row">
           <input
@@ -81,7 +76,7 @@ export default function Achievements() {
             spellCheck={false}
           />
           <button type="submit" className="key key--a">
-            Submit
+            {t("ach.submit")}
           </button>
         </div>
         {status && (
@@ -95,6 +90,7 @@ export default function Achievements() {
         <ol className="ach-list">
           {LEVELS.map((l, i) => {
             const got = solved.includes(l.id);
+            const text = levelText(l, lang);
             return (
               <li key={l.id} className={`ach${got ? " is-solved" : ""}`}>
                 <span className="ach__num" aria-hidden="true">
@@ -102,13 +98,13 @@ export default function Achievements() {
                 </span>
                 <div className="ach__body">
                   <h2 className="ach__title">
-                    {l.title} <span className="ach__pts">{l.points} pts</span>
+                    {text.title} <span className="ach__pts">{t("pts", { n: l.points })}</span>
                   </h2>
-                  <p className="ach__state">{got ? "Solved" : "Locked"}</p>
+                  <p className="ach__state">{got ? t("ach.solved") : t("ach.locked")}</p>
                   {!got && (
                     <details className="ach__hint">
-                      <summary>Show hint</summary>
-                      <p>{l.hint}</p>
+                      <summary>{t("ach.hint")}</summary>
+                      <p>{text.hint}</p>
                     </details>
                   )}
                 </div>
@@ -119,16 +115,21 @@ export default function Achievements() {
       </div>
 
       <div className="button-row">
-        <Link to="/" className="key key--b">
-          Back to the terminal
+        <Link to={to("/")} className="key key--b">
+          {t("ach.back")}
         </Link>
         <button type="button" className="key key--sm" onClick={onReset} onBlur={() => setArmReset(false)}>
-          {armReset ? "Tap again to reset" : "Reset progress"}
+          {armReset ? t("ach.resetArm") : t("ach.reset")}
         </button>
       </div>
       <p className="ach-note">
-        Your progress lives only in this browser. Nothing gets sent anywhere. Stuck for real? The{" "}
-        <Link to="/blogs/mini-ctf-writeup">full writeup</Link> has every solution (spoilers, obviously).
+        {rich(t("ach.note"), {
+          link: (
+            <Link key="w" to={to("/blogs/mini-ctf-writeup")}>
+              {t("ach.writeup")}
+            </Link>
+          ),
+        })}
       </p>
     </PageWrapper>
   );

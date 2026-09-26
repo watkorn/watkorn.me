@@ -1,6 +1,6 @@
 // scripts/prerender.mjs
-// หลัง vite build: render ทุกหน้าเป็นไฟล์ HTML ของตัวเอง (ดีต่อ SEO + ลิงก์พรีวิว)
-// แล้วสร้าง 404.html, sitemap.xml และ rss.xml
+// หลัง vite build: render ทุกหน้า (ทั้ง / และ /th/) เป็นไฟล์ HTML ของตัวเอง (ดีต่อ SEO + ลิงก์พรีวิว)
+// แล้วสร้าง 404.html, sitemap.xml (พร้อม hreflang), rss.xml และ th/rss.xml
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -10,68 +10,95 @@ const OUT = path.join(ROOT, "build");
 const SSR_DIR = path.join(ROOT, "build-ssr");
 const SITE = "https://watkorn.me";
 
-const { render, routes, blogs } = await import(pathToFileURL(path.join(SSR_DIR, "entry-server.js")).href);
+const { render, routes, blogs, LANGS, localizePath } = await import(
+  pathToFileURL(path.join(SSR_DIR, "entry-server.js")).href
+);
 const template = fs.readFileSync(path.join(OUT, "index.html"), "utf8");
-if (!template.includes("<!--app-html-->") || !template.includes("<!--app-head-->")) {
-  throw new Error("[prerender] build/index.html is missing the <!--app-head--> / <!--app-html--> placeholders");
+for (const marker of ["<!--app-html-->", "<!--app-head-->", '<html lang="en">']) {
+  if (!template.includes(marker)) throw new Error(`[prerender] build/index.html is missing ${marker}`);
 }
 
-const page = (url) => {
+const page = (url, lang = "en") => {
   const { html, head } = render(url);
-  return template.replace("<!--app-head-->", head).replace("<!--app-html-->", html);
+  return template
+    .replace('<html lang="en">', `<html lang="${lang}">`)
+    .replace("<!--app-head-->", head)
+    .replace("<!--app-html-->", html);
 };
 
-for (const url of routes) {
+for (const { url, lang } of routes) {
   const file = url === "/" ? path.join(OUT, "index.html") : path.join(OUT, url, "index.html");
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, page(url));
+  fs.writeFileSync(file, page(url, lang));
 }
 fs.writeFileSync(path.join(OUT, "404.html"), page("/404"));
 
-// ---- sitemap.xml
+// ---- sitemap.xml: only pages in their own language, each listing its translations
 const canonical = (url) => `${SITE}${url === "/" ? "/" : `${url}/`}`;
-const lastmod = Object.fromEntries(blogs.map((b) => [`/blogs/${b.slug}`, b.date]));
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${routes
-  .map((u) => `  <url><loc>${canonical(u)}</loc>${lastmod[u] ? `<lastmod>${lastmod[u]}</lastmod>` : ""}</url>`)
+  .filter((r) => r.original)
+  .map((r) => {
+    const alts =
+      r.langs.length > 1
+        ? [...r.langs, "x-default"]
+            .map(
+              (l) =>
+                `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${canonical(localizePath(r.path, l === "x-default" ? "en" : l))}"/>`,
+            )
+            .join("")
+        : "";
+    return `  <url>\n    <loc>${canonical(r.url)}</loc>${r.date ? `\n    <lastmod>${r.date}</lastmod>` : ""}${alts}\n  </url>`;
+  })
   .join("\n")}
 </urlset>
 `;
 fs.writeFileSync(path.join(OUT, "sitemap.xml"), sitemap);
 
-// ---- rss.xml (newest first, full content)
+// ---- rss.xml (English) and th/rss.xml (Thai): newest first, full content, only posts written in that language
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const absolutize = (html) => html.replace(/(src|href)="\/(?!\/)/g, `$1="${SITE}/`);
-const items = [...blogs]
-  .sort((a, b) => b.date.localeCompare(a.date))
-  .map((b) => {
-    const body = JSON.parse(fs.readFileSync(path.join(ROOT, "src/generated/blogs", `${b.slug}.json`), "utf8")).html;
-    const url = canonical(`/blogs/${b.slug}`);
-    return `    <item>
-      <title>${esc(b.title)}</title>
+const FEEDS = {
+  en: { file: "rss.xml", title: "WATKORN.ME", desc: "CTF writeups, security notes and tools by watkorn." },
+  th: { file: "th/rss.xml", title: "WATKORN.ME (ภาษาไทย)", desc: "writeup CTF บันทึกสาย security และเครื่องมือโดย watkorn" },
+};
+for (const lang of LANGS) {
+  const feed = FEEDS[lang];
+  const items = [...blogs]
+    .filter((b) => b.langs.includes(lang))
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .map((b) => {
+      const name = lang === "en" ? b.slug : `${b.slug}.${lang}`;
+      const body = JSON.parse(fs.readFileSync(path.join(ROOT, "src/generated/blogs", `${name}.json`), "utf8")).html;
+      const url = canonical(localizePath(`/blogs/${b.slug}`, lang));
+      return `    <item>
+      <title>${esc(b.text[lang].title)}</title>
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <pubDate>${new Date(`${b.date}T00:00:00Z`).toUTCString()}</pubDate>
-      <description>${esc(b.desc || "")}</description>
+      <description>${esc(b.text[lang].desc || "")}</description>
 ${(b.tags || []).map((t) => `      <category>${esc(t)}</category>`).join("\n")}
       <content:encoded><![CDATA[${absolutize(body).replace(/]]>/g, "]]]]><![CDATA[>")}]]></content:encoded>
     </item>`;
-  })
-  .join("\n");
-const rss = `<?xml version="1.0" encoding="UTF-8"?>
+    })
+    .join("\n");
+  const home = canonical(localizePath("/", lang));
+  const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>WATKORN.ME</title>
-    <link>${SITE}/</link>
-    <description>CTF writeups, security notes and tools by watkorn.</description>
-    <language>en</language>
-    <atom:link href="${SITE}/rss.xml" rel="self" type="application/rss+xml" />
+    <title>${esc(feed.title)}</title>
+    <link>${home}</link>
+    <description>${esc(feed.desc)}</description>
+    <language>${lang}</language>
+    <atom:link href="${SITE}/${feed.file}" rel="self" type="application/rss+xml" />
 ${items}
   </channel>
 </rss>
 `;
-fs.writeFileSync(path.join(OUT, "rss.xml"), rss);
+  fs.mkdirSync(path.dirname(path.join(OUT, feed.file)), { recursive: true });
+  fs.writeFileSync(path.join(OUT, feed.file), rss);
+}
 
 fs.rmSync(SSR_DIR, { recursive: true, force: true });
-console.log(`[prerender] ${routes.length} pages + 404.html, sitemap.xml, rss.xml`);
+console.log(`[prerender] ${routes.length} pages (${LANGS.join(" + ")}) + 404.html, sitemap.xml, rss.xml, th/rss.xml`);

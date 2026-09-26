@@ -33,6 +33,12 @@ const paths = {
       <path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" />
     </>
   ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    </>
+  ),
   close: <path d="M6 6l12 12M18 6L6 18" />,
   caret: <path d="M6 9l6 6 6-6" fill="currentColor" stroke="none" />,
 };

@@ -106,7 +106,17 @@ test("no Content-Security-Policy violations on any page", async ({ page }) => {
   page.on("console", (m) => {
     if (/Refused to|Content Security Policy/i.test(m.text())) violations.push(`${page.url()}: ${m.text().slice(0, 140)}`);
   });
-  for (const path of ["/", "/blogs/", "/blogs/preparing-for-ctf/", "/projects/", "/achievements/", "/y3t1-l41r/", "/404.html"]) {
+  for (const path of [
+    "/",
+    "/blogs/",
+    "/blogs/preparing-for-ctf/",
+    "/projects/",
+    "/achievements/",
+    "/th/",
+    "/th/blogs/mini-ctf-writeup/",
+    "/y3t1-l41r/",
+    "/404.html",
+  ]) {
     await page.goto(path);
     await page.waitForTimeout(400);
   }

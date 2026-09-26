@@ -34,6 +34,7 @@ content/*.md  ─▶  scripts/content.mjs  ─▶  JSON  ─▶  Vite + React
 ```
 
 - **Content:** blog posts and projects are Markdown with frontmatter. At build time, [marked](https://marked.js.org/) and highlight.js turn them into HTML, so no Markdown parser ships to the browser. Drafts are visible in dev and excluded from production.
+- **Two languages:** every page exists in English at `/` and in Thai at `/th/`. A translation is a `post-name.th.md` file next to the original. Until a post is translated, the Thai page shows the original with a note, and `hreflang` links tell search engines which pages belong together.
 - **Pages:** React 19 + React Router 7 on Vite. Every route is **prerendered to its own HTML file**, so posts are indexable and link previews in Discord or LINE show a real title and image. React then takes over for the interactive bits.
 - **Deploys:** every push to `main` builds the site and runs **Playwright smoke tests on desktop and mobile**. Only if they pass does it publish the static files to the `gh-pages` branch. A failing test means the live site doesn't change.
 

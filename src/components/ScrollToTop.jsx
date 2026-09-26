@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Icon from "./Icon";
+import { useLang } from "../i18n";
 
 export default function ScrollToTop() {
+  const { t } = useLang();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -18,7 +20,7 @@ export default function ScrollToTop() {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" })}
       className={`key key--round scroll-top${visible ? " is-visible" : ""}`}
-      aria-label="Back to top"
+      aria-label={t("top")}
       tabIndex={visible ? 0 : -1}
     >
       <Icon name="arrow-up" size={20} />

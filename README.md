@@ -19,6 +19,7 @@
 
 - **A mini CTF.** The home terminal (`ls`, `cd`, `cat`, `open`, `hint`, `submit`…) is the entry point to five flags hidden around the site. Flags are checked by SHA-256 hash, so reading the JavaScript won't hand you the answers. Progress lives on [`/achievements`](https://watkorn.me/achievements/), stored only in the visitor's browser.
 - **Blogs and projects in Markdown**, with a CTF writeup template, category/difficulty badges and tag filters.
+- **English and Thai.** Every page exists at `/…` and `/th/…`, with a language key in the header, `hreflang` links, a Thai RSS feed and Thai translations of every post. The choice is remembered, and Thai browsers land on `/th/` from the home page.
 - **Real URLs and pre-rendered pages.** Every page is built to its own HTML file, so posts are indexable and show proper link previews (Open Graph + Twitter cards). There's also a sitemap and an RSS feed.
 - **Handheld Quest design** with a pixel yeti mascot, light and dark themes, from 320 px phones to wide desktops. See [`DESIGN.md`](DESIGN.md) and [`brand/`](brand/README.md).
 - **Static and locked down.** Plain files on GitHub Pages behind Cloudflare: no server, no database, no third-party scripts, a strict CSP, and no source maps.
@@ -37,6 +38,7 @@ npm start              # http://localhost:3000 (drafts are visible in dev)
 | `npm start` | Vite dev server; rebuilds content when any `.md` changes |
 | `npm run new-post -- "My Title"` | New blog post in `content/blogs/` (as a draft) |
 | `npm run new-post -- --writeup "Challenge"` | New **CTF writeup** from the template |
+| `npm run new-post -- --th my-post` | Start the **Thai translation** of `content/blogs/my-post.md` |
 | `npm run build` | Production build in `build/`: prerendered pages, 404, sitemap, RSS, CSP |
 | `npm run preview` | Serve the production build at http://localhost:4173 |
 | `npm test` | Playwright smoke tests against the build (run `npm run build` first; first time also `npx playwright install chromium`) |
@@ -73,12 +75,27 @@ checksec ./chall
 
 **Projects** work the same way in `content/projects/*.md`, with `category`, `order`, `github` and `screenshots` fields.
 
+### Two languages
+
+English lives at `/…`, Thai at `/th/…`. A translation is a second file next to the original:
+
+```
+content/blogs/baby-rop.md       ->  /blogs/baby-rop/
+content/blogs/baby-rop.th.md    ->  /th/blogs/baby-rop/
+```
+
+- The `.th.md` file only needs `title` and `description` (and `screenshots` for a project, to translate the captions). The date, tags, category and so on come from the original. `npm run new-post -- --th baby-rop` creates it as a draft copy of the original, ready to translate.
+- Not translated yet? The Thai page still exists: it shows the original with a note, points its canonical URL at the original, and stays out of the sitemap. A Thai-only post works too (`--th --slug my-post "ชื่อไทย"`).
+- UI text is in [`src/i18n/strings.js`](src/i18n/strings.js); CTF hints are in [`src/ctf/ctf.js`](src/ctf/ctf.js). Terminal commands, file names and flags stay English on purpose.
+
 <details>
 <summary>ภาษาไทย: เขียนบล็อกใหม่ใน 3 ขั้น</summary>
 
 1. `npm run new-post -- --writeup "ชื่อโจทย์ภาษาอังกฤษ"` (หรือไม่ใส่ `--writeup` สำหรับโพสต์ทั่วไป)
 2. เขียนเนื้อหาใน `content/blogs/<ชื่อ>.md` แล้วดูตัวอย่างด้วย `npm start`
 3. ลบบรรทัด `draft: true` แล้ว commit + push ขึ้น `main` เว็บจะ build, test และ deploy เองอัตโนมัติ
+
+**ฉบับภาษาไทย:** `npm run new-post -- --th <ชื่อไฟล์>` จะสร้าง `content/blogs/<ชื่อไฟล์>.th.md` ที่ก๊อปต้นฉบับมาให้แปล (ใส่แค่ `title` กับ `description` ภาษาไทย ที่เหลือใช้ของต้นฉบับ) แปลเสร็จลบ `draft: true` แล้ว push หน้าภาษาไทยจะอยู่ที่ `/th/blogs/<ชื่อไฟล์>/` ถ้ายังไม่แปล หน้าไทยจะแสดงต้นฉบับพร้อมบอกไว้ ส่วนข้อความบนหน้าเว็บ (เมนู ปุ่ม ฯลฯ) แก้ได้ที่ `src/i18n/strings.js`
 
 </details>
 
@@ -96,14 +113,15 @@ index.html           Page template (Vite)
 public/              Static files: CNAME, robots.txt, icons, og.png, theme-init.js
 scripts/
   content.mjs        content/*.md → src/generated/*.json
-  prerender.mjs      renders every route to HTML + 404.html, sitemap.xml, rss.xml
+  prerender.mjs      renders every route (en + th) to HTML + 404.html, sitemap.xml, rss.xml, th/rss.xml
   csp.mjs            adds the Content-Security-Policy to every HTML file
   new-post.mjs       scaffolds posts / writeups
 src/
   components/ pages/ ctf/ data/ styles/ theme/
+  i18n/              language from the URL, every UI string in English and Thai
   entry-server.jsx   server entry used only for prerendering
   generated/         built from content/ (git-ignored)
-tests/               Playwright smoke tests + CTF integrity test
+tests/               Playwright smoke, i18n and CTF integrity tests
 brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
 .github/             deploy.yml, ci.yml, release.yml, dependabot.yml
 ```
