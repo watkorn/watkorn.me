@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WATKORN.ME</title>
+    <link>https://watkorn.me/</link>
+    <description>CTF writeups, security notes and tools by watkorn.</description>
+    <language>en</language>
+    <atom:link href="https://watkorn.me/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Preparing for CTF</title>
+      <link>https://watkorn.me/blogs/preparing-for-ctf/</link>
+      <guid isPermaLink="true">https://watkorn.me/blogs/preparing-for-ctf/</guid>
+      <pubDate>Wed, 08 Oct 2025 00:00:00 GMT</pubDate>
+      <description>Tips and strategies to get ready for Capture The Flag competitions</description>
+      <category>ctf</category>
+      <content:encoded><![CDATA[<p>Capture The Flag (CTF) competitions are exciting challenges in cybersecurity.
+Proper preparation will help you improve your skills and enjoy the competition more.</p>
+<p><img src="https://watkorn.me/images/blogs/ctftime.png" alt="CTF Preparation" loading="lazy"></p>
+<p>Before joining a CTF, make sure to strengthen your fundamentals in:</p>
+<ul>
+<li>Web security: SQL injection, XSS, CSRF</li>
+<li>Cryptography: basic ciphers, hashing, encryption</li>
+<li>Binary exploitation: buffer overflow, reverse engineering</li>
+<li>Forensics: analyzing files, memory, network traffic</li>
+<li>Networking: protocols, packet analysis, ports</li>
+</ul>
+<p>Practice on platforms like Hack The Box, TryHackMe, and PicoCTF to gain hands-on experience
+and learn new techniques.</p>
+<p>Keep notes, create cheat sheets, and collaborate with teammates. This accelerates learning
+and prepares you for real competitions.</p>
+]]></content:encoded>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /y3t1-l41r/
+
+Sitemap: https://watkorn.me/sitemap.xml
