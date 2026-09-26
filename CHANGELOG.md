@@ -5,6 +5,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Changed
+- Rewrote the site copy: the home page now says "find the flags." and "Five of them are hiding around this site", with a new About section, A/B buttons, `cat README.md`, `blogs`/`projects` output and "command not found" message, plus new text on the Achievements, Blogs, Projects and 404 pages, hints, the footer credit, meta descriptions and the noscript notice. The OG image now reads "find the flags."
+- Rewrote the "Preparing for CTF" post into a practical starter guide and "My Website" into a full case study (architecture, security, the CTF, design, numbers, lessons).
+- Refreshed the README screenshots with the pixel yeti and the real Mali font.
+
 ### Security
 - CSP no longer allows `'unsafe-inline'` styles: the terminal and the level-4 page use classes and an external stylesheet instead. A new test fails on any CSP violation.
 

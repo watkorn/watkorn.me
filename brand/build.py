@@ -192,7 +192,7 @@ def og_image():
     d = ImageDraw.Draw(img)
     font = mali_bold()
     d.text((600, 150), "find the", font=ImageFont.truetype(font, 104), fill=hex_rgba(ink))
-    d.text((600, 262), "flag.", font=ImageFont.truetype(font, 104), fill=hex_rgba(ink))
+    d.text((600, 262), "flags.", font=ImageFont.truetype(font, 104), fill=hex_rgba(ink))
     d.text((604, 408), "CTF writeups · security tools", font=ImageFont.truetype(font, 34), fill=hex_rgba(ink))
     d.text((604, 470), "WATKORN.ME", font=ImageFont.truetype(font, 40), fill=hex_rgba(berry))
     img.convert("RGB").save(ROOT / "public/og.png", optimize=True)

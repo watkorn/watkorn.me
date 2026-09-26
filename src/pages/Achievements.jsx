@@ -17,13 +17,13 @@ export default function Achievements() {
     e.preventDefault();
     if (!flag.trim()) return;
     const level = await checkFlag(flag);
-    if (!level) setStatus({ kind: "err", text: "Nope, that's not a flag (yet)." });
+    if (!level) setStatus({ kind: "err", text: "Nope, not a flag. Yet." });
     else if (solved.includes(level.id)) setStatus({ kind: "info", text: `Already solved: ${level.title}.` });
     else {
       const next = [...solved, level.id];
       setSolved(next);
       saveSolved(next);
-      setStatus({ kind: "ok", text: `Correct! ${level.title} (+${level.points} pts).` });
+      setStatus({ kind: "ok", text: `Correct! ${level.title}, +${level.points} pts. Nice.` });
       setFlag("");
     }
   };
@@ -36,7 +36,7 @@ export default function Achievements() {
     resetSolved();
     setSolved([]);
     setArmReset(false);
-    setStatus({ kind: "info", text: "Progress reset. Good luck, again." });
+    setStatus({ kind: "info", text: "Progress wiped. Fresh start." });
   };
 
   const done = solved.length === LEVELS.length;
@@ -45,13 +45,13 @@ export default function Achievements() {
     <PageWrapper
       title="Achievements"
       path="/achievements"
-      description="Five flags hidden around watkorn.me. How many can you find?"
+      description="Five flags are hidden around watkorn.me. How many can you find?"
     >
       <header className="page-head ach-head">
         <div>
           <h1 className="page-head__title">Achievements</h1>
           <p className="page-head__lede">
-            Five flags are hidden around this site. Find them, then submit them here or in the terminal with{" "}
+            Five flags are hiding around this site. Found one? Submit it here, or in the terminal with{" "}
             <kbd>submit</kbd>.
           </p>
         </div>
@@ -62,7 +62,7 @@ export default function Achievements() {
         <strong>
           {score(solved)}/{TOTAL_POINTS} pts
         </strong>{" "}
-        · {solved.length} of {LEVELS.length} flags {done && "· all found, you're a legend"}
+        · {solved.length} of {LEVELS.length} flags {done && "· all five. legend."}
       </p>
 
       <form className="ach-submit" onSubmit={onSubmit}>
@@ -126,7 +126,7 @@ export default function Achievements() {
           {armReset ? "Tap again to reset" : "Reset progress"}
         </button>
       </div>
-      <p className="ach-note">Progress is saved only in this browser. Nothing is sent anywhere.</p>
+      <p className="ach-note">Your progress lives only in this browser. Nothing gets sent anywhere.</p>
     </PageWrapper>
   );
 }

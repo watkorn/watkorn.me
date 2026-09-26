@@ -13,15 +13,15 @@ export default function NotFound() {
       <div className="bezel">
         <div className="lcd lcd--center">
           <p className="lcd__big">GAME OVER</p>
-          <p>404: this page is not in the cartridge.</p>
+          <p>404: this level isn't in the cartridge.</p>
         </div>
       </div>
       <div className="button-row">
         <Link to="/" className="key key--a">
-          Continue from Home
+          Back to start
         </Link>
         <Link to="/blogs" className="key">
-          Read the blogs
+          Read the writeups
         </Link>
       </div>
     </PageWrapper>

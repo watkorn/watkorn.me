@@ -117,7 +117,7 @@ export default function DetailTemplate({ meta, type, allMeta }) {
       .then((data) => setContent(data))
       .catch((err) => {
         console.error("Failed to load content:", err);
-        setError("Couldn't load this page. Check your connection and refresh.");
+        setError("This page didn't load. Check your connection and refresh.");
         setContent(null);
       })
       .finally(() => setLoading(false));

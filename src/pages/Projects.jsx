@@ -15,16 +15,16 @@ const groups = sortedCategories.map(({ category, data }) => ({
 
 export default function Projects() {
   return (
-    <PageWrapper path={"/projects"} title="Projects" description="Tools and side projects by watkorn.">
+    <PageWrapper path={"/projects"} title="Projects" description="Security tools and side projects by watkorn, built to learn how things work (and break).">
       <header className="page-head">
         <h1 className="page-head__title">Projects</h1>
-        <p className="page-head__lede">Tools I built to try things out. Some useful, all fun.</p>
+        <p className="page-head__lede">Stuff I built to learn how things work, and how they break. Some useful, all fun.</p>
       </header>
       <GroupedIndex
         groups={groups}
         basePath="/projects"
         idPrefix="category"
-        emptyText="Inventory empty. Projects coming soon."
+        emptyText="Inventory empty. Something's in the forge."
       />
     </PageWrapper>
   );

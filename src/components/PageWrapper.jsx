@@ -3,7 +3,8 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 export const SITE_URL = "https://watkorn.me";
-const DEFAULT_DESC = "Watcharakorn Khambung (watkorn): CTF writeups, security tools, and a terminal with a flag in it.";
+const DEFAULT_DESC =
+  "Watcharakorn Khambung (watkorn): CTF writeups, security tools, and a terminal with five flags hidden in it.";
 
 // path = route without trailing slash; canonical URLs use the trailing-slash form GitHub Pages serves
 export default function PageWrapper({
@@ -15,7 +16,7 @@ export default function PageWrapper({
   children,
   className = "",
 }) {
-  const fullTitle = title && title !== "WATKORN.ME" ? `${title} · WATKORN.ME` : "WATKORN.ME · find the flag";
+  const fullTitle = title && title !== "WATKORN.ME" ? `${title} · WATKORN.ME` : "WATKORN.ME · find the flags";
   const desc = description || DEFAULT_DESC;
   const url = path != null ? `${SITE_URL}${path === "/" ? "/" : `${path}/`}` : null;
   return (

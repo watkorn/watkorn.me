@@ -258,8 +258,11 @@ export default function Home() {
 
     // cat README.md
     if (/^cat\s+README\.md$/i.test(input)) {
-      return `Hi, I'm Watcharakorn Khambung!
-This is my portfolio site. I build tools, write CTF writeups, and explore cybersecurity.`;
+      return `# watkorn
+security hobbyist · CTF player · tool builder
+
+5 flags are hidden on this site. flag.txt is the free one.
+next: hint · achievements · ls blogs`;
     }
 
     // simple commands
@@ -278,8 +281,8 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
     if (lc === "date") return new Date().toString();
     if (lc === "help")
       return "Available commands: whoami, pwd, ls, ls -la, cat README.md, cat flag.txt, date, echo, help, clear, projects, blogs";
-    if (lc === "projects") return "Cybersecurity-Tools  CTF-Challenges  Web-Apps";
-    if (lc === "blogs") return "CTF-Writeups  Security-Tips  Tutorials";
+    if (lc === "projects") return `${projects.map((p) => p.slug).join("  ")}\n(open <name> to read one)`;
+    if (lc === "blogs") return `${[...blogs].reverse().map((b) => b.slug).join("  ")}\n(open <name> to read one)`;
 
     // composite simple "&&" support
     if (input.includes("&&")) {
@@ -291,7 +294,7 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
       return outs.join("\n");
     }
 
-    return `Command not found: ${input}`;
+    return `watkorn: command not found: ${input.split(/\s+/)[0]}  (try: help)`;
   };
 
   const runCommand = (cmdText) => {
@@ -377,10 +380,10 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
         <div className="player">
           <Yeti bg="screen" walk={Boolean(achievement)} className="player__avatar" title="watkorn's yeti mascot" />
           <h1 id="home-title" className="player__title">
-            find the flag.
+            find the flags.
           </h1>
           <p className="player__dare">
-            It's in here somewhere. Type <kbd>help</kbd> if you're stuck. No spoilers from me.
+            Five of them are hiding around this site. Start with <kbd>ls</kbd>. Stuck? Type <kbd>hint</kbd>.
           </p>
           <ul className="socials" role="list">
             {socials.map((s) => (
@@ -474,11 +477,11 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
           <nav className="ab-row" aria-label="Continue">
             <Link to="/blogs" className="key key--a key--lg">
               <span className="key__badge">A</span>
-              Read the blogs
+              Read the writeups
             </Link>
             <Link to="/projects" className="key key--b key--lg">
               <span className="key__badge">B</span>
-              See the projects
+              See what I built
             </Link>
           </nav>
         </div>
@@ -490,9 +493,9 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
           <h2 id="about-title" className="dialog__name">
             watkorn
           </h2>
-          <p>I love working on cybersecurity projects just for fun and to challenge myself.</p>
-          <p>I build tools and code to try things out, learn new stuff, and solve problems I run into.</p>
-          <p>It's all about experimenting, testing, and improving my skills while having fun.</p>
+          <p>hey, I'm Watcharakorn. Online I'm watkorn. I break things for fun: CTFs, TryHackMe rooms, and whatever tool I'm building this week.</p>
+          <p>When something finally clicks, I write it up here so future-me (and you) can skip the painful part.</p>
+          <p>Want to say hi? LinkedIn and GitHub are up top. Or skip the small talk and go find the flags.</p>
         </div>
         <span className="dialog__next" aria-hidden="true">
           <Icon name="caret" size={18} />

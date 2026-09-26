@@ -31,10 +31,10 @@ export default function Blogs() {
   const pick = (f) => setParams(f ? { tag: f } : {}, { replace: true });
 
   return (
-    <PageWrapper path="/blogs" title="Blogs" description="CTF writeups, notes, and things I broke on purpose.">
+    <PageWrapper path="/blogs" title="Blogs" description="CTF writeups and notes from things I broke on purpose. Spoilers inside.">
       <header className="page-head">
         <h1 className="page-head__title">Blogs</h1>
-        <p className="page-head__lede">Writeups, notes, and things I broke on purpose. Spoilers inside, obviously.</p>
+        <p className="page-head__lede">CTF writeups and notes from things I broke on purpose. Spoilers inside, obviously.</p>
       </header>
 
       {FILTERS.length > 0 && (
@@ -54,7 +54,7 @@ export default function Blogs() {
         groups={groups}
         basePath="/blogs"
         idPrefix="year"
-        emptyText={active ? `Nothing tagged "${active}" yet.` : "No posts yet. The first writeup is loading…"}
+        emptyText={active ? `Nothing tagged "${active}" yet.` : "No posts yet. The first writeup is still compiling."}
       />
     </PageWrapper>
   );

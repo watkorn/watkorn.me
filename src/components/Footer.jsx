@@ -10,7 +10,7 @@ export default function Footer() {
         {quote}
       </p>
       <p className="site-footer__copy">
-        &copy; {new Date().getFullYear()} Watcharakorn Khambung. Built static, served from GitHub Pages.
+        &copy; {new Date().getFullYear()} Watcharakorn Khambung. Static site, no trackers, built in the open on GitHub.
       </p>
     </footer>
   );
