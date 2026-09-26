@@ -150,7 +150,7 @@ Multi-accent handheld plastics: a shell, a dark bezel, an LCD, and two face butt
 
 ## Typography
 
-**Display / Body:** Mali (Google Fonts, 400 to 700). **Mono:** JetBrains Mono (400, 600).
+**Display / Body:** Mali (self-hosted via `@fontsource/mali`, 400 to 700). **Mono:** JetBrains Mono (`@fontsource/jetbrains-mono`, 400, 600). Each weight ships Thai and Latin subsets split by `unicode-range`, so a page only downloads what it renders.
 
 **Character:** rounded, hand-made Thai-Latin letterforms give the Gen Z warmth. Mono keeps the terminal honest.
 

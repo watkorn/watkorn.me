@@ -147,3 +147,16 @@ test("projects: tag filter and tag links on a project page", async ({ page }) =>
   await expect(page).toHaveURL(/\/projects\?tag=security/);
   await expect(page.locator(".quest")).toHaveCount(2);
 });
+
+test("no third-party requests: fonts and everything else are self-hosted", async ({ page, baseURL }) => {
+  const external = [];
+  page.on("request", (r) => {
+    if (!r.url().startsWith(baseURL) && !r.url().startsWith("data:")) external.push(r.url());
+  });
+  for (const path of ["/", "/th/", "/blogs/preparing-for-ctf/"]) {
+    await page.goto(path);
+    await page.waitForLoadState("networkidle");
+  }
+  expect(external).toEqual([]);
+  expect(await page.evaluate(() => document.fonts.check("700 16px Mali"))).toBe(true);
+});

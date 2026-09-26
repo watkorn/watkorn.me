@@ -26,7 +26,7 @@ The site is itself a tiny CTF: the Home page is an interactive fake shell (`whoa
 - Routes: Home (`/`), Blogs (`/blogs`, `/blogs/:slug`), Projects (`/projects`, `/projects/:slug`), Achievements (`/achievements`). Every route is prerendered to HTML at build time.
 - The home terminal is a 5-level mini CTF. Flags are checked by SHA-256 hash, and progress stays in the visitor's browser (localStorage).
 - Blogs are grouped by year with "Load More"; projects are grouped by category.
-- Production CSP: `script-src 'self'`, fonts only from Google Fonts; no third-party scripts.
+- Production CSP: everything from `'self'` (fonts are self-hosted); no third-party scripts, styles or fonts.
 - Interface copy is English.
 
 ## Brand Commitments
