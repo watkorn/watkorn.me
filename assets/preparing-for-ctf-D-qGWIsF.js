@@ -1,33 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" /><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f2d54c" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#261a3a" />
-    <meta property="og:site_name" content="WATKORN.ME" />
-    <meta property="og:image" content="https://watkorn.me/og.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="The watkorn pixel yeti next to the words find the flag" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <link rel="alternate" type="application/rss+xml" title="WATKORN.ME blog" href="/rss.xml" />
-    <script src="/theme-init.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Mali:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title data-rh="true">Preparing for CTF · WATKORN.ME</title><meta data-rh="true" name="description" content="A no-fluff starter kit for your first Capture The Flag: pick a category, set up your tools, practise, and survive the weekend."/><meta data-rh="true" property="og:title" content="Preparing for CTF · WATKORN.ME"/><meta data-rh="true" property="og:description" content="A no-fluff starter kit for your first Capture The Flag: pick a category, set up your tools, practise, and survive the weekend."/><meta data-rh="true" property="og:type" content="article"/><meta data-rh="true" property="og:url" content="https://watkorn.me/blogs/preparing-for-ctf/"/><meta data-rh="true" property="article:published_time" content="2025-10-08"/><link data-rh="true" rel="canonical" href="https://watkorn.me/blogs/preparing-for-ctf/"/>
-    <script type="module" crossorigin src="/assets/index-CKR7iQg9.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CDDp0T3c.css">
-  </head>
-  <body>
-    <!-- note to self (level 3): jngxbea{i13j_f0hep3_o3s0e3_l0h_u4px}  ·  rot13, obviously -->
-    <noscript>This site needs JavaScript to run the terminal. Sorry, no flag without it.</noscript>
-    <div id="root"><div class="app"><header class="site-header"><a href="#main" class="skip-link">Skip to content</a><div class="site-header__inner"><a class="brand" aria-label="WATKORN.ME home" href="/" data-discover="true"><svg viewBox="0 0 100 100" class="yeti " aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="50" class="yeti__bg"></circle><svg x="14" y="14" width="72" height="72" viewBox="0 0 32 32" shape-rendering="crispEdges"><use class="yeti__f1" href="/assets/yeti-BTVYYaJj.svg#yeti"></use><use class="yeti__f2" href="/assets/yeti-BTVYYaJj.svg#yeti-step"></use></svg></svg><span class="brand__word">WATKORN.ME</span></a><nav class="pill-nav" aria-label="Main"><a class="pill-nav__item" href="/" data-discover="true"><span class="pill-nav__pill" aria-hidden="true"></span><span class="pill-nav__label">Home</span></a><a aria-current="page" class="pill-nav__item is-active" href="/blogs" data-discover="true"><span class="pill-nav__pill" aria-hidden="true"></span><span class="pill-nav__label">Blogs</span></a><a class="pill-nav__item" href="/projects" data-discover="true"><span class="pill-nav__pill" aria-hidden="true"></span><span class="pill-nav__label">Projects</span></a></nav><div class="power-switch"><button type="button" role="switch" aria-checked="false" aria-label="Dark mode" title="Switch to dark mode" class="power-switch__button"><span class="power-switch__track" aria-hidden="true"><span class="power-switch__slider"></span></span></button><span class="power-switch__legend" aria-hidden="true"><span class="is-on">light</span><span class="">dark</span></span></div></div></header><main id="main" class="app__main" tabindex="-1"><div class="page page--read"><div class="read-progress" aria-hidden="true"><div class="read-progress__bar"></div></div><a class="key key--sm back-link" href="/blogs" data-discover="true"><svg class="icon " width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>Blogs</a><article class="bezel bezel--read" aria-busy="false"><div class="screen screen--read"><header class="post-head"><h1 class="post-head__title">Preparing for CTF</h1><p class="post-head__desc">A no-fluff starter kit for your first Capture The Flag: pick a category, set up your tools, practise, and survive the weekend.</p><p class="post-head__meta"><time dateTime="2025-10-08">8 October 2025</time><span>4<!-- --> min read</span><span class="tag">#<!-- -->ctf</span><span class="tag">#<!-- -->beginner</span></p></header><div data-content-key="blog/preparing-for-ctf" class="markdown prose md:prose-lg max-w-none"><p>Capture The Flag (CTF) competitions are the most fun way to learn security. Someone hides a string like <code>flag{...}</code> behind a broken web app, a weird binary or a suspicious PCAP, and you break things (legally) until it falls out. You&#39;ll fail a lot at first. That&#39;s the whole point.</p>
+var e={html:`<p>Capture The Flag (CTF) competitions are the most fun way to learn security. Someone hides a string like <code>flag{...}</code> behind a broken web app, a weird binary or a suspicious PCAP, and you break things (legally) until it falls out. You&#39;ll fail a lot at first. That&#39;s the whole point.</p>
 <p>This is the guide I wish I&#39;d had before my first one.</p>
 <p><img src="/images/blogs/ctftime.png" alt="CTFtime, where you find upcoming CTFs" loading="lazy"></p>
 <h2>First, what kind of CTF is it?</h2>
@@ -141,6 +112,4 @@ checksec --file=./chall         <span class="hljs-comment"># which protections d
 <li><input disabled="" type="checkbox"> Plan to write at least one writeup afterwards</li>
 </ul>
 <p>Want a warm-up right now? The <a href="/">terminal on the home page</a> has five flags hidden around this site. Check your progress on the <a href="/achievements">achievements page</a>. Good luck, and have fun breaking things.</p>
-</div></div></article></div></main><button type="button" class="key key--round scroll-top" aria-label="Back to top" tabindex="-1"><svg class="icon " width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l7-7 7 7"></path></svg></button><footer class="site-footer"><p class="site-footer__quote"><span class="led" aria-hidden="true"></span>Flags don’t hide. You just haven’t looked hard enough.</p><p class="site-footer__copy">© <!-- -->2026<!-- --> Watcharakorn Khambung. Built static, served from GitHub Pages.</p></footer></div></div>
-  </body>
-</html>
+`};export{e as default};
