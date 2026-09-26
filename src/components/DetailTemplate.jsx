@@ -14,7 +14,9 @@ const withPublicUrl = (src) =>
 
 // เนื้อหาแต่ละโพสต์แยกเป็น chunk ของตัวเอง (โหลดเมื่อเปิดหน้านั้น)
 // key = "blog/<slug>" (English) or "blog/<slug>.th" (Thai)
-const loaders = import.meta.glob(["../generated/*/*.json", "!../generated/*/index.json"], { import: "default" });
+const loaders = import.meta.glob(["../generated/*/*.json", "!../generated/*/index.json", "!../generated/search/*"], {
+  import: "default",
+});
 const loadBody = (key) => {
   const [type, name] = key.split("/");
   const load = loaders[`../generated/${type}s/${name}.json`];
@@ -201,6 +203,21 @@ export default function DetailTemplate({ meta: rawMeta, type, allMeta }) {
               ))}
             </p>
           </header>
+
+          {meta.toc?.length > 0 && (
+            <nav className="toc" aria-labelledby="toc-title">
+              <details open>
+                <summary id="toc-title">{t("toc.title")}</summary>
+                <ol>
+                  {meta.toc.map((h) => (
+                    <li key={h.id}>
+                      <a href={`#${h.id}`}>{h.text}</a>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            </nav>
+          )}
 
           {meta.screenshots?.length > 0 && (
             <div className="shots">

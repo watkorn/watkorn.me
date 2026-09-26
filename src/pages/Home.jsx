@@ -11,6 +11,7 @@ import { blogs } from "../data/blogs";
 import { projects } from "../data/projects";
 import { LEVELS, TOTAL_POINTS, checkFlag, levelText, loadSolved, saveSolved, score } from "../ctf/ctf";
 import { ensureSession, readRootFlag, readSession, VAULT_XOR } from "../ctf/season2";
+import { loadIndex, search } from "../search/search";
 import { useLang } from "../i18n";
 import { rich } from "../i18n/rich";
 
@@ -33,6 +34,7 @@ const COMPLETIONS = [
   "ls blogs",
   "ls projects",
   "open ",
+  "search ",
   "submit ",
   "hint",
   "achievements",
@@ -166,7 +168,7 @@ export default function Home() {
         setCwd("~/.secret");
         return "";
       }
-      if (["blogs", "projects", "achievements"].includes(target.replace(/^\//, ""))) {
+      if (["blogs", "projects", "achievements", "search"].includes(target.replace(/^\//, ""))) {
         const path = to(`/${target.replace(/^\//, "")}`);
         setTimeout(() => navigate(path), 350);
         return t("term.opening", { to: path });
@@ -349,6 +351,30 @@ export default function Home() {
         }
         setHistory((h) => h.map((e) => (e.id === id ? { ...e, output: out } : e)));
       });
+      return;
+    }
+
+    // search <words> (or grep): the same index as /search, top 5 as slugs you can `open`
+    const searching = cmdText.trim().match(/^(?:search|grep)(?:\s+(.*))?$/i);
+    if (searching) {
+      setCurrentInput("");
+      const q = (searching[1] || "").trim();
+      const id = Date.now();
+      setHistory((h) => [...h, { id, prompt: entryPrompt, command: cmdText, output: q ? t("search.loading") : t("term.searchUsage") }]);
+      if (q) {
+        loadIndex(lang)
+          .then((entries) => {
+            const found = search(entries, q);
+            return found.length
+              ? [
+                  ...found.slice(0, 5).map((r) => `${r.slug.padEnd(20)} ${r.title}`),
+                  t("term.searchMore", { n: found.length }),
+                ]
+              : t("term.searchNone", { q });
+          })
+          .catch(() => t("search.error"))
+          .then((out) => setHistory((h) => h.map((e) => (e.id === id ? { ...e, output: out } : e))));
+      }
       return;
     }
 

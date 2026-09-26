@@ -1,6 +1,7 @@
 // src/components/TagFilter.jsx — filter chips for an index page, kept in the URL (?tag=…) so a filter can be shared
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import Icon from "./Icon";
 import { useLang } from "../i18n";
 
 // every filter value: categories first (shown bare), then tags (shown as #tag)
@@ -20,8 +21,7 @@ export function useActiveFilter(all) {
 }
 
 export default function TagFilter({ filters, active, onPick, label }) {
-  const { t } = useLang();
-  if (filters.all.length === 0) return null;
+  const { t, to } = useLang();
   return (
     <nav className="filter-row" aria-label={label}>
       <button type="button" className="chip-filter" aria-pressed={!active} onClick={() => onPick(null)}>
@@ -32,6 +32,10 @@ export default function TagFilter({ filters, active, onPick, label }) {
           {filters.categories.includes(f) ? f : `#${f}`}
         </button>
       ))}
+      <Link to={to("/search")} className="chip-filter chip-filter--search">
+        <Icon name="search" size={16} />
+        {t("search.open")}
+      </Link>
     </nav>
   );
 }

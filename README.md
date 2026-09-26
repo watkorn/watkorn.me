@@ -18,6 +18,7 @@
 ## Features
 
 - **A mini CTF.** The home terminal (`ls`, `cd`, `cat`, `open`, `hint`, `submit`…) is the entry point to eight flags in two seasons, hidden around the site (and in a cookie, a vault and a picture). Flags are checked by SHA-256 hash, so reading the JavaScript won't hand you the answers. Progress lives on [`/achievements`](https://watkorn.me/achievements/), stored only in the visitor's browser.
+- **Search and navigation.** `/search` finds any post or project by title, tag, heading or text (Thai included), from a static index that loads only when needed; press `/` anywhere. Long posts get a table of contents and `#` links on every heading.
 - **Blogs and projects in Markdown**, with a CTF writeup template, category/difficulty badges, and tag filters on both lists (tags on a post or project link back to the filtered list).
 - **English and Thai.** Every page exists at `/…` and `/th/…`, with a language key in the header, `hreflang` links, a Thai RSS feed and Thai translations of every post. The choice is remembered, and Thai browsers land on `/th/` from the home page.
 - **Real URLs and pre-rendered pages.** Every page is built to its own HTML file, so posts are indexable and show proper link previews (Open Graph + Twitter cards). There's also a sitemap and an RSS feed.
@@ -118,7 +119,7 @@ scripts/
   csp.mjs            adds the Content-Security-Policy to every HTML file
   new-post.mjs       scaffolds posts / writeups
 src/
-  components/ pages/ ctf/ data/ styles/ theme/
+  components/ pages/ ctf/ data/ search/ styles/ theme/
   i18n/              language from the URL, every UI string in English and Thai
   entry-server.jsx   server entry used only for prerendering
   generated/         built from content/ (git-ignored)
@@ -131,7 +132,7 @@ brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
 
 - **Every push to `main`** runs [`deploy.yml`](.github/workflows/deploy.yml): install → build → Playwright tests → publish `build/` to the **`gh-pages`** branch. If a test fails, nothing is published.
 - **Branches and pull requests** run [`ci.yml`](.github/workflows/ci.yml): build, tests and **Lighthouse** (accessibility and SEO must score ≥ 90).
-- **Dependabot** opens weekly PRs for npm packages and GitHub Actions; CI checks each one. All Actions are pinned to commit SHAs.
+- **Dependabot** opens weekly PRs for npm packages and GitHub Actions; CI checks each one. Patch and minor updates **merge themselves** once the checks pass ([`dependabot-auto-merge.yml`](.github/workflows/dependabot-auto-merge.yml); needs Settings → General → *Allow auto-merge*), major ones wait for you. A **weekly scheduled deploy** (Tuesdays) ships those merges and refreshes `security.txt`. All Actions are pinned to commit SHAs.
 - **Releases:** add a section to [`CHANGELOG.md`](CHANGELOG.md), bump `version` in `package.json`, then run **Actions → Release → Run workflow** with the version (e.g. `v1.2.0`), or push a tag. [`release.yml`](.github/workflows/release.yml) builds the site and creates the GitHub Release.
 - Hosting: GitHub Pages (`gh-pages`, custom domain from `public/CNAME`), proxied through **Cloudflare** (SSL Full (strict), security headers).
 

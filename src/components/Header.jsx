@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import LangSwitch from "./LangSwitch";
 import Yeti from "./Yeti";
+import Icon from "./Icon";
 import { stripLang, useLang } from "../i18n";
 
 const menuItems = [
@@ -45,6 +46,9 @@ export default function Header() {
           })}
         </nav>
 
+        <Link to={to("/search")} className="header-search" aria-label={t("search.label")} title={`${t("search.label")} (/)`}>
+          <Icon name="search" size={22} />
+        </Link>
         <LangSwitch />
         <ThemeToggle />
       </div>

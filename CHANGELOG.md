@@ -5,6 +5,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+- **Site search** at `/search` (and `/th/search`): every post and project by title, tag, heading or text, with highlighted matches, `?q=` links and suggestions. Fully static: the index is built with the content and only loads when search opens; substring matching handles Thai. Reach it with `/` anywhere, the search key in the header, the Blogs/Projects filter rows, the 404 page, or `search <words>` in the terminal.
+- **Table of contents and section links** in posts: long posts (3+ sections) open with an "On this page" list, and every heading gets a `#` link for sharing that section. Heading ids are readable, Thai included, and `#section` URLs land below the sticky header.
+- **Dependabot auto-merge** for patch and minor updates once CI passes (major updates still wait for a human), plus a **weekly scheduled deploy** that ships them and keeps `security.txt` fresh.
+
+### Fixed
+- The header no longer pushes the theme switch off-screen between 420 and 760px wide: the wordmark hides below 760px, the Home pill below 520px and the search key below 420px, checked by a new test at ten widths.
+
 ### Changed
 - **Self-hosted fonts:** Mali and JetBrains Mono now come from `@fontsource` instead of Google Fonts, so the site makes no third-party requests. The CSP tightens to `style-src 'self'; font-src 'self'`, and the OG image script uses the same font files (no download at build time).
 - The fonts each page's first screen uses (Mali Latin, plus the Thai subset on `/th/` pages) are preloaded, which removes the layout shift when the web font swaps in (Lighthouse CLS 0.21 → 0 on the home page, best practices 96 → 100).
