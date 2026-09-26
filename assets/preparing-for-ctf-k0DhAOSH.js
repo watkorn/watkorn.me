@@ -104,12 +104,12 @@ checksec --file=./chall         <span class="hljs-comment"># which protections d
 </ol>
 <h2>Quick checklist</h2>
 <ul>
-<li><input disabled="" type="checkbox"> Picked 1–2 categories to focus on</li>
-<li><input disabled="" type="checkbox"> VM with the core tools installed</li>
-<li><input disabled="" type="checkbox"> Solved 10+ picoCTF or TryHackMe challenges</li>
-<li><input disabled="" type="checkbox"> Found an upcoming beginner CTF on CTFtime</li>
-<li><input disabled="" type="checkbox"> Notes app and team channel ready</li>
-<li><input disabled="" type="checkbox"> Plan to write at least one writeup afterwards</li>
+<li class="task"><label><input type="checkbox" disabled> Picked 1–2 categories to focus on</label></li>
+<li class="task"><label><input type="checkbox" disabled> VM with the core tools installed</label></li>
+<li class="task"><label><input type="checkbox" disabled> Solved 10+ picoCTF or TryHackMe challenges</label></li>
+<li class="task"><label><input type="checkbox" disabled> Found an upcoming beginner CTF on CTFtime</label></li>
+<li class="task"><label><input type="checkbox" disabled> Notes app and team channel ready</label></li>
+<li class="task"><label><input type="checkbox" disabled> Plan to write at least one writeup afterwards</label></li>
 </ul>
 <p>Want a warm-up right now? The <a href="/">terminal on the home page</a> has five flags hidden around this site. Check your progress on the <a href="/achievements">achievements page</a>. Good luck, and have fun breaking things.</p>
 `};export{e as default};

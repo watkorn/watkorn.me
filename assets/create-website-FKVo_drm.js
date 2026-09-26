@@ -15,7 +15,7 @@ var e={html:`<p>This site is my home for CTF writeups and side projects, and a c
                   GitHub Pages  ◀──  Cloudflare (TLS, HSTS, security headers)
 </code></pre><ul>
 <li><strong>Content:</strong> blog posts and projects are Markdown with frontmatter. At build time, <a href="https://marked.js.org/" target="_blank" rel="noopener noreferrer">marked</a> and highlight.js turn them into HTML, so no Markdown parser ships to the browser. Drafts are visible in dev and excluded from production.</li>
-<li><strong>Pages:</strong> React 18 + React Router 7 on Vite. Every route is <strong>prerendered to its own HTML file</strong>, so posts are indexable and link previews in Discord or LINE show a real title and image. React then takes over for the interactive bits.</li>
+<li><strong>Pages:</strong> React 19 + React Router 7 on Vite. Every route is <strong>prerendered to its own HTML file</strong>, so posts are indexable and link previews in Discord or LINE show a real title and image. React then takes over for the interactive bits.</li>
 <li><strong>Deploys:</strong> every push to <code>main</code> builds the site and runs <strong>Playwright smoke tests on desktop and mobile</strong>. Only if they pass does it publish the static files to the <code>gh-pages</code> branch. A failing test means the live site doesn&#39;t change.</li>
 </ul>
 <h2>Security</h2>
@@ -46,6 +46,6 @@ var e={html:`<p>This site is my home for CTF writeups and side projects, and a c
 <li><strong>Tests for the fun stuff matter too.</strong> An unsolvable CTF level is a bug.</li>
 </ul>
 <h2>Stack</h2>
-<p>React 18 · React Router 7 · Vite · Tailwind CSS · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare</p>
+<p>React 19 · React Router 7 · Vite · Tailwind CSS 4 · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare</p>
 <p>The source is open on GitHub (link below). Found something? Tell me, or better yet, find the flags first.</p>
 `};export{e as default};
