@@ -1,10 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://watkorn.me/</loc></url>
-  <url><loc>https://watkorn.me/blogs/</loc></url>
-  <url><loc>https://watkorn.me/projects/</loc></url>
-  <url><loc>https://watkorn.me/achievements/</loc></url>
-  <url><loc>https://watkorn.me/blogs/preparing-for-ctf/</loc><lastmod>2025-10-08</lastmod></url>
-  <url><loc>https://watkorn.me/blogs/mini-ctf-writeup/</loc><lastmod>2026-09-26</lastmod></url>
-  <url><loc>https://watkorn.me/projects/create-website/</loc></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://watkorn.me/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/blogs/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/blogs/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/blogs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/blogs/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/projects/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/projects/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/projects/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/projects/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/achievements/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/achievements/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/achievements/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/achievements/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/blogs/preparing-for-ctf/</loc>
+    <lastmod>2025-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/blogs/preparing-for-ctf/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/blogs/preparing-for-ctf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/blogs/preparing-for-ctf/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/blogs/mini-ctf-writeup/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/blogs/mini-ctf-writeup/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/blogs/mini-ctf-writeup/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/blogs/mini-ctf-writeup/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/projects/create-website/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/projects/create-website/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/projects/create-website/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/projects/create-website/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/projects/thoth/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/projects/thoth/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/projects/thoth/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/projects/thoth/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/blogs/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/blogs/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/blogs/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/blogs/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/projects/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/projects/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/projects/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/projects/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/achievements/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/achievements/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/achievements/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/achievements/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/blogs/preparing-for-ctf/</loc>
+    <lastmod>2025-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/blogs/preparing-for-ctf/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/blogs/preparing-for-ctf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/blogs/preparing-for-ctf/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/blogs/mini-ctf-writeup/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/blogs/mini-ctf-writeup/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/blogs/mini-ctf-writeup/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/blogs/mini-ctf-writeup/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/projects/create-website/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/projects/create-website/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/projects/create-website/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/projects/create-website/"/>
+  </url>
+  <url>
+    <loc>https://watkorn.me/th/projects/thoth/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://watkorn.me/projects/thoth/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://watkorn.me/th/projects/thoth/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://watkorn.me/projects/thoth/"/>
+  </url>
 </urlset>
