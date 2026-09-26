@@ -1,0 +1,30 @@
+# Dependabot patch/minor updates merge themselves once the required checks (test, lighthouse) pass.
+# Major updates are left open for a human. Needs: Settings → General → "Allow auto-merge".
+# Merges done with GITHUB_TOKEN don't trigger other workflows, so the weekly scheduled deploy
+# (deploy.yml) is what ships them to the live site.
+name: Dependabot auto-merge
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'watkorn/watkorn.me'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # merge
+      pull-requests: write # enable auto-merge
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge (patch and minor only)
+        if: steps.meta.outputs.update-type != 'version-update:semver-major'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --auto --merge "$PR_URL"

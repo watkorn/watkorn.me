@@ -53,7 +53,7 @@ const en = {
     "# watkorn\nsecurity hobbyist · CTF player · tool builder\n\n8 flags are hidden on this site. flag.txt is the free one.\nnext: hint · achievements · ls blogs",
   "term.help": [
     "files:  ls, ls -la, cat <file>, cd <dir>, pwd",
-    "site:   ls blogs, ls projects, open <name>, cd blogs, cd projects",
+    "site:   ls blogs, ls projects, open <name>, search <words>, cd blogs",
     "ctf:    submit <flag>, hint [n], achievements",
     "misc:   whoami, id, date, echo, clear",
   ],
@@ -69,6 +69,26 @@ const en = {
   "term.correct": "[+] correct! {title} (+{points} pts)  ·  score {score}/{total}",
   "term.notFound": "watkorn: command not found: {cmd}  (try: help)",
   "term.didYouMean": "Did you mean: cat flag.txt ?",
+
+  // search
+  "search.title": "Search",
+  "search.desc": "Search every writeup and project on watkorn.me.",
+  "search.lede": "Every writeup and project, by title, tag, heading or text.",
+  "search.label": "Search the site",
+  "search.placeholder": "xss, base64, forensics…",
+  "search.loading": "Loading the index…",
+  "search.error": "Search didn't load. Check your connection and refresh.",
+  "search.count": ({ n }) => `${n} ${n === 1 ? "result" : "results"}`,
+  "search.none": 'Nothing matches "{q}". Try a shorter word, or browse by tag.',
+  "search.try": "Try",
+  "search.shortcut": "Tip: press / anywhere on the site to search.",
+  "search.open": "Search",
+  "kind.blog": "blog",
+  "kind.project": "project",
+  "toc.title": "On this page",
+  "term.searchUsage": "usage: search <words>   (try: search base64)",
+  "term.searchNone": "search: no matches for {q}",
+  "term.searchMore": "{n} found · open <name> to read, or: cd search",
 
   // blogs / projects
   "blogs.title": "Blogs",
@@ -137,6 +157,7 @@ const en = {
   "nf.text": "404: this level isn't in the cartridge.",
   "nf.home": "Back to start",
   "nf.blogs": "Read the writeups",
+  "nf.search": "Search the site",
 };
 
 const th = {
@@ -186,7 +207,7 @@ const th = {
     "# watkorn\nสาย security งานอดิเรก · เล่น CTF · ชอบสร้างเครื่องมือ\n\nมี flag ซ่อนอยู่ในเว็บนี้ 8 อัน flag.txt คืออันที่แจกฟรี\nต่อไป: hint · achievements · ls blogs",
   "term.help": [
     "ไฟล์:   ls, ls -la, cat <file>, cd <dir>, pwd",
-    "เว็บ:    ls blogs, ls projects, open <name>, cd blogs, cd projects",
+    "เว็บ:    ls blogs, ls projects, open <name>, search <words>, cd blogs",
     "ctf:    submit <flag>, hint [n], achievements",
     "อื่นๆ:   whoami, id, date, echo, clear",
   ],
@@ -202,6 +223,25 @@ const th = {
   "term.correct": "[+] ถูกต้อง! {title} (+{points} แต้ม)  ·  คะแนน {score}/{total}",
   "term.notFound": "watkorn: command not found: {cmd}  (ลองพิมพ์: help)",
   "term.didYouMean": "หมายถึง cat flag.txt หรือเปล่า?",
+
+  "search.title": "ค้นหา",
+  "search.desc": "ค้นหา writeup และผลงานทั้งหมดใน watkorn.me",
+  "search.lede": "ค้นได้ทั้งชื่อเรื่อง แท็ก หัวข้อ และเนื้อหาของทุก writeup และผลงาน",
+  "search.label": "ค้นหาในเว็บ",
+  "search.placeholder": "เช่น xss, base64, ถอดรหัส…",
+  "search.loading": "กำลังโหลดดัชนี…",
+  "search.error": "โหลดระบบค้นหาไม่สำเร็จ เช็กอินเทอร์เน็ตแล้วรีเฟรชอีกที",
+  "search.count": ({ n }) => `พบ ${n} รายการ`,
+  "search.none": "ไม่พบ \"{q}\" ลองคำที่สั้นลง หรือเลือกดูตามแท็ก",
+  "search.try": "ลอง",
+  "search.shortcut": "เคล็ดลับ: กด / ที่หน้าไหนก็ได้เพื่อค้นหา",
+  "search.open": "ค้นหา",
+  "kind.blog": "บล็อก",
+  "kind.project": "ผลงาน",
+  "toc.title": "ในหน้านี้",
+  "term.searchUsage": "usage: search <words>   (ลอง: search base64)",
+  "term.searchNone": "search: ไม่พบ {q}",
+  "term.searchMore": "พบ {n} รายการ · พิมพ์ open <name> เพื่ออ่าน หรือ cd search",
 
   "blogs.title": "บล็อก",
   "blogs.desc": "writeup CTF และบันทึกจากของที่ผมตั้งใจรื้อให้พัง มีสปอยล์นะ",
@@ -266,6 +306,7 @@ const th = {
   "nf.text": "404: ด่านนี้ไม่มีอยู่ในตลับเกม",
   "nf.home": "กลับไปจุดเริ่มต้น",
   "nf.blogs": "อ่าน writeup",
+  "nf.search": "ค้นหาในเว็บ",
 };
 
 export const strings = { en, th };

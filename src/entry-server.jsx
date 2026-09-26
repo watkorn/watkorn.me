@@ -9,7 +9,7 @@ import { blogs } from "./data/blogs";
 import { projects } from "./data/projects";
 import { LANGS, localizePath } from "./i18n";
 
-const bodies = import.meta.glob(["./generated/*/*.json", "!./generated/*/index.json"], {
+const bodies = import.meta.glob(["./generated/*/*.json", "!./generated/*/index.json", "!./generated/search/*"], {
   eager: true,
   import: "default",
 });
@@ -26,6 +26,7 @@ const pages = [
   { path: "/blogs", langs: LANGS },
   { path: "/projects", langs: LANGS },
   { path: "/achievements", langs: LANGS },
+  { path: "/search", langs: LANGS, noindex: true },
   ...blogs.map((b) => ({ path: `/blogs/${b.slug}`, langs: b.langs, date: b.date })),
   ...projects.map((p) => ({ path: `/projects/${p.slug}`, langs: p.langs })),
 ];

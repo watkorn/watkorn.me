@@ -25,6 +25,9 @@ export default function NotFound() {
         <Link to={to("/blogs")} className="key">
           {t("nf.blogs")}
         </Link>
+        <Link to={to("/search")} className="key">
+          {t("nf.search")}
+        </Link>
       </div>
     </PageWrapper>
   );

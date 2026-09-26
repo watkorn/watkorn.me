@@ -196,7 +196,7 @@ Two kinds of depth, never mixed:
 
 - **Key** (`.key`, with `--a`, `--b`, `--sm`, `--xs`, `--lg` and `--round` variants): the only button. It has default, hover, focus-visible (3px focus outline), active and disabled states. Loading and error states use text changes. Links styled as keys stay `<a>`.
 - **Pill nav** (`.pill-nav`): Home, Blogs, Projects. The active item's pill is pressed down and coloured. It is always visible and there is no hamburger.
-- **Language key** (`.lang-switch`): a globe over the name of the *other* language ("ไทย" on English pages, "EN" on Thai ones). It is a real link to the same page in that language, sits between the pill nav and the power switch, and remembers the choice. Below 420px the Home pill steps aside (the yeti already links home) so everything fits at 320px.
+- **Language key** (`.lang-switch`): a globe over the name of the *other* language ("ไทย" on English pages, "EN" on Thai ones). It is a real link to the same page in that language, sits between the pill nav and the power switch, and remembers the choice. Header fit: below 760px the wordmark hides, below 520px the Home pill steps aside (the yeti links home), below 420px the search key does too; a test checks ten widths from 320 to 1024px.
 - **Power switch** (`.power-switch`): a `role="switch"` theme toggle, with a ridged slider in a recessed track and a "light / dark" silkscreen legend.
 - **Bezel + LCD terminal:** history (↑/↓), Tab completion, `Ctrl+L`, tap-to-focus and quick-command chips. The prompt label is tied to the input.
 - **Quest list** (`.quest`): real links. A berry cursor appears on hover or focus (always visible on touch). It shows title, description, then mono meta.
@@ -205,7 +205,8 @@ Two kinds of depth, never mixed:
 - **Achievement toast** (`.achievement`): a `role="status"` toast with a trophy and an A-key call to action to the writeups. It pauses on hover or focus and auto-hides after 9s. It sits at the top on mobile and bottom-right on desktop.
 - **Achievements** (`/achievements`, `.ach*`): the CTF progress screen. It has a score line, a flag submit form (a LCD-style input plus the A key), and a numbered level list where solved levels turn berry. Hints sit behind `<details>`. Reset takes two taps.
 - **Filters** (`.chip-filter`): outline pills on the shell; the active one fills with the B colour. **Badges** (`.badge`) show category (B colour) and difficulty (easy is LCD green, medium is pear, hard/insane are berry). A shell-coloured language badge marks a post that isn't translated yet, and the post itself opens with a globe note.
-- **Post chrome:** a back key, reading progress bar, copy buttons on `pre`, and an older/newer pager.
+- **Post chrome:** a back key, reading progress bar, an "On this page" table of contents (posts with 3+ sections), a `#` link after every heading (faint on touch, shown on hover/focus), copy buttons on `pre`, and an older/newer pager.
+- **Search** (`/search`, `.search-box`): an LCD-style input with a magnifier, a live result count, suggestion chips when empty, and results as quest-list rows with matches in `<mark>` (selection yellow). A search key sits in the header, a dashed "Search" chip ends each filter row, and `/` opens it from anywhere.
 
 ## Do's and Don'ts
 

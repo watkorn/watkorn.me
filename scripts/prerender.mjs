@@ -54,7 +54,7 @@ const canonical = (url) => `${SITE}${url === "/" ? "/" : `${url}/`}`;
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${routes
-  .filter((r) => r.original)
+  .filter((r) => r.original && !r.noindex)
   .map((r) => {
     const alts =
       r.langs.length > 1

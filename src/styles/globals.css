@@ -403,7 +403,22 @@ kbd {
   white-space: nowrap;
 }
 
-@media (max-width: 479px) {
+/* Header fit, measured (brand 42 + word 180, pills 193, search 44, language 44, power 64):
+   ≥ 760px everything · < 760 the wordmark hides (the yeti stays) and gaps tighten ·
+   < 520 the Home pill steps aside (the yeti links home) · < 420 the search key does too
+   ("/" and the Blogs/Projects filter rows still reach search) */
+.header-search {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 48px;
+  color: var(--color-ink-on-shell-2);
+  border-radius: var(--radius-key);
+}
+.header-search:hover {
+  color: var(--color-ink-on-shell);
+}
+@media (max-width: 759px) {
   .brand__word {
     position: absolute;
     width: 1px;
@@ -416,13 +431,18 @@ kbd {
     gap: var(--space-2xs);
   }
 }
-@media (max-width: 419px) {
+@media (max-width: 519px) {
   .pill-nav__item--home {
     display: none;
   }
   .pill-nav__item {
     min-width: 48px;
     padding-inline: 0.25rem;
+  }
+}
+@media (max-width: 419px) {
+  .header-search {
+    display: none;
   }
 }
 
@@ -1142,6 +1162,63 @@ a.tag--link:hover {
   font-family: var(--font-display);
   font-weight: 700;
   font-style: normal;
+  scroll-margin-top: 5.5rem; /* land below the sticky header */
+}
+/* "#" after each heading: a shareable link to that section. Faint on touch, revealed on hover/focus */
+.markdown .heading-anchor {
+  margin-left: 0.35em;
+  padding-inline: 0.15em;
+  font-weight: 400;
+  color: var(--color-ink-2);
+  text-decoration: none;
+  opacity: 0.35;
+  border-radius: var(--radius-chip);
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+@media (hover: hover) {
+  .markdown .heading-anchor {
+    opacity: 0;
+  }
+  .markdown :is(h2, h3, h4):hover .heading-anchor {
+    opacity: 1;
+  }
+}
+.markdown .heading-anchor:focus-visible {
+  opacity: 1;
+}
+.markdown .heading-anchor:hover {
+  color: var(--color-link-hover);
+}
+
+/* table of contents at the top of long posts */
+.toc {
+  margin: 0 0 var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-screen-2);
+  border-radius: var(--radius-chip);
+}
+.toc summary {
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+.toc ol {
+  margin: var(--space-2xs) 0 0;
+  padding-left: 1.4em;
+  columns: 2 16rem;
+  column-gap: var(--space-lg);
+}
+.toc li {
+  break-inside: avoid;
+  padding: 0.15em 0;
+}
+.toc a {
+  color: var(--color-link);
+  text-underline-offset: 3px;
+}
+.toc a:hover {
+  color: var(--color-link-hover);
 }
 .markdown a:hover {
   color: var(--color-link-hover);
@@ -1588,4 +1665,70 @@ body:lang(th),
   display: inline-flex;
   align-items: baseline;
   gap: 0.5em;
+}
+
+/* ===============================
+   Search (/search)
+================================ */
+.search-box {
+  position: relative;
+  margin: 0 0 var(--space-xs);
+}
+.search-box__icon {
+  position: absolute;
+  top: 50%;
+  left: 0.9rem;
+  transform: translateY(-50%);
+  color: var(--color-lcd-ink);
+  pointer-events: none;
+}
+.search-box input {
+  width: 100%;
+  min-height: 56px;
+  padding: 0 var(--space-sm) 0 2.9rem;
+  font-family: var(--font-mono);
+  font-size: max(var(--text-input-touch), var(--text-md));
+  color: var(--color-lcd-ink);
+  background: var(--color-lcd);
+  border: 3px solid var(--color-bezel);
+  border-radius: var(--radius-key);
+}
+.search-box input::placeholder {
+  color: color-mix(in oklch, var(--color-lcd-ink) 60%, transparent);
+}
+.search-box input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.search-status {
+  margin: 0 0 var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--color-ink-on-shell-2);
+}
+.filter-row--flat {
+  margin-top: 0;
+  align-items: center;
+}
+.filter-row__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-ink-on-shell);
+}
+.chip-filter--search {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  border-style: dashed;
+}
+.badge--kind {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-shell-2);
+}
+.quest mark {
+  color: var(--color-selection-ink);
+  background: var(--color-selection);
+  border-radius: 3px;
+  padding-inline: 0.1em;
 }

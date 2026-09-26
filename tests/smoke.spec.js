@@ -160,3 +160,51 @@ test("no third-party requests: fonts and everything else are self-hosted", async
   expect(external).toEqual([]);
   expect(await page.evaluate(() => document.fonts.check("700 16px Mali"))).toBe(true);
 });
+
+test("header fits at every width (nothing pushed off-screen)", async ({ page }) => {
+  test.skip(test.info().project.name !== "desktop", "sweeps its own viewport sizes");
+  for (const width of [320, 360, 419, 420, 519, 520, 640, 759, 760, 1024]) {
+    await page.setViewportSize({ width, height: 700 });
+    for (const path of ["/", "/th/"]) {
+      await page.goto(path);
+      const right = await page.evaluate(() =>
+        Math.max(
+          ...[...document.querySelector(".site-header__inner").children]
+            .filter((el) => el.offsetParent)
+            .map((el) => el.getBoundingClientRect().right),
+        ),
+      );
+      expect(right, `${path} at ${width}px`).toBeLessThanOrEqual(width);
+      await expect(page.getByRole("switch")).toBeInViewport();
+    }
+  }
+});
+
+test("search: finds posts in both languages, highlights, and / opens it", async ({ page }) => {
+  await page.goto("/blogs/");
+  await page.keyboard.press("/");
+  await expect(page).toHaveURL(/\/search\/?$/);
+  const box = page.locator("#search-input");
+  await expect(box).toBeFocused();
+  await box.fill("robots");
+  await expect(page).toHaveURL(/q=robots/);
+  await expect(page.locator(".quest").first()).toContainText("mini CTF");
+  await expect(page.locator(".quest mark").first()).toHaveText(/robots/i);
+
+  await page.goto("/th/search?q=" + encodeURIComponent("ถอดรหัส"));
+  await expect(page.locator(".search-status")).toContainText("พบ");
+  await page.goto("/search?q=zzzznothing");
+  await expect(page.locator(".search-status")).toContainText("Nothing matches");
+});
+
+test("posts: table of contents and # links to each section", async ({ page }) => {
+  await page.goto("/blogs/mini-ctf-writeup/");
+  const toc = page.locator(".toc");
+  await expect(toc).toBeVisible();
+  await toc.getByRole("link", { name: /Level 3/ }).click();
+  await expect(page).toHaveURL(/#level-3-view-source-30-pts$/);
+  await expect(page.locator("#level-3-view-source-30-pts")).toBeInViewport();
+
+  await page.goto("/th/blogs/mini-ctf-writeup/#" + encodeURIComponent("ด่าน-4-สำหรับหุ่นยนต์เท่านั้น-40-แต้ม"));
+  await expect(page.locator("h2", { hasText: "ด่าน 4" })).toBeInViewport();
+});
