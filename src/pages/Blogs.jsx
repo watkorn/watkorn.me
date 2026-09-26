@@ -1,18 +1,14 @@
 // src/pages/Blogs.jsx
 import React from "react";
-import { useSearchParams } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import GroupedIndex from "../components/GroupedIndex";
+import TagFilter, { filtersFor, matchesFilter, useActiveFilter } from "../components/TagFilter";
 import { blogs } from "../data/blogs";
 import { localizeAll } from "../data/localize";
 import { useLang } from "../i18n";
 
-// every filter value: CTF categories first, then tags
-const categories = [...new Set(blogs.map((b) => b.category).filter(Boolean))].sort();
-const tags = [...new Set(blogs.flatMap((b) => b.tags || []))].filter((t) => !categories.includes(t)).sort();
-const FILTERS = [...categories, ...tags];
-
-const matches = (b, f) => !f || b.category === f || (b.tags || []).includes(f);
+// CTF categories (web, pwn…) and tags
+const FILTERS = filtersFor(blogs, { withCategories: true });
 
 function groupByYear(list, formatYear) {
   const years = [...new Set(list.map((b) => b.year))].sort((a, b) => b - a);
@@ -27,14 +23,11 @@ function groupByYear(list, formatYear) {
 
 export default function Blogs() {
   const { lang, t, year } = useLang();
-  const [params, setParams] = useSearchParams();
-  const active = FILTERS.includes(params.get("tag")) ? params.get("tag") : null;
+  const [active, pick] = useActiveFilter(FILTERS.all);
   const groups = groupByYear(
-    localizeAll(blogs, lang).filter((b) => matches(b, active)),
+    localizeAll(blogs, lang).filter((b) => matchesFilter(b, active)),
     year,
   );
-
-  const pick = (f) => setParams(f ? { tag: f } : {}, { replace: true });
 
   return (
     <PageWrapper path="/blogs" title={t("blogs.title")} description={t("blogs.desc")}>
@@ -43,18 +36,7 @@ export default function Blogs() {
         <p className="page-head__lede">{t("blogs.lede")}</p>
       </header>
 
-      {FILTERS.length > 0 && (
-        <nav className="filter-row" aria-label={t("blogs.filter")}>
-          <button type="button" className="chip-filter" aria-pressed={!active} onClick={() => pick(null)}>
-            {t("blogs.all")}
-          </button>
-          {FILTERS.map((f) => (
-            <button key={f} type="button" className="chip-filter" aria-pressed={active === f} onClick={() => pick(f)}>
-              {categories.includes(f) ? f : `#${f}`}
-            </button>
-          ))}
-        </nav>
-      )}
+      <TagFilter filters={FILTERS} active={active} onPick={pick} label={t("blogs.filter")} />
 
       <GroupedIndex
         groups={groups}

@@ -506,6 +506,14 @@ kbd {
   background: var(--color-screen-2);
   border-radius: var(--radius-pill);
 }
+a.tag--link {
+  text-decoration: none;
+}
+a.tag--link:hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 .page--narrow {
   max-width: 40rem;
   margin-inline: auto;

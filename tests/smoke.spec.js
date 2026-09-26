@@ -122,3 +122,15 @@ test("no Content-Security-Policy violations on any page", async ({ page }) => {
   }
   expect(violations).toEqual([]);
 });
+
+test("projects: tag filter and tag links on a project page", async ({ page }) => {
+  await page.goto("/projects");
+  await page.getByRole("button", { name: "#forensics" }).click();
+  await expect(page).toHaveURL(/tag=forensics/);
+  await expect(page.locator(".quest__title")).toHaveText(["Thoth"]);
+  await page.getByRole("link", { name: /Thoth/ }).click();
+  await expect(page.locator("h1")).toHaveText("Thoth");
+  await page.locator(".post-head").getByRole("link", { name: "#security" }).click();
+  await expect(page).toHaveURL(/\/projects\?tag=security/);
+  await expect(page.locator(".quest")).toHaveCount(2);
+});

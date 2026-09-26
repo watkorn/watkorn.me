@@ -18,7 +18,7 @@
 ## Features
 
 - **A mini CTF.** The home terminal (`ls`, `cd`, `cat`, `open`, `hint`, `submit`…) is the entry point to five flags hidden around the site. Flags are checked by SHA-256 hash, so reading the JavaScript won't hand you the answers. Progress lives on [`/achievements`](https://watkorn.me/achievements/), stored only in the visitor's browser.
-- **Blogs and projects in Markdown**, with a CTF writeup template, category/difficulty badges and tag filters.
+- **Blogs and projects in Markdown**, with a CTF writeup template, category/difficulty badges, and tag filters on both lists (tags on a post or project link back to the filtered list).
 - **English and Thai.** Every page exists at `/…` and `/th/…`, with a language key in the header, `hreflang` links, a Thai RSS feed and Thai translations of every post. The choice is remembered, and Thai browsers land on `/th/` from the home page.
 - **Real URLs and pre-rendered pages.** Every page is built to its own HTML file, so posts are indexable and show proper link previews (Open Graph + Twitter cards). There's also a sitemap and an RSS feed.
 - **Handheld Quest design** with a pixel yeti mascot, light and dark themes, from 320 px phones to wide desktops. See [`DESIGN.md`](DESIGN.md) and [`brand/`](brand/README.md).
@@ -73,7 +73,7 @@ checksec ./chall
 - Code blocks are syntax-highlighted at build time and get a copy button.
 - Commit and push to `main`. CI builds, tests and deploys by itself.
 
-**Projects** work the same way in `content/projects/*.md`, with `category`, `order`, `github` and `screenshots` fields.
+**Projects** work the same way in `content/projects/*.md`, with `category`, `order`, `tags`, `github` and `screenshots` fields. Project images go in `public/images/projects/`.
 
 ### Two languages
 

@@ -6,6 +6,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ## [Unreleased]
 
 ### Added
+- **Thoth** project page (English + Thai) with light and dark screenshots. Security is described by principle only, with no infrastructure, versions or known gaps, and the page states that Thoth is out of scope for the site's CTF.
+- **Project tags** (`tags:` in frontmatter) with a tag filter on the Projects page, shared with Blogs (`TagFilter`). Tags on a post or project page now link to the filtered list.
 - **Thai language** (ภาษาไทย): every page now also exists under `/th/`, with a globe key in the header that switches to the same page in the other language. The choice is remembered, and Thai browsers opening the home page land on `/th/`.
   - All UI text, the terminal's help, README, hints and messages, and the CTF level names and hints are translated (commands, file names and flags stay English).
   - Thai translations of "Preparing for CTF", the mini CTF writeup and "My Website". A translation is a `<slug>.th.md` next to the original; untranslated posts show the original with a note.

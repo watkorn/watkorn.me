@@ -163,6 +163,7 @@ function buildProjects(opts) {
           category: String(data.category),
           order: Number.isFinite(data.order) ? data.order : 999,
           date: data.date ? toISODate(data.date, rel) : null,
+          tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
           github: data.github ? String(data.github) : null,
           screenshots: Array.isArray(data.screenshots) ? data.screenshots : [],
         },

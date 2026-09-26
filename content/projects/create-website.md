@@ -3,6 +3,7 @@ title: My Website
 description: "watkorn.me: a static, A+-hardened portfolio that is also a tiny CTF. How it's built, secured and shipped."
 category: Web
 order: 1
+tags: [react, vite, security, ctf]
 github: https://github.com/watkorn/watkorn.me
 screenshots:
   - src: /screenshot_light.png

@@ -193,10 +193,10 @@ export default function DetailTemplate({ meta: rawMeta, type, allMeta }) {
               {meta.date && <time dateTime={meta.date}>{date(meta.date, "long")}</time>}
               {meta.readingMinutes ? <span>{t("list.minRead", { n: meta.readingMinutes })}</span> : null}
               {meta.category && <span>{meta.category}</span>}
-              {meta.tags?.map((t) => (
-                <span key={t} className="tag">
-                  #{t}
-                </span>
+              {meta.tags?.map((tag) => (
+                <Link key={tag} to={`${to(listPath)}?tag=${encodeURIComponent(tag)}`} className="tag tag--link">
+                  #{tag}
+                </Link>
               ))}
             </p>
           </header>
