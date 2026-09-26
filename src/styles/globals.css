@@ -1434,3 +1434,20 @@ kbd {
   color: var(--color-a-ink);
   background: var(--color-a);
 }
+
+/* wide markdown tables scroll inside themselves instead of widening the page */
+.markdown table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.markdown input[type="checkbox"] {
+  margin: 0 0.5em 0 0;
+  accent-color: var(--color-a);
+}
+.markdown li:has(> input[type="checkbox"]) {
+  list-style: none;
+}
+.markdown ul:has(> li > input[type="checkbox"]) {
+  padding-inline-start: 0;
+}
