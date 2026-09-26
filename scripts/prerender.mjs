@@ -18,11 +18,27 @@ for (const marker of ["<!--app-html-->", "<!--app-head-->", '<html lang="en">'])
   if (!template.includes(marker)) throw new Error(`[prerender] build/index.html is missing ${marker}`);
 }
 
+// preload the fonts the first screen renders with, so text doesn't paint in a fallback font and then jump
+// (layout shift). Thai pages also need Mali's Thai subset. Files are hashed by Vite, so look them up.
+const assets = fs.readdirSync(path.join(OUT, "assets"));
+const PRELOAD = {
+  en: ["mali-latin-400", "mali-latin-600", "mali-latin-700", "jetbrains-mono-latin-400"],
+  th: ["mali-thai-400", "mali-thai-600", "mali-thai-700"],
+};
+const preloads = (lang) =>
+  [...PRELOAD.en, ...(lang === "en" ? [] : PRELOAD[lang])]
+    .map((name) => {
+      const file = assets.find((f) => f.startsWith(`${name}-normal-`) && f.endsWith(".woff2"));
+      if (!file) throw new Error(`[prerender] no font file for ${name} in build/assets`);
+      return `<link rel="preload" href="/assets/${file}" as="font" type="font/woff2" crossorigin>`;
+    })
+    .join("");
+
 const page = (url, lang = "en") => {
   const { html, head } = render(url);
   return template
     .replace('<html lang="en">', `<html lang="${lang}">`)
-    .replace("<!--app-head-->", head)
+    .replace("<!--app-head-->", preloads(lang) + head)
     .replace("<!--app-html-->", html);
 };
 

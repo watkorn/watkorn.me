@@ -16,8 +16,6 @@ import { strings } from "../src/i18n/strings.js";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "build");
 const GEN = path.join(ROOT, "src", "generated");
-const FONT_DIR = path.join(ROOT, "brand", "fonts"); // gitignored cache; Mali is SIL OFL 1.1
-const FONTS = { 500: "Mali-Medium.ttf", 700: "Mali-Bold.ttf" };
 const LOCALES = { en: "en-GB", th: "th-TH" };
 const KIND = { en: { blog: "blog", project: "project" }, th: { blog: "บล็อก", project: "ผลงาน" } };
 
@@ -34,18 +32,16 @@ const date = (iso, lang) =>
     timeZone: "UTC",
   });
 
-async function font(weight) {
-  const file = path.join(FONT_DIR, FONTS[weight]);
-  if (!fs.existsSync(file)) {
-    // an old user agent makes Google Fonts serve one full TTF (Latin + Thai) instead of woff2 subsets
-    const ua = { "User-Agent": "Mozilla/4.0" };
-    const css = await (await fetch(`https://fonts.googleapis.com/css2?family=Mali:wght@${weight}`, { headers: ua })).text();
-    const url = css.match(/url\((https:[^)]+)\)/)?.[1];
-    if (!url) throw new Error(`no font URL for Mali ${weight}`);
-    fs.mkdirSync(FONT_DIR, { recursive: true });
-    fs.writeFileSync(file, Buffer.from(await (await fetch(url)).arrayBuffer()));
-  }
-  return fs.readFileSync(file).toString("base64");
+// the same self-hosted Mali the site uses (@fontsource): its @font-face rules, with every woff2 inlined
+// as a data URI (the card is rendered from a string, so it can't fetch relative files)
+function fontFaces(weight) {
+  const dir = path.join(ROOT, "node_modules", "@fontsource", "mali");
+  return fs
+    .readFileSync(path.join(dir, `${weight}.css`), "utf8")
+    .replace(/url\(\.\/files\/([^)]+\.woff2)\) format\('woff2'\)(, url\([^)]+\) format\('woff'\))?/g, (m, file) => {
+      const data = fs.readFileSync(path.join(dir, "files", file)).toString("base64");
+      return `url(data:font/woff2;base64,${data}) format('woff2')`;
+    });
 }
 
 // ---- which cards to draw
@@ -96,8 +92,7 @@ const yetiUri = `data:image/svg+xml;base64,${Buffer.from(yeti).toString("base64"
 
 const html = (card, fonts) => `<!doctype html>
 <html lang="${card.lang}"><head><meta charset="utf-8"><style>
-@font-face { font-family: Mali; font-weight: 500; src: url(data:font/ttf;base64,${fonts[500]}) format("truetype"); }
-@font-face { font-family: Mali; font-weight: 700; src: url(data:font/ttf;base64,${fonts[700]}) format("truetype"); }
+${fonts}
 * { box-sizing: border-box; margin: 0; }
 body { width: 1200px; height: 630px; overflow: hidden; background: oklch(87% 0.15 92); color: oklch(22% 0.04 70);
   font-family: Mali, sans-serif; display: grid; grid-template-columns: 1fr 380px; gap: 56px; padding: 64px 72px; }
@@ -155,7 +150,7 @@ function fallback(reason) {
 
 let browser;
 try {
-  const fonts = { 500: await font(500), 700: await font(700) };
+  const fonts = fontFaces(500) + fontFaces(700);
   const { chromium } = await import("@playwright/test");
   browser = await chromium.launch(
     process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {},

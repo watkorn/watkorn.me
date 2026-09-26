@@ -5,6 +5,14 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Changed
+- **Self-hosted fonts:** Mali and JetBrains Mono now come from `@fontsource` instead of Google Fonts, so the site makes no third-party requests. The CSP tightens to `style-src 'self'; font-src 'self'`, and the OG image script uses the same font files (no download at build time).
+- The fonts each page's first screen uses (Mali Latin, plus the Thai subset on `/th/` pages) are preloaded, which removes the layout shift when the web font swaps in (Lighthouse CLS 0.21 → 0 on the home page, best practices 96 → 100).
+- CI, deploy and release workflows run on **Node 24** (LTS).
+
+### Removed
+- Unused `eslint` and `eslint-plugin-react-hooks` dev dependencies (no config or lint script used them).
+
 ## [1.2.0] - 2026-09-26
 
 ### Added

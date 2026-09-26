@@ -26,7 +26,7 @@
 
 ## Quick start
 
-Requires **Node 20+**.
+Requires **Node 20.19+** (CI runs Node 24).
 
 ```bash
 npm install
@@ -139,8 +139,9 @@ brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
 
 - **Rated A+ on [securityheaders.com](https://securityheaders.com/?q=watkorn.me&followRedirects=on).** Cloudflare sends HSTS (1 year, includeSubDomains), CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy and COOP.
 - The live site is static files only; there is nothing server-side to exploit.
-- Every HTML page carries a strict `Content-Security-Policy`: no inline scripts **or** inline styles (`script-src 'self'; style-src 'self' https://fonts.googleapis.com`). The theme bootstrap lives in `public/theme-init.js` for that reason, and a test fails the build on any CSP violation. Cloudflare adds HSTS and the other security headers GitHub Pages can't set.
+- Every HTML page carries a strict `Content-Security-Policy`: no inline scripts **or** inline styles (`script-src 'self'; style-src 'self'; font-src 'self'`). The theme bootstrap lives in `public/theme-init.js` for that reason, and a test fails the build on any CSP violation. Cloudflare adds HSTS and the other security headers GitHub Pages can't set.
 - Markdown is rendered at build time from files in this repo; visitor input is never rendered as HTML.
+- **No third-party requests at all:** the fonts (Mali, JetBrains Mono) are self-hosted via `@fontsource`, so not even Google Fonts sees your IP.
 - The only cookie is `yeti_session`, a first-party game cookie for CTF level 6. Nothing is tracked, and nothing is sent anywhere.
 - Everything in the frontend bundle is public. Never put real secrets in `src/` or `content/`.
 
@@ -148,7 +149,7 @@ Found a real vulnerability? Please report it **privately** by email to **fkub001
 
 ## Tech
 
-React 19 · React Router 7 · Vite · Tailwind CSS 4 (+ typography) · gray-matter · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
+React 19 · React Router 7 · Vite · Tailwind CSS 4 (+ typography) · Fontsource · gray-matter · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
 
 ## License
 
