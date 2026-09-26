@@ -1,14 +1,14 @@
 var e={html:`<p>Capture The Flag (CTF) competitions are the most fun way to learn security. Someone hides a string like <code>flag{...}</code> behind a broken web app, a weird binary or a suspicious PCAP, and you break things (legally) until it falls out. You&#39;ll fail a lot at first. That&#39;s the whole point.</p>
 <p>This is the guide I wish I&#39;d had before my first one.</p>
 <p><img src="/images/blogs/ctftime.png" alt="CTFtime, where you find upcoming CTFs" loading="lazy"></p>
-<h2>First, what kind of CTF is it?</h2>
+<h2 id="first-what-kind-of-ctf-is-it">First, what kind of CTF is it?<a class="heading-anchor" href="#first-what-kind-of-ctf-is-it" aria-label="Link to this section: First, what kind of CTF is it?">#</a></h2>
 <ul>
 <li><strong>Jeopardy.</strong> A board of challenges by category and points. Solve any in any order. This is 90% of CTFs and where you should start.</li>
 <li><strong>Attack–Defense.</strong> Every team gets the same vulnerable services. Patch yours, exploit everyone else&#39;s. Chaotic, amazing, not for week one.</li>
 <li><strong>King of the Hill.</strong> Take over a box and hold it. Great on TryHackMe once you&#39;re comfortable.</li>
 </ul>
 <p>Find events on <a href="https://ctftime.org/" target="_blank" rel="noopener noreferrer">CTFtime</a>. Look for ones tagged <em>beginner</em>, or with low &quot;weight&quot;.</p>
-<h2>Pick a lane (then another)</h2>
+<h2 id="pick-a-lane-then-another">Pick a lane (then another)<a class="heading-anchor" href="#pick-a-lane-then-another" aria-label="Link to this section: Pick a lane (then another)">#</a></h2>
 <p>Nobody is good at everything. Start with one or two categories, then branch out.</p>
 <table>
 <thead>
@@ -50,7 +50,7 @@ var e={html:`<p>Capture The Flag (CTF) competitions are the most fun way to lear
 </tr>
 </tbody></table>
 <p>If you don&#39;t know where to start: <strong>web</strong> or <strong>forensics</strong>. You get quick wins without needing assembly first.</p>
-<h2>Set up your toolkit</h2>
+<h2 id="set-up-your-toolkit">Set up your toolkit<a class="heading-anchor" href="#set-up-your-toolkit" aria-label="Link to this section: Set up your toolkit">#</a></h2>
 <p>A Linux VM (Kali, Parrot or plain Ubuntu) keeps everything in one place and your host clean. Core tools:</p>
 <ul>
 <li><strong>Everywhere:</strong> Python 3, <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreferrer">CyberChef</a>, <code>file</code>, <code>strings</code>, a good text editor</li>
@@ -62,7 +62,7 @@ var e={html:`<p>Capture The Flag (CTF) competitions are the most fun way to lear
 <pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> apt install -y python3-pip gdb binwalk exiftool wireshark john hashcat
 pip install pwntools
 git <span class="hljs-built_in">clone</span> https://github.com/pwndbg/pwndbg &amp;&amp; <span class="hljs-built_in">cd</span> pwndbg &amp;&amp; ./setup.sh
-</code></pre><h2>Practise before the weekend</h2>
+</code></pre><h2 id="practise-before-the-weekend">Practise before the weekend<a class="heading-anchor" href="#practise-before-the-weekend" aria-label="Link to this section: Practise before the weekend">#</a></h2>
 <ul>
 <li><a href="https://picoctf.org/" target="_blank" rel="noopener noreferrer">picoCTF</a>: the best place to start. Challenges go from gentle to genuinely hard.</li>
 <li><a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener noreferrer">OverTheWire: Bandit</a>: Linux basics, one level at a time.</li>
@@ -72,7 +72,7 @@ git <span class="hljs-built_in">clone</span> https://github.com/pwndbg/pwndbg &a
 <li><a href="https://cryptohack.org/" target="_blank" rel="noopener noreferrer">CryptoHack</a>: crypto, taught through puzzles.</li>
 </ul>
 <p>Aim for something small every day rather than one huge weekend. Ten solved easy challenges beat one hard one you gave up on.</p>
-<h2>The first 10 minutes of any challenge</h2>
+<h2 id="the-first-10-minutes-of-any-challenge">The first 10 minutes of any challenge<a class="heading-anchor" href="#the-first-10-minutes-of-any-challenge" aria-label="Link to this section: The first 10 minutes of any challenge">#</a></h2>
 <p>Before anything clever, run the boring stuff. It solves more challenges than you&#39;d think.</p>
 <pre><code class="hljs language-bash">file chall                      <span class="hljs-comment"># what is this, really?</span>
 strings -n 8 chall | less       <span class="hljs-comment"># readable text, sometimes the flag itself</span>
@@ -80,7 +80,7 @@ exiftool image.png              <span class="hljs-comment"># metadata</span>
 binwalk -e firmware.bin         <span class="hljs-comment"># files hidden inside files</span>
 checksec --file=./chall         <span class="hljs-comment"># which protections does this binary have?</span>
 </code></pre><p>For web challenges: read the page source, open DevTools, check <code>/robots.txt</code>, look at cookies, and watch every request in Burp.</p>
-<h2>During the CTF</h2>
+<h2 id="during-the-ctf">During the CTF<a class="heading-anchor" href="#during-the-ctf" aria-label="Link to this section: During the CTF">#</a></h2>
 <ul>
 <li><strong>Read every challenge first.</strong> Sort by number of solves; the most-solved ones are usually the easiest.</li>
 <li><strong>Timebox.</strong> If you&#39;ve made no progress in 45–60 minutes, switch challenges and come back later.</li>
@@ -88,21 +88,21 @@ checksec --file=./chall         <span class="hljs-comment"># which protections d
 <li><strong>Read the rules.</strong> Don&#39;t attack the infrastructure, don&#39;t brute-force the flag submission, don&#39;t share flags.</li>
 <li><strong>Sleep and eat.</strong> Seriously. Tired brains don&#39;t find off-by-one bugs.</li>
 </ul>
-<h2>Play with a team</h2>
+<h2 id="play-with-a-team">Play with a team<a class="heading-anchor" href="#play-with-a-team" aria-label="Link to this section: Play with a team">#</a></h2>
 <ul>
 <li>One channel or thread per challenge. Post what you&#39;ve tried.</li>
 <li>&quot;Claim&quot; a challenge so two people don&#39;t silently do the same thing.</li>
 <li>Share notes in one place (Obsidian, HedgeDoc or Notion) so nothing lives only in your head.</li>
 <li>Pair up: someone strong in rev plus someone strong in pwn is a very good combo.</li>
 </ul>
-<h2>After the CTF (the part everyone skips)</h2>
+<h2 id="after-the-ctf-the-part-everyone-skips">After the CTF (the part everyone skips)<a class="heading-anchor" href="#after-the-ctf-the-part-everyone-skips" aria-label="Link to this section: After the CTF (the part everyone skips)">#</a></h2>
 <p>This is where most of the learning actually happens:</p>
 <ol>
 <li><strong>Read other teams&#39; writeups</strong> for the challenges you didn&#39;t solve. CTFtime links them on each event page.</li>
 <li><strong>Write your own writeups</strong>, even for easy ones. Explaining a solve is how it sticks. (On this site, it&#39;s <code>npm run new-post -- --writeup &quot;Challenge name&quot;</code>.)</li>
 <li><strong>Turn repeated tricks into cheat sheets.</strong> Payloads, one-liners, Python snippets.</li>
 </ol>
-<h2>Quick checklist</h2>
+<h2 id="quick-checklist">Quick checklist<a class="heading-anchor" href="#quick-checklist" aria-label="Link to this section: Quick checklist">#</a></h2>
 <ul>
 <li class="task"><label><input type="checkbox" disabled> Picked 1–2 categories to focus on</label></li>
 <li class="task"><label><input type="checkbox" disabled> VM with the core tools installed</label></li>

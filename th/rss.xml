@@ -19,7 +19,7 @@
 <p><strong>เตือนสปอยล์</strong> โพสต์นี้เฉลยทุกด่านของ mini CTF ในเว็บนี้ ถ้ายังไม่ได้ลองเล่น ไปที่<a href="https://watkorn.me/th/">หน้าแรก</a> พิมพ์ <code>ls</code> แล้วค่อยกลับมาตอนติด คำใบ้ดูฟรีได้ที่<a href="https://watkorn.me/th/achievements">หน้าความสำเร็จ</a> ส่วนตัว flag พับซ่อนไว้ใต้แต่ละด่าน อ่านวิธีคิดได้โดยไม่เห็นคำตอบ โพสต์นี้เฉลยแค่<strong>ซีซัน 1</strong> (ด่าน 1–5) ซีซัน 2 (ด่าน 6–8) ยังเปิดเล่นอยู่ เลยยังไม่มีเฉลยตรงนี้</p>
 </blockquote>
 <p>ซีซัน 1 มี 5 ด่าน ด่านละ 10 ถึง 50 แต้ม (รวม 150 จากทั้งหมด 360) terminal ตรวจคำตอบด้วยคำสั่ง <code>submit &lt;flag&gt;</code> และมันรู้แค่ <strong>SHA-256 hash</strong> ของ flag เท่านั้น คำตอบจึงไม่ได้วางเป็น plain text อยู่ใน JavaScript ก็... ส่วนใหญ่อ่ะนะ ไปกันเลย</p>
-<h2>ด่าน 1: วอร์มอัพ (10 แต้ม)</h2>
+<h2 id="ด่าน-1-วอร์มอัพ-10-แต้ม">ด่าน 1: วอร์มอัพ (10 แต้ม)<a class="heading-anchor" href="#ด่าน-1-วอร์มอัพ-10-แต้ม" aria-label="ลิงก์ไปหัวข้อนี้: ด่าน 1: วอร์มอัพ (10 แต้ม)">#</a></h2>
 <p><em>&quot;มีไฟล์วางทิ้งไว้ในโฟลเดอร์ home&quot;</em></p>
 <p>ท่าแรกสุดคลาสสิกของทุก shell คือมองไปรอบๆ:</p>
 <pre><code class="hljs language-bash">watkorn@me:~$ <span class="hljs-built_in">ls</span>
@@ -29,7 +29,7 @@ watkorn@me:~$ <span class="hljs-built_in">cat</span> flag.txt
 <details>
 <summary>ดู flag</summary><p><code>my_w3b_is_c00ler_th4n_u_th1nk</code></p>
 </details><p><strong>บทเรียน:</strong> สำรวจให้ครบก่อนจะทำอะไรเท่ๆ เสมอ <code>ls</code>, <code>cat</code>, <code>file</code>, <code>strings</code></p>
-<h2>ด่าน 2: ซ่อนไว้ต่อหน้าต่อตา (20 แต้ม)</h2>
+<h2 id="ด่าน-2-ซ่อนไว้ต่อหน้าต่อตา-20-แต้ม">ด่าน 2: ซ่อนไว้ต่อหน้าต่อตา (20 แต้ม)<a class="heading-anchor" href="#ด่าน-2-ซ่อนไว้ต่อหน้าต่อตา-20-แต้ม" aria-label="ลิงก์ไปหัวข้อนี้: ด่าน 2: ซ่อนไว้ต่อหน้าต่อตา (20 แต้ม)">#</a></h2>
 <p><em>&quot;ls แสดงไฟล์ แต่ ls -la แสดงทุกไฟล์&quot;</em></p>
 <p>บน Linux ไฟล์ที่ขึ้นต้นด้วยจุดจะไม่โผล่ตอนสั่ง <code>ls</code> เฉยๆ ต้องเติม <code>-a</code> (all) และ <code>-l</code> (long):</p>
 <pre><code class="hljs language-bash">watkorn@me:~$ <span class="hljs-built_in">ls</span> -la
@@ -47,7 +47,7 @@ d2F0a29ybntkMHRmMWwzc180cjNfbjB0X3MzY3IzdHN9
 <details>
 <summary>ดู flag</summary><p><code>watkorn{d0tf1l3s_4r3_n0t_s3cr3ts}</code></p>
 </details><p><strong>บทเรียน:</strong> Base64 คือ <strong>encoding ไม่ใช่ encryption</strong> ใครก็ย้อนกลับได้ ไม่ต้องมีกุญแจ และ dotfile ที่ &quot;ซ่อน&quot; อยู่ก็ซ่อนอะไรไม่ได้เลยจากคนที่พิมพ์ <code>-a</code> เป็น</p>
-<h2>ด่าน 3: ดูซอร์สโค้ด (30 แต้ม)</h2>
+<h2 id="ด่าน-3-ดูซอร์สโค้ด-30-แต้ม">ด่าน 3: ดูซอร์สโค้ด (30 แต้ม)<a class="heading-anchor" href="#ด่าน-3-ดูซอร์สโค้ด-30-แต้ม" aria-label="ลิงก์ไปหัวข้อนี้: ด่าน 3: ดูซอร์สโค้ด (30 แต้ม)">#</a></h2>
 <p><em>&quot;หน้าที่เห็นไม่ใช่ทั้งหมดของหน้าเว็บ&quot;</em></p>
 <p>สิ่งที่เบราว์เซอร์แสดงเป็นแค่ส่วนหนึ่งของสิ่งที่เซิร์ฟเวอร์ส่งมา เปิด HTML ดิบๆ ด้วย <strong>Ctrl+U</strong> (หรือ <code>view-source:https://watkorn.me/</code>) หรือดึงมาดูเลย:</p>
 <pre><code class="hljs language-bash">curl -s https://watkorn.me/ | grep -i <span class="hljs-string">&quot;note to self&quot;</span>
@@ -59,7 +59,7 @@ d2F0a29ybntkMHRmMWwzc180cjNfbjB0X3MzY3IzdHN9
 <details>
 <summary>ดู flag</summary><p><code>watkorn{v13w_s0urc3_b3f0r3_y0u_h4ck}</code></p>
 </details><p><strong>บทเรียน:</strong> comment หลุดขึ้น production บ่อยกว่าที่คิด ในโจทย์ web จริง (และ bug bounty จริง) ให้อ่าน source, JavaScript bundle และ HTML comment ก่อนเป็นอย่างแรก</p>
-<h2>ด่าน 4: สำหรับหุ่นยนต์เท่านั้น (40 แต้ม)</h2>
+<h2 id="ด่าน-4-สำหรับหุ่นยนต์เท่านั้น-40-แต้ม">ด่าน 4: สำหรับหุ่นยนต์เท่านั้น (40 แต้ม)<a class="heading-anchor" href="#ด่าน-4-สำหรับหุ่นยนต์เท่านั้น-40-แต้ม" aria-label="ลิงก์ไปหัวข้อนี้: ด่าน 4: สำหรับหุ่นยนต์เท่านั้น (40 แต้ม)">#</a></h2>
 <p><em>&quot;crawler ที่มีมารยาทจะอ่านไฟล์หนึ่งก่อนเสมอ ลองทำตัวไม่มีมารยาทดู&quot;</em></p>
 <p>ไฟล์นั้นคือ <code>/robots.txt</code> คำขอร้องแบบสุภาพถึง search engine ว่าอย่าเก็บหน้าไหนเข้า index:</p>
 <pre><code class="hljs language-bash">curl -s https://watkorn.me/robots.txt
@@ -72,7 +72,7 @@ Disallow: /y3t1-l41r/
 </code></pre><details>
 <summary>ดู flag</summary><p><code>watkorn{r0b0ts_txt_1s_4_tr34sur3_m4p}</code></p>
 </details><p><strong>บทเรียน:</strong> <code>robots.txt</code> <strong>ไม่ใช่ access control</strong> มันคือรายชื่อ path ที่มีคนอยากซ่อนพอดี เลยเป็นหนึ่งในไฟล์แรกๆ ที่ต้องเช็กในทุกโจทย์ web และทุกการทำ recon</p>
-<h2>ด่าน 5: ความลับในพิกเซล (50 แต้ม)</h2>
+<h2 id="ด่าน-5-ความลับในพิกเซล-50-แต้ม">ด่าน 5: ความลับในพิกเซล (50 แต้ม)<a class="heading-anchor" href="#ด่าน-5-ความลับในพิกเซล-50-แต้ม" aria-label="ลิงก์ไปหัวข้อนี้: ด่าน 5: ความลับในพิกเซล (50 แต้ม)">#</a></h2>
 <p><em>&quot;เยติคือไฟล์ SVG ลองเปิดไฟล์นั้นแยกออกมา แล้วมองให้ลึกกว่าพิกเซล&quot;</em></p>
 <p>เยติพิกเซลไม่ได้เป็นแท็กรูปภาพ มันวาดจาก SVG sprite ลองเปิด DevTools (<strong>F12 → Elements</strong>) แล้ว inspect ตัวเยติ จะเจอประมาณนี้:</p>
 <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">use</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/assets/yeti-XXXXXXXX.svg#yeti&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">use</span>&gt;</span>
@@ -87,13 +87,13 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 </code></pre><details>
 <summary>ดู flag</summary><p><code>watkorn{p1x3ls_c4n_h1d3_st4ff_t00}</code></p>
 </details><p><strong>บทเรียน:</strong> รูปภาพพกข้อมูลได้ SVG เป็นไฟล์ข้อความที่ใส่ metadata, comment หรือแม้แต่ script ได้ เว็บจริงจึงต้อง sanitise SVG ที่ผู้ใช้อัปโหลด และโจทย์ steganography ก็ชอบไฟล์รูปด้วยเหตุผลนี้</p>
-<h2>ระบบตรวจทำงานยังไง (และข้อจำกัด)</h2>
+<h2 id="ระบบตรวจทำงานยังไง-และข้อจำกัด">ระบบตรวจทำงานยังไง (และข้อจำกัด)<a class="heading-anchor" href="#ระบบตรวจทำงานยังไง-และข้อจำกัด" aria-label="ลิงก์ไปหัวข้อนี้: ระบบตรวจทำงานยังไง (และข้อจำกัด)">#</a></h2>
 <ul>
 <li>terminal เอาสิ่งที่คุณ <code>submit</code> ไป hash ด้วย SHA-256 ในเบราว์เซอร์ของคุณเอง (<code>crypto.subtle.digest</code>) แล้วเทียบกับ hash ที่เก็บไว้ hash เปิดเผยได้ แต่ย้อนกลับเป็น flag ไม่ได้</li>
 <li>ความคืบหน้าเก็บไว้ใน <code>localStorage</code> ของเบราว์เซอร์คุณ ไม่มีอะไรถูกส่งไปเซิร์ฟเวอร์ เพราะไม่มีเซิร์ฟเวอร์ให้ส่ง</li>
 <li>ข้อจำกัดตรงๆ: flag ข้อ 1 และ 2 ต้องอยู่ใน JavaScript เพราะ terminal เป็นคนพิมพ์มันออกมา และทั้งเว็บเป็น <a href="https://github.com/watkorn/watkorn.me" target="_blank" rel="noopener noreferrer">open source</a> การไปอ่าน repo เลยเป็นกลยุทธ์ที่ใช้ได้ แม้จะแอบขี้โกงนิดๆ สำหรับ CTF วอร์มอัพ นี่ถือเป็นฟีเจอร์</li>
 </ul>
-<h2>mini CTF นี้สอนอะไร</h2>
+<h2 id="mini-ctf-นี้สอนอะไร">mini CTF นี้สอนอะไร<a class="heading-anchor" href="#mini-ctf-นี้สอนอะไร" aria-label="ลิงก์ไปหัวข้อนี้: mini CTF นี้สอนอะไร">#</a></h2>
 <table>
 <thead>
 <tr>
@@ -142,14 +142,14 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
       <content:encoded><![CDATA[<p>การแข่ง Capture The Flag (CTF) คือวิธีเรียน security ที่สนุกที่สุดแล้ว ผู้จัดจะซ่อนข้อความหน้าตาแบบ <code>flag{...}</code> ไว้หลังเว็บแอปพังๆ ไบนารีแปลกๆ หรือไฟล์ PCAP ที่ดูมีพิรุธ หน้าที่ของเราคือรื้อมันให้พัง (แบบถูกกฎหมาย) จนกว่า flag จะหล่นออกมา ช่วงแรกจะแพ้บ่อยมาก และนั่นแหละคือประเด็น</p>
 <p>นี่คือไกด์ที่ผมอยากให้มีคนยื่นให้ก่อนลงแข่งครั้งแรก</p>
 <p><img src="https://watkorn.me/images/blogs/ctftime.png" alt="CTFtime เว็บสำหรับหา CTF ที่กำลังจะจัด" loading="lazy"></p>
-<h2>ก่อนอื่น CTF นี้เป็นแบบไหน?</h2>
+<h2 id="ก่อนอื่น-ctf-นี้เป็นแบบไหน">ก่อนอื่น CTF นี้เป็นแบบไหน?<a class="heading-anchor" href="#ก่อนอื่น-ctf-นี้เป็นแบบไหน" aria-label="ลิงก์ไปหัวข้อนี้: ก่อนอื่น CTF นี้เป็นแบบไหน?">#</a></h2>
 <ul>
 <li><strong>Jeopardy</strong> กระดานโจทย์แบ่งตามหมวดและคะแนน จะแก้ข้อไหนก่อนก็ได้ CTF ราว 90% เป็นแบบนี้ และเป็นจุดที่ควรเริ่ม</li>
 <li><strong>Attack–Defense</strong> ทุกทีมได้ service ที่มีช่องโหว่ชุดเดียวกัน ต้อง patch ของตัวเองแล้วไปเจาะของทีมอื่น วุ่นวายแต่มันส์มาก ยังไม่ใช่ของสัปดาห์แรก</li>
 <li><strong>King of the Hill</strong> ยึดเครื่องให้ได้แล้วรักษาไว้ให้นานที่สุด ลองเล่นใน TryHackMe ได้เมื่อเริ่มคล่องแล้ว</li>
 </ul>
 <p>หางานแข่งได้ที่ <a href="https://ctftime.org/" target="_blank" rel="noopener noreferrer">CTFtime</a> มองหางานที่ติดป้าย <em>beginner</em> หรือมีค่า &quot;weight&quot; ต่ำๆ</p>
-<h2>เลือกสายก่อน (แล้วค่อยขยาย)</h2>
+<h2 id="เลือกสายก่อน-แล้วค่อยขยาย">เลือกสายก่อน (แล้วค่อยขยาย)<a class="heading-anchor" href="#เลือกสายก่อน-แล้วค่อยขยาย" aria-label="ลิงก์ไปหัวข้อนี้: เลือกสายก่อน (แล้วค่อยขยาย)">#</a></h2>
 <p>ไม่มีใครเก่งทุกอย่าง เริ่มจากสักหนึ่งหรือสองหมวด แล้วค่อยขยายออกไป</p>
 <table>
 <thead>
@@ -191,7 +191,7 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 </tr>
 </tbody></table>
 <p>ถ้าไม่รู้จะเริ่มตรงไหน: <strong>web</strong> หรือ <strong>forensics</strong> ได้ผลเร็ว ไม่ต้องรู้ assembly ก่อน</p>
-<h2>เซ็ตเครื่องมือ</h2>
+<h2 id="เซ็ตเครื่องมือ">เซ็ตเครื่องมือ<a class="heading-anchor" href="#เซ็ตเครื่องมือ" aria-label="ลิงก์ไปหัวข้อนี้: เซ็ตเครื่องมือ">#</a></h2>
 <p>ใช้ Linux VM (Kali, Parrot หรือ Ubuntu ธรรมดา) จะรวมทุกอย่างไว้ที่เดียวและไม่ทำให้เครื่องหลักรก เครื่องมือหลัก:</p>
 <ul>
 <li><strong>ใช้ทุกหมวด:</strong> Python 3, <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreferrer">CyberChef</a>, <code>file</code>, <code>strings</code>, text editor ดีๆ สักตัว</li>
@@ -203,7 +203,7 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 <pre><code class="hljs language-bash"><span class="hljs-built_in">sudo</span> apt install -y python3-pip gdb binwalk exiftool wireshark john hashcat
 pip install pwntools
 git <span class="hljs-built_in">clone</span> https://github.com/pwndbg/pwndbg &amp;&amp; <span class="hljs-built_in">cd</span> pwndbg &amp;&amp; ./setup.sh
-</code></pre><h2>ซ้อมก่อนถึงวันแข่ง</h2>
+</code></pre><h2 id="ซ้อมก่อนถึงวันแข่ง">ซ้อมก่อนถึงวันแข่ง<a class="heading-anchor" href="#ซ้อมก่อนถึงวันแข่ง" aria-label="ลิงก์ไปหัวข้อนี้: ซ้อมก่อนถึงวันแข่ง">#</a></h2>
 <ul>
 <li><a href="https://picoctf.org/" target="_blank" rel="noopener noreferrer">picoCTF</a>: ที่ที่ดีที่สุดสำหรับเริ่มต้น โจทย์มีตั้งแต่ง่ายๆ ไปจนถึงยากของจริง</li>
 <li><a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener noreferrer">OverTheWire: Bandit</a>: พื้นฐาน Linux ทีละด่าน</li>
@@ -213,7 +213,7 @@ git <span class="hljs-built_in">clone</span> https://github.com/pwndbg/pwndbg &a
 <li><a href="https://cryptohack.org/" target="_blank" rel="noopener noreferrer">CryptoHack</a>: เรียน crypto ผ่านปริศนา</li>
 </ul>
 <p>ทำทีละนิดทุกวันดีกว่าอัดทีเดียวทั้งสุดสัปดาห์ แก้โจทย์ง่ายได้สิบข้อ ดีกว่าโจทย์ยากข้อเดียวที่ถอดใจกลางทาง</p>
-<h2>10 นาทีแรกของทุกโจทย์</h2>
+<h2 id="10-นาทีแรกของทุกโจทย์">10 นาทีแรกของทุกโจทย์<a class="heading-anchor" href="#10-นาทีแรกของทุกโจทย์" aria-label="ลิงก์ไปหัวข้อนี้: 10 นาทีแรกของทุกโจทย์">#</a></h2>
 <p>ก่อนจะทำอะไรเท่ๆ ให้รันของน่าเบื่อก่อน มันแก้โจทย์ได้มากกว่าที่คิด</p>
 <pre><code class="hljs language-bash">file chall                      <span class="hljs-comment"># ตกลงไฟล์นี้คืออะไรกันแน่?</span>
 strings -n 8 chall | less       <span class="hljs-comment"># ข้อความที่อ่านออก บางทีก็คือ flag เลย</span>
@@ -221,7 +221,7 @@ exiftool image.png              <span class="hljs-comment"># metadata</span>
 binwalk -e firmware.bin         <span class="hljs-comment"># ไฟล์ที่ซ่อนอยู่ในไฟล์</span>
 checksec --file=./chall         <span class="hljs-comment"># ไบนารีนี้เปิดระบบป้องกันอะไรไว้บ้าง?</span>
 </code></pre><p>โจทย์ web: อ่าน source ของหน้า เปิด DevTools ดู <code>/robots.txt</code> เช็ก cookie และส่องทุก request ใน Burp</p>
-<h2>ระหว่างแข่ง</h2>
+<h2 id="ระหว่างแข่ง">ระหว่างแข่ง<a class="heading-anchor" href="#ระหว่างแข่ง" aria-label="ลิงก์ไปหัวข้อนี้: ระหว่างแข่ง">#</a></h2>
 <ul>
 <li><strong>อ่านโจทย์ทุกข้อก่อน</strong> เรียงตามจำนวนคนที่แก้ได้ ข้อที่คนแก้ได้เยอะที่สุดมักจะง่ายที่สุด</li>
 <li><strong>จับเวลา</strong> ถ้า 45–60 นาทีแล้วยังไม่คืบ ให้เปลี่ยนข้อแล้วค่อยกลับมาทีหลัง</li>
@@ -229,21 +229,21 @@ checksec --file=./chall         <span class="hljs-comment"># ไบนารี�
 <li><strong>อ่านกติกา</strong> ห้ามโจมตีโครงสร้างระบบของงาน ห้าม brute-force การส่ง flag ห้ามแชร์ flag</li>
 <li><strong>นอนกับกินข้าว</strong> จริงจังนะ สมองที่ล้าหาบั๊ก off-by-one ไม่เจอหรอก</li>
 </ul>
-<h2>เล่นเป็นทีม</h2>
+<h2 id="เล่นเป็นทีม">เล่นเป็นทีม<a class="heading-anchor" href="#เล่นเป็นทีม" aria-label="ลิงก์ไปหัวข้อนี้: เล่นเป็นทีม">#</a></h2>
 <ul>
 <li>หนึ่ง channel หรือ thread ต่อหนึ่งโจทย์ โพสต์ว่าลองอะไรไปแล้วบ้าง</li>
 <li>&quot;จอง&quot; โจทย์ก่อนลงมือ จะได้ไม่มีสองคนทำเรื่องเดียวกันเงียบๆ</li>
 <li>รวมโน้ตไว้ที่เดียว (Obsidian, HedgeDoc หรือ Notion) อย่าให้อะไรอยู่แค่ในหัวใครคนเดียว</li>
 <li>จับคู่กัน: คนเก่ง rev คู่กับคนเก่ง pwn คือคอมโบที่ดีมาก</li>
 </ul>
-<h2>หลังแข่งจบ (ส่วนที่ทุกคนชอบข้าม)</h2>
+<h2 id="หลังแข่งจบ-ส่วนที่ทุกคนชอบข้าม">หลังแข่งจบ (ส่วนที่ทุกคนชอบข้าม)<a class="heading-anchor" href="#หลังแข่งจบ-ส่วนที่ทุกคนชอบข้าม" aria-label="ลิงก์ไปหัวข้อนี้: หลังแข่งจบ (ส่วนที่ทุกคนชอบข้าม)">#</a></h2>
 <p>การเรียนรู้จริงๆ เกิดขึ้นตรงนี้:</p>
 <ol>
 <li><strong>อ่าน writeup ของทีมอื่น</strong> สำหรับข้อที่เราแก้ไม่ได้ CTFtime จะรวมลิงก์ไว้ในหน้าของแต่ละงาน</li>
 <li><strong>เขียน writeup ของตัวเอง</strong> ต่อให้เป็นข้อง่ายก็เขียน การอธิบายวิธีแก้คือสิ่งที่ทำให้มันติดหัว (บนเว็บนี้ใช้คำสั่ง <code>npm run new-post -- --writeup &quot;Challenge name&quot;</code>)</li>
 <li><strong>เปลี่ยนทริกที่ใช้ซ้ำๆ ให้เป็น cheat sheet</strong> ทั้ง payload, one-liner และ snippet Python</li>
 </ol>
-<h2>เช็กลิสต์สั้นๆ</h2>
+<h2 id="เช็กลิสต์สั้นๆ">เช็กลิสต์สั้นๆ<a class="heading-anchor" href="#เช็กลิสต์สั้นๆ" aria-label="ลิงก์ไปหัวข้อนี้: เช็กลิสต์สั้นๆ">#</a></h2>
 <ul>
 <li class="task"><label><input type="checkbox" disabled> เลือกหมวดที่จะโฟกัสแล้ว 1–2 หมวด</label></li>
 <li class="task"><label><input type="checkbox" disabled> มี VM ที่ลงเครื่องมือหลักครบ</label></li>

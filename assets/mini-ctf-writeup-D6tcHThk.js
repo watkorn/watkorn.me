@@ -2,7 +2,7 @@ var e={html:`<blockquote>
 <p><strong>Spoiler alert.</strong> This post solves every level of the mini CTF on this site. If you haven&#39;t tried it yet, go to the <a href="/">home page</a>, type <code>ls</code>, and come back when you&#39;re stuck. Hints are free on the <a href="/achievements">achievements page</a>. The flags themselves are folded away below each level, so you can read the method without seeing the answer. This post covers <strong>season 1</strong> (levels 1–5). Season 2 (levels 6–8) is still live, so no spoilers for it here yet.</p>
 </blockquote>
 <p>Season 1 has five levels, worth 10 to 50 points (150 of the 360 in total). The terminal checks your answers with <code>submit &lt;flag&gt;</code>, and it only knows the <strong>SHA-256 hashes</strong> of the flags, so the answers aren&#39;t sitting in the JavaScript in plain text. Well, mostly. Let&#39;s go.</p>
-<h2>Level 1: Warm-up (10 pts)</h2>
+<h2 id="level-1-warm-up-10-pts">Level 1: Warm-up (10 pts)<a class="heading-anchor" href="#level-1-warm-up-10-pts" aria-label="Link to this section: Level 1: Warm-up (10 pts)">#</a></h2>
 <p><em>&quot;Some files are just lying around in the home folder.&quot;</em></p>
 <p>The classic first move in any shell is to look around:</p>
 <pre><code class="hljs language-bash">watkorn@me:~$ <span class="hljs-built_in">ls</span>
@@ -12,7 +12,7 @@ watkorn@me:~$ <span class="hljs-built_in">cat</span> flag.txt
 <details>
 <summary>Show flag</summary><p><code>my_w3b_is_c00ler_th4n_u_th1nk</code></p>
 </details><p><strong>Lesson:</strong> always enumerate before you get clever. <code>ls</code>, <code>cat</code>, <code>file</code>, <code>strings</code>.</p>
-<h2>Level 2: Hidden in plain sight (20 pts)</h2>
+<h2 id="level-2-hidden-in-plain-sight-20-pts">Level 2: Hidden in plain sight (20 pts)<a class="heading-anchor" href="#level-2-hidden-in-plain-sight-20-pts" aria-label="Link to this section: Level 2: Hidden in plain sight (20 pts)">#</a></h2>
 <p><em>&quot;ls shows files. ls -la shows all of them.&quot;</em></p>
 <p>On Linux, files starting with a dot are hidden from a plain <code>ls</code>. Add <code>-a</code> (all) and <code>-l</code> (long):</p>
 <pre><code class="hljs language-bash">watkorn@me:~$ <span class="hljs-built_in">ls</span> -la
@@ -30,7 +30,7 @@ d2F0a29ybntkMHRmMWwzc180cjNfbjB0X3MzY3IzdHN9
 <details>
 <summary>Show flag</summary><p><code>watkorn{d0tf1l3s_4r3_n0t_s3cr3ts}</code></p>
 </details><p><strong>Lesson:</strong> Base64 is <strong>encoding, not encryption</strong>. Anyone can reverse it, no key needed. And &quot;hidden&quot; dotfiles hide nothing from someone who types <code>-a</code>.</p>
-<h2>Level 3: View source (30 pts)</h2>
+<h2 id="level-3-view-source-30-pts">Level 3: View source (30 pts)<a class="heading-anchor" href="#level-3-view-source-30-pts" aria-label="Link to this section: Level 3: View source (30 pts)">#</a></h2>
 <p><em>&quot;The page you see isn&#39;t the whole page.&quot;</em></p>
 <p>What the browser renders is only part of what the server sends. Open the raw HTML with <strong>Ctrl+U</strong> (or <code>view-source:https://watkorn.me/</code>), or fetch it:</p>
 <pre><code class="hljs language-bash">curl -s https://watkorn.me/ | grep -i <span class="hljs-string">&quot;note to self&quot;</span>
@@ -42,7 +42,7 @@ d2F0a29ybntkMHRmMWwzc180cjNfbjB0X3MzY3IzdHN9
 <details>
 <summary>Show flag</summary><p><code>watkorn{v13w_s0urc3_b3f0r3_y0u_h4ck}</code></p>
 </details><p><strong>Lesson:</strong> comments ship to production more often than you&#39;d think. On real web challenges (and real bug bounties), read the source, the JavaScript bundles and the HTML comments first.</p>
-<h2>Level 4: Robots only (40 pts)</h2>
+<h2 id="level-4-robots-only-40-pts">Level 4: Robots only (40 pts)<a class="heading-anchor" href="#level-4-robots-only-40-pts" aria-label="Link to this section: Level 4: Robots only (40 pts)">#</a></h2>
 <p><em>&quot;Every well-behaved crawler reads one file before anything else. Be badly behaved.&quot;</em></p>
 <p>That file is <code>/robots.txt</code>, a polite request to search engines about what not to index:</p>
 <pre><code class="hljs language-bash">curl -s https://watkorn.me/robots.txt
@@ -55,7 +55,7 @@ Disallow: /y3t1-l41r/
 </code></pre><details>
 <summary>Show flag</summary><p><code>watkorn{r0b0ts_txt_1s_4_tr34sur3_m4p}</code></p>
 </details><p><strong>Lesson:</strong> <code>robots.txt</code> is <strong>not access control</strong>. It lists exactly the paths someone wanted to hide, which makes it one of the first files to check in any web challenge or recon.</p>
-<h2>Level 5: Pixel secrets (50 pts)</h2>
+<h2 id="level-5-pixel-secrets-50-pts">Level 5: Pixel secrets (50 pts)<a class="heading-anchor" href="#level-5-pixel-secrets-50-pts" aria-label="Link to this section: Level 5: Pixel secrets (50 pts)">#</a></h2>
 <p><em>&quot;The yeti is an SVG. Open the file on its own and look past the pixels.&quot;</em></p>
 <p>The pixel yeti isn&#39;t an image tag; it&#39;s drawn from an SVG sprite. In DevTools (<strong>F12 → Elements</strong>), inspect the yeti and you&#39;ll find something like:</p>
 <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">use</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/assets/yeti-XXXXXXXX.svg#yeti&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">use</span>&gt;</span>
@@ -70,13 +70,13 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 </code></pre><details>
 <summary>Show flag</summary><p><code>watkorn{p1x3ls_c4n_h1d3_st4ff_t00}</code></p>
 </details><p><strong>Lesson:</strong> images can carry data. SVGs are text files that can hold metadata, comments and even scripts. That&#39;s why real sites sanitise user-uploaded SVGs, and why steganography challenges love image files.</p>
-<h2>How the checking works (and its limits)</h2>
+<h2 id="how-the-checking-works-and-its-limits">How the checking works (and its limits)<a class="heading-anchor" href="#how-the-checking-works-and-its-limits" aria-label="Link to this section: How the checking works (and its limits)">#</a></h2>
 <ul>
 <li>The terminal hashes whatever you <code>submit</code> with SHA-256 in your browser (<code>crypto.subtle.digest</code>) and compares it against the stored hashes. The hashes are public, but a hash can&#39;t be reversed back into the flag.</li>
 <li>Your progress is stored in your browser&#39;s <code>localStorage</code>. Nothing is sent to a server, because there isn&#39;t one.</li>
 <li>Honest limits: flags 1 and 2 have to live in the JavaScript, because the terminal prints them. And the whole site is <a href="https://github.com/watkorn/watkorn.me" target="_blank" rel="noopener noreferrer">open source</a>, so reading the repo is a valid, if slightly cheeky, strategy. For a warm-up CTF, that&#39;s a feature.</li>
 </ul>
-<h2>What this mini CTF teaches</h2>
+<h2 id="what-this-mini-ctf-teaches">What this mini CTF teaches<a class="heading-anchor" href="#what-this-mini-ctf-teaches" aria-label="Link to this section: What this mini CTF teaches">#</a></h2>
 <table>
 <thead>
 <tr>
