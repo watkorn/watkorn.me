@@ -18,6 +18,8 @@ export default function PageWrapper({
   langs = LANGS,
   type = "website",
   published,
+  image,
+  imageAlt,
   children,
   className = "",
 }) {
@@ -26,6 +28,8 @@ export default function PageWrapper({
   const desc = description || t("meta.desc");
   const canonicalLang = langs.includes(lang) ? lang : langs[0];
   const url = path != null ? absoluteUrl(localizePath(path, canonicalLang)) : null;
+  // link-preview image: per post/project (scripts/og.mjs), otherwise the site card for this language
+  const ogImage = `${SITE_URL}${image || (lang === DEFAULT_LANG ? "/og.png" : `/og/${lang}.png`)}`;
   return (
     <>
       <Helmet>
@@ -35,6 +39,10 @@ export default function PageWrapper({
         <meta property="og:description" content={desc} />
         <meta property="og:type" content={type} />
         <meta property="og:locale" content={OG_LOCALES[lang]} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={imageAlt || (image ? fullTitle : t("meta.ogAlt"))} />
         {url && <meta property="og:url" content={url} />}
         {url && <link rel="canonical" href={url} />}
         {path != null &&

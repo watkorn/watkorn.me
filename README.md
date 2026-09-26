@@ -7,7 +7,7 @@
 [![Live site](https://img.shields.io/badge/live-watkorn.me-f2d54c)](https://watkorn.me)
 
 > The personal site of **Watcharakorn Khambung (watkorn)**: CTF writeups, security side projects,
-> and a terminal on the home page with **five flags** hidden around the site. Go find them.
+> and a terminal on the home page with **eight flags** hidden around the site. Go find them.
 
 | Light | Dark |
 |---|---|
@@ -17,7 +17,7 @@
 
 ## Features
 
-- **A mini CTF.** The home terminal (`ls`, `cd`, `cat`, `open`, `hint`, `submit`…) is the entry point to five flags hidden around the site. Flags are checked by SHA-256 hash, so reading the JavaScript won't hand you the answers. Progress lives on [`/achievements`](https://watkorn.me/achievements/), stored only in the visitor's browser.
+- **A mini CTF.** The home terminal (`ls`, `cd`, `cat`, `open`, `hint`, `submit`…) is the entry point to eight flags in two seasons, hidden around the site (and in a cookie, a vault and a picture). Flags are checked by SHA-256 hash, so reading the JavaScript won't hand you the answers. Progress lives on [`/achievements`](https://watkorn.me/achievements/), stored only in the visitor's browser.
 - **Blogs and projects in Markdown**, with a CTF writeup template, category/difficulty badges, and tag filters on both lists (tags on a post or project link back to the filtered list).
 - **English and Thai.** Every page exists at `/…` and `/th/…`, with a language key in the header, `hreflang` links, a Thai RSS feed and Thai translations of every post. The choice is remembered, and Thai browsers land on `/th/` from the home page.
 - **Real URLs and pre-rendered pages.** Every page is built to its own HTML file, so posts are indexable and show proper link previews (Open Graph + Twitter cards). There's also a sitemap and an RSS feed.
@@ -39,7 +39,7 @@ npm start              # http://localhost:3000 (drafts are visible in dev)
 | `npm run new-post -- "My Title"` | New blog post in `content/blogs/` (as a draft) |
 | `npm run new-post -- --writeup "Challenge"` | New **CTF writeup** from the template |
 | `npm run new-post -- --th my-post` | Start the **Thai translation** of `content/blogs/my-post.md` |
-| `npm run build` | Production build in `build/`: prerendered pages, 404, sitemap, RSS, CSP |
+| `npm run build` | Production build in `build/`: prerendered pages, 404, sitemap, RSS, link-preview images, security.txt, CSP. The images are drawn with Chromium (`npx playwright install chromium` once); without it they fall back to `og.png` with a warning |
 | `npm run preview` | Serve the production build at http://localhost:4173 |
 | `npm test` | Playwright smoke tests against the build (run `npm run build` first; first time also `npx playwright install chromium`) |
 
@@ -103,6 +103,7 @@ content/blogs/baby-rop.th.md    ->  /th/blogs/baby-rop/
 
 - The levels, points, hints and **SHA-256 hashes** of the flags are in [`src/ctf/ctf.js`](src/ctf/ctf.js). The plaintext flags exist only in their hiding places on the site.
 - [`tests/ctf-integrity.spec.js`](tests/ctf-integrity.spec.js) proves every flag can be found on the built site and matches its hash. If you move or change a flag, update both the hiding place and the hash, and this test will tell you if they disagree.
+- Season 2 (levels 6–8) lives in [`src/ctf/season2.js`](src/ctf/season2.js): level 6's flag is AES-GCM encrypted and only decrypts for a forged `role=admin` session cookie, level 7's is XORed with one byte, and level 8's is hidden in the least significant bits of `public/images/blogs/ctftime.png`. **Don't re-save or optimise that image**, or the flag is gone (the integrity test would catch it).
 - Heads-up: this repo is public, so a determined player can read the source. That's fine for a warm-up CTF; for harder challenges, keep the hiding places outside this repo.
 
 ## Project structure
@@ -140,9 +141,10 @@ brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
 - The live site is static files only; there is nothing server-side to exploit.
 - Every HTML page carries a strict `Content-Security-Policy`: no inline scripts **or** inline styles (`script-src 'self'; style-src 'self' https://fonts.googleapis.com`). The theme bootstrap lives in `public/theme-init.js` for that reason, and a test fails the build on any CSP violation. Cloudflare adds HSTS and the other security headers GitHub Pages can't set.
 - Markdown is rendered at build time from files in this repo; visitor input is never rendered as HTML.
+- The only cookie is `yeti_session`, a first-party game cookie for CTF level 6. Nothing is tracked, and nothing is sent anywhere.
 - Everything in the frontend bundle is public. Never put real secrets in `src/` or `content/`.
 
-Found a real issue? Please open a GitHub issue or email **fkub0011@gmail.com**.
+Found a real vulnerability? Please report it **privately** by email to **fkub0011@gmail.com** rather than in a public issue. The same contact is published at [`/.well-known/security.txt`](https://watkorn.me/.well-known/security.txt) (RFC 9116, regenerated with a fresh `Expires` on every build). The mini CTF flags are meant to be found, so they don't count.
 
 ## Tech
 

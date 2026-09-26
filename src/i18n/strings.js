@@ -23,12 +23,13 @@ const en = {
 
   // meta
   "meta.homeTitle": "WATKORN.ME · find the flags",
-  "meta.desc": "Watcharakorn Khambung (watkorn): CTF writeups, security tools, and a terminal with five flags hidden in it.",
+  "meta.desc": "Watcharakorn Khambung (watkorn): CTF writeups, security tools, and a terminal with eight flags hidden in it.",
   "meta.rss": "WATKORN.ME blog",
+  "meta.ogAlt": "The watkorn pixel yeti next to the words find the flags",
 
   // home
   "home.title": "find the flags.",
-  "home.dare": "Five of them are hiding around this site. Start with {ls}. Stuck? Type {hint}.",
+  "home.dare": "Eight of them are hiding around this site. Start with {ls}. Stuck? Type {hint}.",
   "home.yeti": "watkorn's yeti mascot",
   "home.power": "power",
   "home.edition": "watkorn@me · ctf edition",
@@ -49,12 +50,12 @@ const en = {
 
   // terminal output (commands themselves stay English)
   "term.readme":
-    "# watkorn\nsecurity hobbyist · CTF player · tool builder\n\n5 flags are hidden on this site. flag.txt is the free one.\nnext: hint · achievements · ls blogs",
+    "# watkorn\nsecurity hobbyist · CTF player · tool builder\n\n8 flags are hidden on this site. flag.txt is the free one.\nnext: hint · achievements · ls blogs",
   "term.help": [
     "files:  ls, ls -la, cat <file>, cd <dir>, pwd",
     "site:   ls blogs, ls projects, open <name>, cd blogs, cd projects",
     "ctf:    submit <flag>, hint [n], achievements",
-    "misc:   whoami, date, echo, clear",
+    "misc:   whoami, id, date, echo, clear",
   ],
   "term.open": "(open <name> to read one)",
   "term.opening": "opening {to} …",
@@ -110,10 +111,10 @@ const en = {
 
   // achievements
   "ach.title": "Achievements",
-  "ach.desc": "Five flags are hidden around watkorn.me. How many can you find?",
-  "ach.lede": "Five flags are hiding around this site. Found one? Submit it here, or in the terminal with {submit}.",
+  "ach.desc": "Eight flags are hidden around watkorn.me. How many can you find?",
+  "ach.lede": "Eight flags are hiding around this site. Found one? Submit it here, or in the terminal with {submit}.",
   "ach.score": "{found} of {total} flags",
-  "ach.legend": "all five. legend.",
+  "ach.legend": "all eight. legend.",
   "ach.submitLabel": "Submit a flag",
   "ach.submit": "Submit",
   "ach.nope": "Nope, not a flag. Yet.",
@@ -123,6 +124,7 @@ const en = {
   "ach.solved": "Solved",
   "ach.locked": "Locked",
   "ach.hint": "Show hint",
+  "ach.season2": "season 2",
   "ach.back": "Back to the terminal",
   "ach.reset": "Reset progress",
   "ach.resetArm": "Tap again to reset",
@@ -156,11 +158,12 @@ const th = {
   "top": "กลับขึ้นด้านบน",
 
   "meta.homeTitle": "WATKORN.ME · หา flag ให้เจอ",
-  "meta.desc": "Watcharakorn Khambung (watkorn): writeup CTF เครื่องมือสาย security และ terminal ที่ซ่อน flag ไว้ 5 อัน",
+  "meta.desc": "Watcharakorn Khambung (watkorn): writeup CTF เครื่องมือสาย security และ terminal ที่ซ่อน flag ไว้ 8 อัน",
   "meta.rss": "บล็อก WATKORN.ME (ภาษาไทย)",
+  "meta.ogAlt": "เยติพิกเซลของ watkorn ข้างข้อความ หา flag ให้เจอ",
 
   "home.title": "หา flag ให้\u2060เจอ.", // word joiner: never break "ให้|เจอ"
-  "home.dare": "มีซ่อนอยู่ 5 อันทั่วเว็บนี้ เริ่มจาก {ls} ได้เลย ติดตรงไหนพิมพ์ {hint}",
+  "home.dare": "มีซ่อนอยู่ 8 อันทั่วเว็บนี้ เริ่มจาก {ls} ได้เลย ติดตรงไหนพิมพ์ {hint}",
   "home.yeti": "เยติ มาสคอตของ watkorn",
   "home.power": "power",
   "home.edition": "watkorn@me · ctf edition",
@@ -180,12 +183,12 @@ const th = {
   "toast.dismiss": "ปิด",
 
   "term.readme":
-    "# watkorn\nสาย security งานอดิเรก · เล่น CTF · ชอบสร้างเครื่องมือ\n\nมี flag ซ่อนอยู่ในเว็บนี้ 5 อัน flag.txt คืออันที่แจกฟรี\nต่อไป: hint · achievements · ls blogs",
+    "# watkorn\nสาย security งานอดิเรก · เล่น CTF · ชอบสร้างเครื่องมือ\n\nมี flag ซ่อนอยู่ในเว็บนี้ 8 อัน flag.txt คืออันที่แจกฟรี\nต่อไป: hint · achievements · ls blogs",
   "term.help": [
     "ไฟล์:   ls, ls -la, cat <file>, cd <dir>, pwd",
     "เว็บ:    ls blogs, ls projects, open <name>, cd blogs, cd projects",
     "ctf:    submit <flag>, hint [n], achievements",
-    "อื่นๆ:   whoami, date, echo, clear",
+    "อื่นๆ:   whoami, id, date, echo, clear",
   ],
   "term.open": "(พิมพ์ open <name> เพื่อเปิดอ่าน)",
   "term.opening": "กำลังเปิด {to} …",
@@ -238,10 +241,10 @@ const th = {
   "copy.label": "คัดลอกโค้ด",
 
   "ach.title": "ความสำเร็จ",
-  "ach.desc": "มี flag ซ่อนอยู่ 5 อันทั่ว watkorn.me คุณหาเจอได้กี่อัน?",
-  "ach.lede": "มี flag ซ่อนอยู่ 5 อันทั่วเว็บนี้ เจอแล้วส่งตรงนี้ได้เลย หรือจะส่งใน terminal ด้วย {submit} ก็ได้",
+  "ach.desc": "มี flag ซ่อนอยู่ 8 อันทั่ว watkorn.me คุณหาเจอได้กี่อัน?",
+  "ach.lede": "มี flag ซ่อนอยู่ 8 อันทั่วเว็บนี้ เจอแล้วส่งตรงนี้ได้เลย หรือจะส่งใน terminal ด้วย {submit} ก็ได้",
   "ach.score": "เจอแล้ว {found} จาก {total} flag",
-  "ach.legend": "ครบทั้ง 5 ตำนานชัดๆ",
+  "ach.legend": "ครบทั้ง 8 ตำนานชัดๆ",
   "ach.submitLabel": "ส่ง flag",
   "ach.submit": "ส่ง",
   "ach.nope": "ไม่ใช่ นี่ยังไม่ใช่ flag",
@@ -251,6 +254,7 @@ const th = {
   "ach.solved": "ผ่านแล้ว",
   "ach.locked": "ยังล็อกอยู่",
   "ach.hint": "ดูคำใบ้",
+  "ach.season2": "ซีซัน 2",
   "ach.back": "กลับไปที่ terminal",
   "ach.reset": "ล้างความคืบหน้า",
   "ach.resetArm": "แตะอีกครั้งเพื่อล้าง",

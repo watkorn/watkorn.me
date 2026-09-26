@@ -5,7 +5,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-09-26
+
 ### Added
+- **Mini CTF season 2:** three harder levels, still fully static. *Trust issues* (60, web: a session cookie whose signature nobody checks, with `id` and `sudo` in the terminal), *One byte* (70, crypto: a single-byte XOR vault in `~/.secret`) and *Least significant* (80, forensics: LSB steganography in a blog image). 8 flags, 360 points. None of the new flags exist in plain text in the code or the build; the integrity test solves all eight.
+- **Link-preview images for every post and project**, in both languages (`build/og/…`), drawn at build time by `scripts/og.mjs` in headless Chromium, plus a Thai card for the `/th/` pages.
+- **`/.well-known/security.txt`** (RFC 9116), regenerated on every build with a fresh `Expires`, and a private-reporting note in the README instead of "open an issue".
 - **Thoth** project page (English + Thai) with light and dark screenshots. Security is described by principle only, with no infrastructure, versions or known gaps, and the page states that Thoth is out of scope for the site's CTF.
 - **Project tags** (`tags:` in frontmatter) with a tag filter on the Projects page, shared with Blogs (`TagFilter`). Tags on a post or project page now link to the filtered list.
 - **Thai language** (ภาษาไทย): every page now also exists under `/th/`, with a globe key in the header that switches to the same page in the other language. The choice is remembered, and Thai browsers opening the home page land on `/th/`.
@@ -85,6 +90,7 @@ First release in this repository.
 - The production build ships without source maps or inline scripts, with a strict `Content-Security-Policy`.
 - The site is fully static: no server, database, or third-party scripts.
 
-[Unreleased]: https://github.com/watkorn/watkorn.me/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/watkorn/watkorn.me/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/watkorn/watkorn.me/releases/tag/v1.2.0
 [1.1.0]: https://github.com/watkorn/watkorn.me/releases/tag/v1.1.0
 [1.0.0]: https://github.com/watkorn/watkorn.me/releases/tag/v1.0.0

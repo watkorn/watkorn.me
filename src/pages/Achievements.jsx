@@ -100,7 +100,10 @@ export default function Achievements() {
                   <h2 className="ach__title">
                     {text.title} <span className="ach__pts">{t("pts", { n: l.points })}</span>
                   </h2>
-                  <p className="ach__state">{got ? t("ach.solved") : t("ach.locked")}</p>
+                  <p className="ach__state">
+                    {got ? t("ach.solved") : t("ach.locked")}
+                    {l.season === 2 && ` · ${t("ach.season2")}`}
+                  </p>
                   {!got && (
                     <details className="ach__hint">
                       <summary>{t("ach.hint")}</summary>

@@ -48,7 +48,7 @@ test("ctf: warm-up flag unlocks, level 2 can be found and submitted", async ({ p
   await expect(page.locator(".terminal__line--input")).toContainText("watkorn@me:~/.secret$");
 
   await page.goto("/achievements");
-  await expect(page.locator(".ach-score")).toContainText("30/150 pts");
+  await expect(page.locator(".ach-score")).toContainText("30/360 pts");
 });
 
 test("blog post is prerendered with SEO tags (no JS needed)", async ({ request }) => {
@@ -59,15 +59,28 @@ test("blog post is prerendered with SEO tags (no JS needed)", async ({ request }
   expect(html).toContain("Preparing for CTF");
   expect(html).toContain('property="og:title"');
   expect(html).toContain('rel="canonical"');
+  expect(html).toContain('property="og:image" content="https://watkorn.me/og/blogs/preparing-for-ctf.png"');
   expect(html).toContain("Capture The Flag (CTF) competitions");
   expect(html).toContain('http-equiv="Content-Security-Policy"');
 });
 
 test("feeds and robots exist", async ({ request }) => {
-  for (const path of ["/rss.xml", "/sitemap.xml", "/robots.txt", "/og.png"]) {
+  for (const path of [
+    "/rss.xml",
+    "/sitemap.xml",
+    "/robots.txt",
+    "/og.png",
+    "/og/th.png",
+    "/og/blogs/preparing-for-ctf.png",
+    "/og/th/projects/thoth.png",
+    "/.well-known/security.txt",
+  ]) {
     expect((await request.get(path)).ok(), path).toBe(true);
   }
   expect(await (await request.get("/rss.xml")).text()).toContain("<item>");
+  const securityTxt = await (await request.get("/.well-known/security.txt")).text();
+  expect(securityTxt).toMatch(/^Contact: mailto:/m);
+  expect(new Date(securityTxt.match(/^Expires: (.+)$/m)[1]).getTime()).toBeGreaterThan(Date.now());
 });
 
 test("blogs: list, filter and open a post", async ({ page }) => {

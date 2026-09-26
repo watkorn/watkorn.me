@@ -14,7 +14,7 @@ screenshots:
     label: Dark theme
 ---
 
-This site is my home for CTF writeups and side projects, and a challenge in its own right. The home page is a terminal with **five flags** hidden around the site. If you're a security person, the fastest way to get to know me is to try to break my website.
+This site is my home for CTF writeups and side projects, and a challenge in its own right. The home page is a terminal with **eight flags** hidden around the site. If you're a security person, the fastest way to get to know me is to try to break my website.
 
 ## Goals
 
@@ -51,7 +51,7 @@ Being a security person's website, it had better hold up:
 
 ## The CTF inside
 
-The terminal speaks a little shell: `ls -la`, `cd`, `cat`, `open <post>`, `hint`, `submit <flag>`, with history and Tab completion. Five levels (10 to 50 points) are hidden in places a player should learn to look. Flags are checked by **SHA-256 hash only**, so reading the JavaScript doesn't hand over the answers. Progress lives on the [achievements page](/achievements), stored only in your browser.
+The terminal speaks a little shell: `ls -la`, `cd`, `cat`, `open <post>`, `hint`, `submit <flag>`, with history and Tab completion. Eight levels in two seasons (10 to 80 points) are hidden in places a player should learn to look. Flags are checked by **SHA-256 hash only**, so reading the JavaScript doesn't hand over the answers. Progress lives on the [achievements page](/achievements), stored only in your browser.
 
 A test proves every flag is reachable on the built site and matches its hash, so I can't accidentally ship an unsolvable level.
 

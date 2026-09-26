@@ -33,21 +33,24 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Build static site (prerendered pages, sitemap, RSS, CSP)
+      # Chromium draws the link-preview images during the build (scripts/og.mjs) and runs the tests
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build static site (prerendered pages, OG images, sitemap, RSS, CSP)
         run: npm run build
 
       - name: Smoke tests
-        run: |
-          npx playwright install --with-deps chromium
-          npx playwright test
+        run: npx playwright test
 
       - name: Publish build/ to gh-pages branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # gh-pages' -u parser rejects the "[bot]" address, so set the identity via git config
+          # --dotfiles: publish build/.well-known/ (security.txt) too
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          npx gh-pages -d build --nojekyll \
+          npx gh-pages -d build --nojekyll --dotfiles \
             -m "Deploy ${GITHUB_SHA::7}" \
             -r "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"

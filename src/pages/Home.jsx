@@ -10,12 +10,14 @@ import tryhackme from "../assets/tryhackmeL.png";
 import { blogs } from "../data/blogs";
 import { projects } from "../data/projects";
 import { LEVELS, TOTAL_POINTS, checkFlag, levelText, loadSolved, saveSolved, score } from "../ctf/ctf";
+import { ensureSession, readRootFlag, readSession, VAULT_XOR } from "../ctf/season2";
 import { useLang } from "../i18n";
 import { rich } from "../i18n/rich";
 
 // คำสั่งที่ Tab เติมให้ได้ (ไม่รวมคำใบ้ flag)
 const COMPLETIONS = [
   "whoami",
+  "id",
   "pwd",
   "ls",
   "ls -la",
@@ -55,7 +57,10 @@ export default function Home() {
   const title = (level) => levelText(level, lang).title;
   const [cwd, setCwd] = useState("~");
   const [solved, setSolved] = useState([]);
-  useEffect(() => setSolved(loadSolved()), []);
+  useEffect(() => {
+    setSolved(loadSolved());
+    ensureSession(); // level 6 cookie
+  }, []);
   const prompt = `watkorn@me:${cwd}$`;
 
   // typing animation for initial whoami
@@ -176,6 +181,21 @@ export default function Home() {
       setTimeout(() => navigate(path), 350);
       return t("term.opening", { to: path });
     }
+    // level 6: who you are comes from the session cookie (whose signature nobody checks)
+    if (lc === "id" || lc.startsWith("sudo") || /^ls\s+\/root\/?$/.test(lc) || lc === "cd /root") {
+      const session = readSession();
+      if (!session) return "id: can't read your session cookie (delete yeti_session and reload for a fresh one)";
+      const root = session.role === "admin";
+      const name = root ? "root" : session.user;
+      if (lc === "id") return root ? "uid=0(root) gid=0(root) groups=0(root)" : `uid=1000(${name}) gid=1000(${name}) groups=1000(${name})`;
+      if (lc.startsWith("sudo") && !root) return `${session.user} is not in the sudoers file. This incident will be reported.`;
+      if (lc === "sudo" || lc === "sudo -l") return "(ALL : ALL) ALL";
+      const rest = lc.replace(/^sudo\s+/, "");
+      if (/^ls\s+\/root\/?$/.test(rest)) return root ? "flag.txt" : "ls: cannot open directory '/root': Permission denied";
+      if (rest === "cd /root") return root ? "cd: nice try. just cat it." : "cd: permission denied: /root";
+      if (rest === "whoami") return "root";
+      return shell(input.replace(/^sudo\s+/i, "")) ?? evaluate(input.replace(/^sudo\s+/i, ""));
+    }
     if (lc === "ls blogs")
       return blogs.length
         ? [...blogs]
@@ -203,13 +223,16 @@ export default function Home() {
     }
     if (lc === "help") return t("term.help");
     if (cwd === "~/.secret") {
-      if (lc === "ls") return "note.b64";
+      if (lc === "ls") return "note.b64  vault.xor";
       if (lc === "ls -la")
         return [
           "drwx------ 2 watkorn users 4096 Oct 8 2025 .",
           "drwxr-xr-x 3 watkorn users 4096 Oct 8 2025 ..",
           "-rw------- 1 watkorn users   45 Oct 8 2025 note.b64",
+          "-rw------- 1 watkorn users   78 Sep 26 2026 vault.xor",
         ];
+      if (/^cat\s+vault\.xor$/i.test(input)) return VAULT_XOR; // level 7
+      if (/^file\s+vault\.xor$/i.test(input)) return "vault.xor: ASCII text (hex), 39 bytes of XORed data";
       if (lc === "pwd") return "/home/watkorn/.secret";
       if (/^cat\s+note\.b64$/i.test(input)) return SECRET_NOTE;
       if (/^cat\s+/i.test(input)) return `cat: ${arg}: No such file or directory`;
@@ -326,6 +349,30 @@ export default function Home() {
         }
         setHistory((h) => h.map((e) => (e.id === id ? { ...e, output: out } : e)));
       });
+      return;
+    }
+
+    // level 6: /root/flag.txt is decrypted in the browser, and only for role=admin
+    if (/^(?:sudo\s+)?cat\s+\/root\/flag\.txt$/i.test(cmdText.trim())) {
+      setCurrentInput("");
+      const session = readSession();
+      const viaSudo = /^sudo\s/i.test(cmdText.trim());
+      const id = Date.now();
+      const deny =
+        session?.role === "admin"
+          ? null
+          : viaSudo && session
+            ? `${session.user} is not in the sudoers file. This incident will be reported.`
+            : "cat: /root/flag.txt: Permission denied";
+      setHistory((h) => [...h, { id, prompt: entryPrompt, command: cmdText, output: deny ?? t("term.checking") }]);
+      if (!deny) {
+        readRootFlag(session)
+          .catch(() => null)
+          .then((flag) => {
+            const out = flag ?? "cat: /root/flag.txt: Input/output error";
+            setHistory((h) => h.map((e) => (e.id === id ? { ...e, output: out } : e)));
+          });
+      }
       return;
     }
 

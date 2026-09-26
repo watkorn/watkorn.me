@@ -43,6 +43,43 @@ export const LEVELS = [
     hash: "38dd2dbba7c2c1aebf5e37d8f7c390cfd56a0ba704bf2ca5f645fc470696d0c7",
     th: { title: "ความลับในพิกเซล", hint: "เยติคือไฟล์ SVG ลองเปิดไฟล์นั้นแยกออกมา แล้วมองให้ลึกกว่าพิกเซล" },
   },
+  // ---- season 2: harder, still 100% static (see src/ctf/season2.js)
+  {
+    id: "cookie",
+    season: 2,
+    title: "Trust issues",
+    points: 60,
+    hint: "The terminal decides who you are from something your browser hands back on every visit. Try id, then open DevTools → Application → Cookies.",
+    hash: "8ec82cd21afeea4132cc6675e054ae77ec4267fb2209ab2694bde4f6141e4192",
+    th: {
+      title: "ปัญหาเรื่องความไว้ใจ",
+      hint: "terminal ตัดสินว่าคุณเป็นใครจากของที่เบราว์เซอร์ส่งกลับมาทุกครั้ง ลองพิมพ์ id แล้วเปิด DevTools → Application → Cookies",
+    },
+  },
+  {
+    id: "xor",
+    season: 2,
+    title: "One byte",
+    points: 70,
+    hint: "There's a vault next to the note in ~/.secret. The key is a single byte, and you already know how every flag starts.",
+    hash: "42378b445ef1a3be756ce4182129abb0bd705831d2d731cb7f3bdf56b3119283",
+    th: {
+      title: "ไบต์เดียว",
+      hint: "ใน ~/.secret มีตู้เซฟวางอยู่ข้างโน้ต กุญแจยาวแค่ไบต์เดียว และคุณรู้อยู่แล้วว่า flag ทุกอันขึ้นต้นด้วยอะไร",
+    },
+  },
+  {
+    id: "lsb",
+    season: 2,
+    title: "Least significant",
+    points: 80,
+    hint: "One picture in my posts carries more than pixels. Look at the least significant bits (zsteg knows how).",
+    hash: "394dc1b0b27726d14d9ed5fcde552523848d7fd376b19bab67c97cdcb891ef85",
+    th: {
+      title: "บิตที่สำคัญน้อยที่สุด",
+      hint: "มีรูปหนึ่งในโพสต์ของผมที่พกมากกว่าพิกเซล ลองดูบิตที่สำคัญน้อยที่สุด (zsteg ทำให้ได้)",
+    },
+  },
 ];
 
 // title + hint in the reader's language (English is the default)

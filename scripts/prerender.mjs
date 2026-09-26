@@ -100,5 +100,21 @@ ${items}
   fs.writeFileSync(path.join(OUT, feed.file), rss);
 }
 
+// ---- .well-known/security.txt (RFC 9116): where to report a real vulnerability.
+// Written on every build so "Expires" always sits ~6 months after the last deploy.
+const expires = new Date(Date.now() + 182 * 24 * 60 * 60 * 1000);
+expires.setUTCHours(0, 0, 0, 0);
+const securityTxt = `# Found a real vulnerability on watkorn.me? Thank you. Please report it privately.
+# The mini CTF on this site is meant to be played: flags are not vulnerabilities.
+# Thoth (${SITE}/projects/thoth/) is out of scope for testing, but reports are welcome.
+Contact: mailto:fkub0011@gmail.com
+Expires: ${expires.toISOString()}
+Preferred-Languages: en, th
+Canonical: ${SITE}/.well-known/security.txt
+Policy: https://github.com/watkorn/watkorn.me#security
+`;
+fs.mkdirSync(path.join(OUT, ".well-known"), { recursive: true });
+fs.writeFileSync(path.join(OUT, ".well-known", "security.txt"), securityTxt);
+
 fs.rmSync(SSR_DIR, { recursive: true, force: true });
-console.log(`[prerender] ${routes.length} pages (${LANGS.join(" + ")}) + 404.html, sitemap.xml, rss.xml, th/rss.xml`);
+console.log(`[prerender] ${routes.length} pages (${LANGS.join(" + ")}) + 404.html, sitemap.xml, rss.xml, th/rss.xml, security.txt`);

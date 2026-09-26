@@ -107,4 +107,4 @@ This is where most of the learning actually happens:
 - [ ] Notes app and team channel ready
 - [ ] Plan to write at least one writeup afterwards
 
-Want a warm-up right now? The [terminal on the home page](/) has five flags hidden around this site. Check your progress on the [achievements page](/achievements). Good luck, and have fun breaking things.
+Want a warm-up right now? The [terminal on the home page](/) has eight flags hidden around this site. Check your progress on the [achievements page](/achievements). Good luck, and have fun breaking things.

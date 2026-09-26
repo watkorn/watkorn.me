@@ -1,6 +1,6 @@
 {
   "name": "watkorn.me",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "description": "Personal site of watkorn: CTF writeups, security tools, and a terminal with a flag in it. Static React + Markdown, deployed to GitHub Pages.",
   "homepage": "https://watkorn.me",
@@ -13,7 +13,7 @@
     "start": "node scripts/start.mjs",
     "content": "node scripts/content.mjs",
     "new-post": "node scripts/new-post.mjs",
-    "build": "node scripts/content.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir build-ssr && node scripts/prerender.mjs && node scripts/csp.mjs",
+    "build": "node scripts/content.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir build-ssr && node scripts/prerender.mjs && node scripts/og.mjs && node scripts/csp.mjs",
     "preview": "vite preview --outDir build --port 4173",
     "test": "playwright test",
     "deploy": "gh-pages -d build --nojekyll"

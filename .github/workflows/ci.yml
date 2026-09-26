@@ -25,8 +25,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium # also draws the OG images during the build
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
       - run: npx playwright test
 
   lighthouse:
@@ -40,6 +40,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium # OG images during the build
       - run: npm run build
       - name: Lighthouse (performance, accessibility, SEO, best practices)
         run: npx --yes @lhci/cli@0.15.1 autorun

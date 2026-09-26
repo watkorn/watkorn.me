@@ -1,6 +1,6 @@
 ---
 title: "Writeup: the watkorn.me mini CTF"
-description: "Full solutions for all five flags hidden on this site: dotfiles, view-source, robots.txt and a yeti with a secret. Spoilers, obviously."
+description: "Full solutions for season 1 of the mini CTF on this site: dotfiles, view-source, robots.txt and a yeti with a secret. Spoilers, obviously."
 date: 2026-09-26
 event: "watkorn.me mini CTF"
 category: web
@@ -8,9 +8,9 @@ difficulty: easy
 tags: [ctf, writeup, beginner]
 ---
 
-> **Spoiler alert.** This post solves every level of the mini CTF on this site. If you haven't tried it yet, go to the [home page](/), type `ls`, and come back when you're stuck. Hints are free on the [achievements page](/achievements). The flags themselves are folded away below each level, so you can read the method without seeing the answer.
+> **Spoiler alert.** This post solves every level of the mini CTF on this site. If you haven't tried it yet, go to the [home page](/), type `ls`, and come back when you're stuck. Hints are free on the [achievements page](/achievements). The flags themselves are folded away below each level, so you can read the method without seeing the answer. This post covers **season 1** (levels 1–5). Season 2 (levels 6–8) is still live, so no spoilers for it here yet.
 
-The mini CTF has five levels, worth 10 to 50 points (150 in total). The terminal checks your answers with `submit <flag>`, and it only knows the **SHA-256 hashes** of the flags, so the answers aren't sitting in the JavaScript in plain text. Well, mostly. Let's go.
+Season 1 has five levels, worth 10 to 50 points (150 of the 360 in total). The terminal checks your answers with `submit <flag>`, and it only knows the **SHA-256 hashes** of the flags, so the answers aren't sitting in the JavaScript in plain text. Well, mostly. Let's go.
 
 ## Level 1: Warm-up (10 pts)
 
@@ -180,7 +180,7 @@ curl -s "https://watkorn.me$svg" | grep -o 'yeti-says: [^<]*'
 
 ## How the checking works (and its limits)
 
-- The terminal hashes whatever you `submit` with SHA-256 in your browser (`crypto.subtle.digest`) and compares it against the five stored hashes. The hashes are public, but a hash can't be reversed back into the flag.
+- The terminal hashes whatever you `submit` with SHA-256 in your browser (`crypto.subtle.digest`) and compares it against the stored hashes. The hashes are public, but a hash can't be reversed back into the flag.
 - Your progress is stored in your browser's `localStorage`. Nothing is sent to a server, because there isn't one.
 - Honest limits: flags 1 and 2 have to live in the JavaScript, because the terminal prints them. And the whole site is [open source](https://github.com/watkorn/watkorn.me), so reading the repo is a valid, if slightly cheeky, strategy. For a warm-up CTF, that's a feature.
 
@@ -194,4 +194,4 @@ curl -s "https://watkorn.me$svg" | grep -o 'yeti-says: [^<]*'
 | 4 | robots.txt + hex | recon on `robots.txt`, `sitemap.xml`, `.well-known/` |
 | 5 | File metadata | EXIF data, SVG/Office metadata, steganography |
 
-Got all five? Screenshot your [achievements](/achievements) and tag me. Next time I'll make them harder.
+Got all five? Season 2 is waiting: three harder levels involving a cookie, a vault and a picture. The hints are on the [achievements page](/achievements).

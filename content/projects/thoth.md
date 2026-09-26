@@ -15,7 +15,7 @@ screenshots:
 
 Thoth is a case-management web app plus an investigation toolbox for investigators in Thailand. Case files, Thai legal documents and the analysis of phone records, bank statements and provider logs live in one place. It's in production, and most of the heavy analysis runs in the browser, so raw evidence files don't have to leave the officer's machine.
 
-> **Out of scope.** Thoth handles real cases, so it is **not** part of this site's CTF. Please don't test it. If you think you've spotted a problem, tell me privately instead (LinkedIn is linked on the home page).
+> **Out of scope.** Thoth handles real cases, so it is **not** part of this site's CTF. Please don't test it. If you think you've spotted a problem, report it privately instead: the contact is in [security.txt](/.well-known/security.txt).
 
 ## Goals
 

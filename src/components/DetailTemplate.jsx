@@ -164,6 +164,7 @@ export default function DetailTemplate({ meta: rawMeta, type, allMeta }) {
       description={meta.desc}
       path={`${listPath}/${meta.slug}`}
       langs={meta.langs}
+      image={`/og/${meta.lang === "en" ? "" : `${meta.lang}/`}${type}s/${meta.slug}.png`}
       type="article"
       published={meta.date}
       className="page--read"
