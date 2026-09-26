@@ -1,0 +1,8 @@
+# Found a real vulnerability on watkorn.me? Thank you. Please report it privately.
+# The mini CTF on this site is meant to be played: flags are not vulnerabilities.
+# Thoth (https://watkorn.me/projects/thoth/) is out of scope for testing, but reports are welcome.
+Contact: mailto:fkub0011@gmail.com
+Expires: 2027-03-27T00:00:00.000Z
+Preferred-Languages: en, th
+Canonical: https://watkorn.me/.well-known/security.txt
+Policy: https://github.com/watkorn/watkorn.me#security

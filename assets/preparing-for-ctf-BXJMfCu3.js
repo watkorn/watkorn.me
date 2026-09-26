@@ -111,5 +111,5 @@ checksec --file=./chall         <span class="hljs-comment"># which protections d
 <li class="task"><label><input type="checkbox" disabled> Notes app and team channel ready</label></li>
 <li class="task"><label><input type="checkbox" disabled> Plan to write at least one writeup afterwards</label></li>
 </ul>
-<p>Want a warm-up right now? The <a href="/">terminal on the home page</a> has five flags hidden around this site. Check your progress on the <a href="/achievements">achievements page</a>. Good luck, and have fun breaking things.</p>
+<p>Want a warm-up right now? The <a href="/">terminal on the home page</a> has eight flags hidden around this site. Check your progress on the <a href="/achievements">achievements page</a>. Good luck, and have fun breaking things.</p>
 `};export{e as default};

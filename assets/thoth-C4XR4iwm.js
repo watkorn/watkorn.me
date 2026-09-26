@@ -1,6 +1,6 @@
 var e={html:`<p>Thoth is a case-management web app plus an investigation toolbox for investigators in Thailand. Case files, Thai legal documents and the analysis of phone records, bank statements and provider logs live in one place. It&#39;s in production, and most of the heavy analysis runs in the browser, so raw evidence files don&#39;t have to leave the officer&#39;s machine.</p>
 <blockquote>
-<p><strong>Out of scope.</strong> Thoth handles real cases, so it is <strong>not</strong> part of this site&#39;s CTF. Please don&#39;t test it. If you think you&#39;ve spotted a problem, tell me privately instead (LinkedIn is linked on the home page).</p>
+<p><strong>Out of scope.</strong> Thoth handles real cases, so it is <strong>not</strong> part of this site&#39;s CTF. Please don&#39;t test it. If you think you&#39;ve spotted a problem, report it privately instead: the contact is in <a href="/.well-known/security.txt">security.txt</a>.</p>
 </blockquote>
 <h2>Goals</h2>
 <ul>

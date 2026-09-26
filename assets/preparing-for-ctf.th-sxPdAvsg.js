@@ -111,5 +111,5 @@ checksec --file=./chall         <span class="hljs-comment"># ไบนารี�
 <li class="task"><label><input type="checkbox" disabled> เตรียมแอปจดโน้ตกับช่องคุยของทีมไว้แล้ว</label></li>
 <li class="task"><label><input type="checkbox" disabled> ตั้งใจว่าจะเขียน writeup อย่างน้อยหนึ่งเรื่องหลังแข่ง</label></li>
 </ul>
-<p>อยากวอร์มอัพตอนนี้เลย? <a href="/th/">terminal ในหน้าแรก</a> มี flag ซ่อนอยู่ทั่วเว็บนี้ 5 อัน เช็กความคืบหน้าได้ที่<a href="/th/achievements">หน้าความสำเร็จ</a> ขอให้โชคดี และสนุกกับการรื้อของให้พังนะ</p>
+<p>อยากวอร์มอัพตอนนี้เลย? <a href="/th/">terminal ในหน้าแรก</a> มี flag ซ่อนอยู่ทั่วเว็บนี้ 8 อัน เช็กความคืบหน้าได้ที่<a href="/th/achievements">หน้าความสำเร็จ</a> ขอให้โชคดี และสนุกกับการรื้อของให้พังนะ</p>
 `};export{e as default};

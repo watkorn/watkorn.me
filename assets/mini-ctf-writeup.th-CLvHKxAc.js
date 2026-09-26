@@ -1,7 +1,7 @@
 var e={html:`<blockquote>
-<p><strong>เตือนสปอยล์</strong> โพสต์นี้เฉลยทุกด่านของ mini CTF ในเว็บนี้ ถ้ายังไม่ได้ลองเล่น ไปที่<a href="/th/">หน้าแรก</a> พิมพ์ <code>ls</code> แล้วค่อยกลับมาตอนติด คำใบ้ดูฟรีได้ที่<a href="/th/achievements">หน้าความสำเร็จ</a> ส่วนตัว flag พับซ่อนไว้ใต้แต่ละด่าน อ่านวิธีคิดได้โดยไม่เห็นคำตอบ</p>
+<p><strong>เตือนสปอยล์</strong> โพสต์นี้เฉลยทุกด่านของ mini CTF ในเว็บนี้ ถ้ายังไม่ได้ลองเล่น ไปที่<a href="/th/">หน้าแรก</a> พิมพ์ <code>ls</code> แล้วค่อยกลับมาตอนติด คำใบ้ดูฟรีได้ที่<a href="/th/achievements">หน้าความสำเร็จ</a> ส่วนตัว flag พับซ่อนไว้ใต้แต่ละด่าน อ่านวิธีคิดได้โดยไม่เห็นคำตอบ โพสต์นี้เฉลยแค่<strong>ซีซัน 1</strong> (ด่าน 1–5) ซีซัน 2 (ด่าน 6–8) ยังเปิดเล่นอยู่ เลยยังไม่มีเฉลยตรงนี้</p>
 </blockquote>
-<p>mini CTF มีทั้งหมด 5 ด่าน ด่านละ 10 ถึง 50 แต้ม (รวม 150) terminal ตรวจคำตอบด้วยคำสั่ง <code>submit &lt;flag&gt;</code> และมันรู้แค่ <strong>SHA-256 hash</strong> ของ flag เท่านั้น คำตอบจึงไม่ได้วางเป็น plain text อยู่ใน JavaScript ก็... ส่วนใหญ่อ่ะนะ ไปกันเลย</p>
+<p>ซีซัน 1 มี 5 ด่าน ด่านละ 10 ถึง 50 แต้ม (รวม 150 จากทั้งหมด 360) terminal ตรวจคำตอบด้วยคำสั่ง <code>submit &lt;flag&gt;</code> และมันรู้แค่ <strong>SHA-256 hash</strong> ของ flag เท่านั้น คำตอบจึงไม่ได้วางเป็น plain text อยู่ใน JavaScript ก็... ส่วนใหญ่อ่ะนะ ไปกันเลย</p>
 <h2>ด่าน 1: วอร์มอัพ (10 แต้ม)</h2>
 <p><em>&quot;มีไฟล์วางทิ้งไว้ในโฟลเดอร์ home&quot;</em></p>
 <p>ท่าแรกสุดคลาสสิกของทุก shell คือมองไปรอบๆ:</p>
@@ -72,7 +72,7 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 </details><p><strong>บทเรียน:</strong> รูปภาพพกข้อมูลได้ SVG เป็นไฟล์ข้อความที่ใส่ metadata, comment หรือแม้แต่ script ได้ เว็บจริงจึงต้อง sanitise SVG ที่ผู้ใช้อัปโหลด และโจทย์ steganography ก็ชอบไฟล์รูปด้วยเหตุผลนี้</p>
 <h2>ระบบตรวจทำงานยังไง (และข้อจำกัด)</h2>
 <ul>
-<li>terminal เอาสิ่งที่คุณ <code>submit</code> ไป hash ด้วย SHA-256 ในเบราว์เซอร์ของคุณเอง (<code>crypto.subtle.digest</code>) แล้วเทียบกับ hash ทั้ง 5 ที่เก็บไว้ hash เปิดเผยได้ แต่ย้อนกลับเป็น flag ไม่ได้</li>
+<li>terminal เอาสิ่งที่คุณ <code>submit</code> ไป hash ด้วย SHA-256 ในเบราว์เซอร์ของคุณเอง (<code>crypto.subtle.digest</code>) แล้วเทียบกับ hash ที่เก็บไว้ hash เปิดเผยได้ แต่ย้อนกลับเป็น flag ไม่ได้</li>
 <li>ความคืบหน้าเก็บไว้ใน <code>localStorage</code> ของเบราว์เซอร์คุณ ไม่มีอะไรถูกส่งไปเซิร์ฟเวอร์ เพราะไม่มีเซิร์ฟเวอร์ให้ส่ง</li>
 <li>ข้อจำกัดตรงๆ: flag ข้อ 1 และ 2 ต้องอยู่ใน JavaScript เพราะ terminal เป็นคนพิมพ์มันออกมา และทั้งเว็บเป็น <a href="https://github.com/watkorn/watkorn.me" target="_blank" rel="noopener noreferrer">open source</a> การไปอ่าน repo เลยเป็นกลยุทธ์ที่ใช้ได้ แม้จะแอบขี้โกงนิดๆ สำหรับ CTF วอร์มอัพ นี่ถือเป็นฟีเจอร์</li>
 </ul>
@@ -111,5 +111,5 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 <td>ข้อมูล EXIF, metadata ใน SVG/Office, steganography</td>
 </tr>
 </tbody></table>
-<p>เจอครบทั้ง 5 แล้ว? แคปหน้า<a href="/th/achievements">ความสำเร็จ</a>แล้วแท็กมาเลย รอบหน้าจะทำให้ยากกว่านี้</p>
+<p>เจอครบทั้ง 5 แล้ว? ซีซัน 2 รออยู่ เป็นด่านที่ยากขึ้น 3 ด่าน เกี่ยวกับ cookie ตู้เซฟ และรูปภาพ คำใบ้อยู่ที่<a href="/th/achievements">หน้าความสำเร็จ</a></p>
 `};export{e as default};

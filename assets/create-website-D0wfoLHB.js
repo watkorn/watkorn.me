@@ -1,4 +1,4 @@
-var e={html:`<p>This site is my home for CTF writeups and side projects, and a challenge in its own right. The home page is a terminal with <strong>five flags</strong> hidden around the site. If you&#39;re a security person, the fastest way to get to know me is to try to break my website.</p>
+var e={html:`<p>This site is my home for CTF writeups and side projects, and a challenge in its own right. The home page is a terminal with <strong>eight flags</strong> hidden around the site. If you&#39;re a security person, the fastest way to get to know me is to try to break my website.</p>
 <h2>Goals</h2>
 <ol>
 <li><strong>Play first, read second, hire third.</strong> The terminal is the front door. Writeups come next, then projects and contact links.</li>
@@ -29,7 +29,7 @@ var e={html:`<p>This site is my home for CTF writeups and side projects, and a c
 <li><strong>Visitor input is never rendered as HTML.</strong> All Markdown is rendered at build time from files in the repo.</li>
 </ul>
 <h2>The CTF inside</h2>
-<p>The terminal speaks a little shell: <code>ls -la</code>, <code>cd</code>, <code>cat</code>, <code>open &lt;post&gt;</code>, <code>hint</code>, <code>submit &lt;flag&gt;</code>, with history and Tab completion. Five levels (10 to 50 points) are hidden in places a player should learn to look. Flags are checked by <strong>SHA-256 hash only</strong>, so reading the JavaScript doesn&#39;t hand over the answers. Progress lives on the <a href="/achievements">achievements page</a>, stored only in your browser.</p>
+<p>The terminal speaks a little shell: <code>ls -la</code>, <code>cd</code>, <code>cat</code>, <code>open &lt;post&gt;</code>, <code>hint</code>, <code>submit &lt;flag&gt;</code>, with history and Tab completion. Eight levels in two seasons (10 to 80 points) are hidden in places a player should learn to look. Flags are checked by <strong>SHA-256 hash only</strong>, so reading the JavaScript doesn&#39;t hand over the answers. Progress lives on the <a href="/achievements">achievements page</a>, stored only in your browser.</p>
 <p>A test proves every flag is reachable on the built site and matches its hash, so I can&#39;t accidentally ship an unsolvable level.</p>
 <h2>Design: Handheld Quest</h2>
 <p>The look is a pocket game console. The page is the console&#39;s plastic shell: dandelion yellow by day, grape at night. Content sits on &quot;screens&quot; with the handheld&#39;s big bottom-right curve, the terminal is an LCD, and every button is a rubber key that physically presses down.</p>

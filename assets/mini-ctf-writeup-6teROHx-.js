@@ -1,7 +1,7 @@
 var e={html:`<blockquote>
-<p><strong>Spoiler alert.</strong> This post solves every level of the mini CTF on this site. If you haven&#39;t tried it yet, go to the <a href="/">home page</a>, type <code>ls</code>, and come back when you&#39;re stuck. Hints are free on the <a href="/achievements">achievements page</a>. The flags themselves are folded away below each level, so you can read the method without seeing the answer.</p>
+<p><strong>Spoiler alert.</strong> This post solves every level of the mini CTF on this site. If you haven&#39;t tried it yet, go to the <a href="/">home page</a>, type <code>ls</code>, and come back when you&#39;re stuck. Hints are free on the <a href="/achievements">achievements page</a>. The flags themselves are folded away below each level, so you can read the method without seeing the answer. This post covers <strong>season 1</strong> (levels 1–5). Season 2 (levels 6–8) is still live, so no spoilers for it here yet.</p>
 </blockquote>
-<p>The mini CTF has five levels, worth 10 to 50 points (150 in total). The terminal checks your answers with <code>submit &lt;flag&gt;</code>, and it only knows the <strong>SHA-256 hashes</strong> of the flags, so the answers aren&#39;t sitting in the JavaScript in plain text. Well, mostly. Let&#39;s go.</p>
+<p>Season 1 has five levels, worth 10 to 50 points (150 of the 360 in total). The terminal checks your answers with <code>submit &lt;flag&gt;</code>, and it only knows the <strong>SHA-256 hashes</strong> of the flags, so the answers aren&#39;t sitting in the JavaScript in plain text. Well, mostly. Let&#39;s go.</p>
 <h2>Level 1: Warm-up (10 pts)</h2>
 <p><em>&quot;Some files are just lying around in the home folder.&quot;</em></p>
 <p>The classic first move in any shell is to look around:</p>
@@ -72,7 +72,7 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 </details><p><strong>Lesson:</strong> images can carry data. SVGs are text files that can hold metadata, comments and even scripts. That&#39;s why real sites sanitise user-uploaded SVGs, and why steganography challenges love image files.</p>
 <h2>How the checking works (and its limits)</h2>
 <ul>
-<li>The terminal hashes whatever you <code>submit</code> with SHA-256 in your browser (<code>crypto.subtle.digest</code>) and compares it against the five stored hashes. The hashes are public, but a hash can&#39;t be reversed back into the flag.</li>
+<li>The terminal hashes whatever you <code>submit</code> with SHA-256 in your browser (<code>crypto.subtle.digest</code>) and compares it against the stored hashes. The hashes are public, but a hash can&#39;t be reversed back into the flag.</li>
 <li>Your progress is stored in your browser&#39;s <code>localStorage</code>. Nothing is sent to a server, because there isn&#39;t one.</li>
 <li>Honest limits: flags 1 and 2 have to live in the JavaScript, because the terminal prints them. And the whole site is <a href="https://github.com/watkorn/watkorn.me" target="_blank" rel="noopener noreferrer">open source</a>, so reading the repo is a valid, if slightly cheeky, strategy. For a warm-up CTF, that&#39;s a feature.</li>
 </ul>
@@ -111,5 +111,5 @@ curl -s <span class="hljs-string">&quot;https://watkorn.me<span class="hljs-vari
 <td>EXIF data, SVG/Office metadata, steganography</td>
 </tr>
 </tbody></table>
-<p>Got all five? Screenshot your <a href="/achievements">achievements</a> and tag me. Next time I&#39;ll make them harder.</p>
+<p>Got all five? Season 2 is waiting: three harder levels involving a cookie, a vault and a picture. The hints are on the <a href="/achievements">achievements page</a>.</p>
 `};export{e as default};
