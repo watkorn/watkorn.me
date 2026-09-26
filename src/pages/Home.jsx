@@ -412,7 +412,7 @@ This is my portfolio site. I build tools, write CTF writeups, and explore cybers
                       <span>{typedCommand}</span>
                       <span className="terminal__caret" aria-hidden="true" />
                     </div>
-                    <div className="terminal__out" style={{ opacity: showResult ? 1 : 0 }}>
+                    <div className={`terminal__out${showResult ? "" : " is-pending"}`}>
                       Watcharakorn Khambung
                     </div>
                   </div>

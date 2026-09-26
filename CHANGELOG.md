@@ -5,6 +5,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Security
+- CSP no longer allows `'unsafe-inline'` styles: the terminal and the level-4 page use classes and an external stylesheet instead. A new test fails on any CSP violation.
+
 ## [1.1.0] - 2026-09-26
 
 ### Added

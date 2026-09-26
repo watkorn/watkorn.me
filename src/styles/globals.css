@@ -615,6 +615,9 @@ kbd {
   color: var(--color-lcd-ink-2);
   transition: opacity var(--dur-med) var(--ease-out);
 }
+.terminal__out.is-pending {
+  opacity: 0;
+}
 .terminal__input {
   flex: 1;
   min-width: 0;

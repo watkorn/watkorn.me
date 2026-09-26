@@ -119,7 +119,7 @@ brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
 ## Security
 
 - The live site is static files only; there is nothing server-side to exploit.
-- Every HTML page carries a `Content-Security-Policy` (`script-src 'self'`, no inline scripts; the theme bootstrap lives in `public/theme-init.js` for that reason). Cloudflare adds HSTS and the other security headers GitHub Pages can't set.
+- Every HTML page carries a strict `Content-Security-Policy`: no inline scripts **or** inline styles (`script-src 'self'; style-src 'self' https://fonts.googleapis.com`). The theme bootstrap lives in `public/theme-init.js` for that reason, and a test fails the build on any CSP violation. Cloudflare adds HSTS and the other security headers GitHub Pages can't set.
 - Markdown is rendered at build time from files in this repo; visitor input is never rendered as HTML.
 - Everything in the frontend bundle is public. Never put real secrets in `src/` or `content/`.
 

@@ -100,3 +100,15 @@ test("theme toggle switches to dark and back", async ({ page }) => {
   await toggle.click();
   await expect(toggle).toHaveAttribute("aria-checked", before === "true" ? "false" : "true");
 });
+
+test("no Content-Security-Policy violations on any page", async ({ page }) => {
+  const violations = [];
+  page.on("console", (m) => {
+    if (/Refused to|Content Security Policy/i.test(m.text())) violations.push(`${page.url()}: ${m.text().slice(0, 140)}`);
+  });
+  for (const path of ["/", "/blogs/", "/blogs/preparing-for-ctf/", "/projects/", "/achievements/", "/y3t1-l41r/", "/404.html"]) {
+    await page.goto(path);
+    await page.waitForTimeout(400);
+  }
+  expect(violations).toEqual([]);
+});

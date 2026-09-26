@@ -27,7 +27,7 @@ test("all 5 flags are reachable and match their hashes", async ({ request }) => 
   // 4: robots.txt -> lair -> hex
   const robots = await (await request.get("/robots.txt")).text();
   const lair = await (await request.get(robots.match(/Disallow: (\S+)/)[1])).text();
-  found.push(Buffer.from(lair.match(/<code>([0-9a-f ]+)<\/code>/)[1].replace(/ /g, ""), "hex").toString());
+  found.push(Buffer.from(lair.match(/<code[^>]*>([0-9a-f ]+)<\/code>/)[1].replace(/ /g, ""), "hex").toString());
   // 5: base64 in the yeti sprite's <metadata>
   const svg = await (await request.get(js.match(/["'`](\/assets\/yeti-[^"'`]+\.svg)["'`]/)[1])).text();
   found.push(Buffer.from(svg.match(/yeti-says: (\S+)</)[1], "base64").toString());
