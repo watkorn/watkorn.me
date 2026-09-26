@@ -1,0 +1,8 @@
+/* the yeti's lair (CTF level 4). External on purpose: the site CSP has no 'unsafe-inline'. */
+body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0f380f; color: #9bbc0f;
+  font: 16px/1.6 ui-monospace, Menlo, monospace; padding: 24px; box-sizing: border-box; }
+main { max-width: 40rem; }
+h1 { font-size: 1.25rem; margin: 0 0 1rem; }
+code.wall { display: block; padding: 1rem; background: #306230; border-radius: 12px 12px 36px 12px; overflow-wrap: anywhere; }
+a { color: #e0f8d0; }
+code.inline { display: inline; padding: 0 .3em; border-radius: 6px; }
