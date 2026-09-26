@@ -34,7 +34,7 @@ content/*.md  ─▶  scripts/content.mjs  ─▶  JSON  ─▶  Vite + React
 ```
 
 - **Content:** blog posts and projects are Markdown with frontmatter. At build time, [marked](https://marked.js.org/) and highlight.js turn them into HTML, so no Markdown parser ships to the browser. Drafts are visible in dev and excluded from production.
-- **Pages:** React 18 + React Router 7 on Vite. Every route is **prerendered to its own HTML file**, so posts are indexable and link previews in Discord or LINE show a real title and image. React then takes over for the interactive bits.
+- **Pages:** React 19 + React Router 7 on Vite. Every route is **prerendered to its own HTML file**, so posts are indexable and link previews in Discord or LINE show a real title and image. React then takes over for the interactive bits.
 - **Deploys:** every push to `main` builds the site and runs **Playwright smoke tests on desktop and mobile**. Only if they pass does it publish the static files to the `gh-pages` branch. A failing test means the live site doesn't change.
 
 ## Security
@@ -73,6 +73,6 @@ The mascot is a **32×32 pixel yeti** drawn in code. It has 8 recolourable layer
 
 ## Stack
 
-React 18 · React Router 7 · Vite · Tailwind CSS · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
+React 19 · React Router 7 · Vite · Tailwind CSS 4 · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
 
 The source is open on GitHub (link below). Found something? Tell me, or better yet, find the flags first.

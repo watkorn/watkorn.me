@@ -5,10 +5,21 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ## [Unreleased]
 
+### Added
+- **"Writeup: the watkorn.me mini CTF"** blog post with every solution (each flag folded behind a "Show flag" toggle), linked from the Achievements page.
+- Spoiler folds (`<details>`) styled for posts.
+
+### Fixed
+- Checklist items in posts are now `<label>`s, so each checkbox has an accessible name (Lighthouse accessibility back to 100).
+
 ### Changed
 - Rewrote the site copy: the home page now says "find the flags." and "Five of them are hiding around this site", with a new About section, A/B buttons, `cat README.md`, `blogs`/`projects` output and "command not found" message, plus new text on the Achievements, Blogs, Projects and 404 pages, hints, the footer credit, meta descriptions and the noscript notice. The OG image now reads "find the flags."
 - Rewrote the "Preparing for CTF" post into a practical starter guide and "My Website" into a full case study (architecture, security, the CTF, design, numbers, lessons).
 - Refreshed the README screenshots with the pixel yeti and the real Mali font.
+- Upgraded to **React 19**, **react-helmet-async 3** and **Tailwind CSS 4** (CSS-first config via `@tailwindcss/vite`; the PostCSS and Tailwind config files are gone), plus Playwright 1.63.
+
+### Removed
+- Dead code: `Card.jsx`, `ResponsiveLeftNav.jsx`, `utils/helpers.js`, three unused icon PNGs, and the `autoprefixer`/`postcss` dependencies (Tailwind 4 handles prefixing).
 
 ### Security
 - CSP no longer allows `'unsafe-inline'` styles: the terminal and the level-4 page use classes and an external stylesheet instead. A new test fails on any CSP violation.

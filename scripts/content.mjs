@@ -33,6 +33,13 @@ const marked = new Marked(
   {
     gfm: true,
     renderer: {
+      // task-list items: wrap checkbox + text in a <label> so the checkbox has an accessible name
+      listitem(item) {
+        if (!item.task) return false; // default rendering for normal list items
+        const text = this.parser.parse(item.tokens, !!item.loose).replace(/^<input[^>]*>\s*/, "");
+        const box = `<input type="checkbox" disabled${item.checked ? " checked" : ""}>`;
+        return `<li class="task"><label>${box} ${text.trim()}</label></li>\n`;
+      },
       // ลิงก์ภายนอกเปิดแท็บใหม่ + กัน tabnabbing
       link({ href, title, tokens }) {
         const text = this.parser.parseInline(tokens);

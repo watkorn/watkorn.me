@@ -126,7 +126,10 @@ export default function Achievements() {
           {armReset ? "Tap again to reset" : "Reset progress"}
         </button>
       </div>
-      <p className="ach-note">Your progress lives only in this browser. Nothing gets sent anywhere.</p>
+      <p className="ach-note">
+        Your progress lives only in this browser. Nothing gets sent anywhere. Stuck for real? The{" "}
+        <Link to="/blogs/mini-ctf-writeup">full writeup</Link> has every solution (spoilers, obviously).
+      </p>
     </PageWrapper>
   );
 }

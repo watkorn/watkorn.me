@@ -2,12 +2,13 @@
  * nav: Start/Select pills + power switch · footer: Ft5 statement strip · enrichment: none (mascot art + CSS objects)
  * design-system: DESIGN.md · designed-as-app
  */
+@import "tailwindcss" source("../");
 @import "./tokens.css";
 @import "./yeti.css";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind is only used for its reset + the typography plugin (.prose on posts);
+   all colours, fonts and spacing come from tokens.css */
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ===============================
    Base + browser surfaces
@@ -1450,4 +1451,34 @@ kbd {
 }
 .markdown ul:has(> li > input[type="checkbox"]) {
   padding-inline-start: 0;
+}
+
+/* spoiler folds in writeups: <details><summary>Show flag</summary>…</details> */
+.markdown details {
+  margin: 1em 0;
+  padding: var(--space-2xs) var(--space-sm);
+  background: var(--color-screen-2);
+  border-radius: var(--radius-key);
+}
+.markdown summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  font-weight: 700;
+  color: var(--color-link);
+  cursor: pointer;
+}
+.markdown details[open] summary {
+  margin-bottom: var(--space-2xs);
+}
+.markdown details > :last-child {
+  margin-bottom: 0;
+}
+.markdown li.task {
+  list-style: none;
+}
+.markdown li.task label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
 }

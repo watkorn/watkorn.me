@@ -6,7 +6,12 @@ export default defineConfig({
   timeout: 30_000,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [["github"], ["list"]] : "list",
-  use: { baseURL: "http://localhost:4173", trace: "retain-on-failure" },
+  use: {
+    baseURL: "http://localhost:4173",
+    trace: "retain-on-failure",
+    // optional: point at an already-installed Chromium instead of `npx playwright install`
+    launchOptions: process.env.PW_CHROMIUM_PATH ? { executablePath: process.env.PW_CHROMIUM_PATH } : {},
+  },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] } },

@@ -22,7 +22,7 @@ The site is itself a tiny CTF: the Home page is an interactive fake shell (`whoa
 - Content is authored as Markdown in `content/blogs` and `content/projects`, built to static files and served from GitHub Pages (`gh-pages` branch, custom domain watkorn.me).
 
 ## Capabilities and Constraints
-- Static React site (Vite, React Router 7, Tailwind CSS 3), prerendered. No server, no backend, no user data.
+- Static React site (React 19, Vite, React Router 7, Tailwind CSS 4), prerendered. No server, no backend, no user data.
 - Routes: Home (`/`), Blogs (`/blogs`, `/blogs/:slug`), Projects (`/projects`, `/projects/:slug`), Achievements (`/achievements`). Every route is prerendered to HTML at build time.
 - The home terminal is a 5-level mini CTF. Flags are checked by SHA-256 hash, and progress stays in the visitor's browser (localStorage).
 - Blogs are grouped by year with "Load More"; projects are grouped by category.

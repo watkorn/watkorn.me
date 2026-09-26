@@ -128,7 +128,7 @@ Found a real issue? Please open a GitHub issue or email **fkub0011@gmail.com**.
 
 ## Tech
 
-React 18 · React Router 7 · Vite · Tailwind CSS 3 (+ typography) · gray-matter · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
+React 19 · React Router 7 · Vite · Tailwind CSS 4 (+ typography) · gray-matter · marked · highlight.js · Playwright · Lighthouse CI · GitHub Actions · GitHub Pages · Cloudflare
 
 ## License
 
