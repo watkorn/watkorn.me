@@ -12,6 +12,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - **Dependabot auto-merge** for patch and minor updates once CI passes (major updates still wait for a human), plus a **weekly scheduled deploy** that ships them and keeps `security.txt` fresh.
 
 ### Fixed
+- Phones: long inline code (base64/hex) in posts now wraps instead of running off the screen, and the Achievements page no longer pushes its yeti past the right edge (it hides below 480px). A new test checks six pages at 320 and 375px.
+- The keyboard hints under the terminal were 9.6px; now 12px.
 - The header no longer pushes the theme switch off-screen between 420 and 760px wide: the wordmark hides below 760px, the Home pill below 520px and the search key below 420px, checked by a new test at ten widths.
 
 ### Changed

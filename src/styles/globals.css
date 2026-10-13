@@ -736,6 +736,7 @@ a.tag--link:hover {
   color: var(--color-bezel-ink);
 }
 .bezel__hint kbd {
+  font-size: 1em; /* the hint is already --text-xs; the default 0.8em would shrink keys to ~9.6px */
   color: var(--color-ink);
 }
 @media (pointer: coarse) {
@@ -1228,6 +1229,7 @@ a.tag--link:hover {
   border: var(--rule-hair) solid var(--color-rule);
 }
 .markdown :not(pre) > code {
+  overflow-wrap: anywhere; /* long base64/hex strings wrap instead of running off a phone screen */
   padding: 0.1em 0.4em;
   font-weight: 600;
   background: var(--color-screen-2);
@@ -1389,9 +1391,16 @@ a.tag--link:hover {
   gap: var(--space-md);
 }
 .ach-head__yeti {
+  flex: none;
   width: clamp(80px, 14vw, 128px);
   height: auto;
   aspect-ratio: 1;
+}
+/* "Achievements" can't wrap, so on phones the decorative yeti steps aside (the header has one) */
+@media (max-width: 479px) {
+  .ach-head__yeti {
+    display: none;
+  }
 }
 .ach-score {
   margin: 0 0 var(--space-md);

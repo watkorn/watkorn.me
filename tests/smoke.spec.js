@@ -208,3 +208,20 @@ test("posts: table of contents and # links to each section", async ({ page }) =>
   await page.goto("/th/blogs/mini-ctf-writeup/#" + encodeURIComponent("ด่าน-4-สำหรับหุ่นยนต์เท่านั้น-40-แต้ม"));
   await expect(page.locator("h2", { hasText: "ด่าน 4" })).toBeInViewport();
 });
+
+test("phones: nothing on the content pages runs past the right edge", async ({ page }) => {
+  test.skip(test.info().project.name !== "desktop", "sweeps its own viewport sizes");
+  for (const width of [320, 375]) {
+    await page.setViewportSize({ width, height: 800 });
+    for (const path of ["/", "/achievements/", "/blogs/mini-ctf-writeup/", "/th/blogs/mini-ctf-writeup/", "/projects/thoth/", "/search/?q=flag"]) {
+      await page.goto(path);
+      const out = await page.evaluate(() =>
+        [...document.querySelectorAll("main *")]
+          .filter((el) => !el.closest("pre, table, .terminal__scroll, .sr-only"))
+          .filter((el) => el.getBoundingClientRect().width && el.getBoundingClientRect().right > innerWidth + 1)
+          .map((el) => `${el.tagName}.${el.className}`),
+      );
+      expect(out, `${path} at ${width}px`).toEqual([]);
+    }
+  }
+});
