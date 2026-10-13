@@ -6,6 +6,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ## [Unreleased]
 
 ### Added
+- **[`WRITING.md`](WRITING.md)**: a step-by-step guide (Thai) to publishing a post through a pull request, either on the GitHub website or locally, with the frontmatter template, Markdown tricks, translations, editing/removing posts and the common CI errors. The README no longer says to push to `main`, which the ruleset now blocks.
 - **Site search** at `/search` (and `/th/search`): every post and project by title, tag, heading or text, with highlighted matches, `?q=` links and suggestions. Fully static: the index is built with the content and only loads when search opens; substring matching handles Thai. Reach it with `/` anywhere, the search key in the header, the Blogs/Projects filter rows, the 404 page, or `search <words>` in the terminal.
 - **Table of contents and section links** in posts: long posts (3+ sections) open with an "On this page" list, and every heading gets a `#` link for sharing that section. Heading ids are readable, Thai included, and `#section` URLs land below the sticky header.
 - **Dependabot auto-merge** for patch and minor updates once CI passes (major updates still wait for a human), plus a **weekly scheduled deploy** that ships them and keeps `security.txt` fresh.

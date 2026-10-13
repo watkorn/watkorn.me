@@ -72,7 +72,7 @@ checksec ./chall
 
 - Images go in `public/images/blogs/`; reference them as `/images/blogs/<file>`.
 - Code blocks are syntax-highlighted at build time and get a copy button.
-- Commit and push to `main`. CI builds, tests and deploys by itself.
+- `main` is protected: put the post on a branch, open a pull request, and merge it once CI is green. The merge deploys by itself. **Step-by-step guide (Thai), including writing straight in the GitHub website: [`WRITING.md`](WRITING.md).**
 
 **Projects** work the same way in `content/projects/*.md`, with `category`, `order`, `tags`, `github` and `screenshots` fields. Project images go in `public/images/projects/`.
 
@@ -94,7 +94,9 @@ content/blogs/baby-rop.th.md    ->  /th/blogs/baby-rop/
 
 1. `npm run new-post -- --writeup "ชื่อโจทย์ภาษาอังกฤษ"` (หรือไม่ใส่ `--writeup` สำหรับโพสต์ทั่วไป)
 2. เขียนเนื้อหาใน `content/blogs/<ชื่อ>.md` แล้วดูตัวอย่างด้วย `npm start`
-3. ลบบรรทัด `draft: true` แล้ว commit + push ขึ้น `main` เว็บจะ build, test และ deploy เองอัตโนมัติ
+3. ลบบรรทัด `draft: true` แล้ว push ขึ้น branch ใหม่ เปิด Pull Request รอ CI ขึ้น ✅ แล้วกด Merge เว็บจะ deploy เอง (push เข้า `main` ตรงๆ ไม่ได้ เพราะมี Ruleset ป้องกัน)
+
+**คู่มือทีละขั้นฉบับเต็ม รวมวิธีเขียนบนหน้าเว็บ GitHub โดยไม่ต้องติดตั้งอะไร: [`WRITING.md`](WRITING.md)**
 
 **ฉบับภาษาไทย:** `npm run new-post -- --th <ชื่อไฟล์>` จะสร้าง `content/blogs/<ชื่อไฟล์>.th.md` ที่ก๊อปต้นฉบับมาให้แปล (ใส่แค่ `title` กับ `description` ภาษาไทย ที่เหลือใช้ของต้นฉบับ) แปลเสร็จลบ `draft: true` แล้ว push หน้าภาษาไทยจะอยู่ที่ `/th/blogs/<ชื่อไฟล์>/` ถ้ายังไม่แปล หน้าไทยจะแสดงต้นฉบับพร้อมบอกไว้ ส่วนข้อความบนหน้าเว็บ (เมนู ปุ่ม ฯลฯ) แก้ได้ที่ `src/i18n/strings.js`
 
@@ -130,7 +132,7 @@ brand/               Yeti logo: sprite source, palettes, exports, Logo Lab
 
 ## Deployment, CI and releases
 
-- **Every push to `main`** runs [`deploy.yml`](.github/workflows/deploy.yml): install → build → Playwright tests → publish `build/` to the **`gh-pages`** branch. If a test fails, nothing is published.
+- **Every merge into `main`** runs [`deploy.yml`](.github/workflows/deploy.yml): install → build → Playwright tests → publish `build/` to the **`gh-pages`** branch. If a test fails, nothing is published.
 - **Branches and pull requests** run [`ci.yml`](.github/workflows/ci.yml): build, tests and **Lighthouse** (accessibility and SEO must score ≥ 90).
 - **Dependabot** opens weekly PRs for npm packages and GitHub Actions; CI checks each one. Patch and minor updates **merge themselves** once the checks pass ([`dependabot-auto-merge.yml`](.github/workflows/dependabot-auto-merge.yml); needs Settings → General → *Allow auto-merge*), major ones wait for you. A **weekly scheduled deploy** (Tuesdays) ships those merges and refreshes `security.txt`. All Actions are pinned to commit SHAs.
 - **Releases:** add a section to [`CHANGELOG.md`](CHANGELOG.md), bump `version` in `package.json`, then run **Actions → Release → Run workflow** with the version (e.g. `v1.2.0`), or push a tag. [`release.yml`](.github/workflows/release.yml) builds the site and creates the GitHub Release.
