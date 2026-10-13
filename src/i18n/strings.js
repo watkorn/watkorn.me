@@ -174,7 +174,7 @@ const th = {
   "theme.toDark": "เปลี่ยนเป็นโหมดมืด",
   "theme.light": "สว่าง",
   "theme.darkShort": "มืด",
-  "footer.quote": "flag ไม่ได้ซ่อนหรอก แค่ยังหาไม่ละเอียดพอ",
+  "footer.quote": "flag ไม่ได้ซ่อนหรอก แค่ยังหา\u2060ไม่\u2060ละเอียด\u2060พอ", // word joiners: never split "ไม่ละเอียดพอ"
   "footer.copy": "เว็บ static ไม่มีตัวติดตาม โค้ดเปิดให้ดูบน GitHub",
   "top": "กลับขึ้นด้านบน",
 
