@@ -225,3 +225,23 @@ test("phones: nothing on the content pages runs past the right edge", async ({ p
     }
   }
 });
+
+test("footer: the back-to-top key never covers the footer text", async ({ page }) => {
+  for (const path of ["/blogs/mini-ctf-writeup/", "/th/"]) {
+    await page.goto(path);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    const key = page.locator(".scroll-top");
+    await expect(key).toHaveClass(/is-visible/);
+    await page.waitForTimeout(400);
+    const k = await key.boundingBox();
+    for (const sel of [".site-footer__quote", ".site-footer__copy"]) {
+      const t = await page.evaluate((s) => {
+        const r = document.createRange();
+        r.selectNodeContents(document.querySelector(s));
+        return [...r.getClientRects()].map((c) => ({ x: c.x, y: c.y, w: c.width, h: c.height }));
+      }, sel);
+      const hit = t.some((c) => c.x < k.x + k.width && c.x + c.w > k.x && c.y < k.y + k.height && c.y + c.h > k.y);
+      expect(hit, `${sel} on ${path}`).toBe(false);
+    }
+  }
+});

@@ -449,15 +449,13 @@ kbd {
 /* ===============================
    Footer: quote strip
 ================================ */
+/* bottom padding leaves room for the floating "back to top" key (48px + its offset),
+   so it never sits on top of the copyright line when you reach the end of a page */
 .site-footer {
-  padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
+  padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
 }
 .site-footer__quote {
   text-wrap: balance;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-xs);
   margin: 0;
   padding: var(--space-sm) var(--space-md);
   font-family: var(--font-display);
@@ -465,6 +463,12 @@ kbd {
   text-align: center;
   color: var(--color-bezel-ink);
   background: var(--color-bezel);
+}
+/* the LED sits inline with the text, so it stays next to the first word when the line wraps */
+.site-footer__quote .led {
+  display: inline-block;
+  margin-right: 0.6em;
+  vertical-align: 0.1em;
 }
 .site-footer__copy {
   margin: var(--space-sm) auto 0;
