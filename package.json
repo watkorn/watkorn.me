@@ -21,8 +21,8 @@
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.3.0",
     "@fontsource/mali": "^5.3.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.18.4"
   },
