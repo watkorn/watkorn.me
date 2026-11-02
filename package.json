@@ -24,7 +24,7 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.18.4"
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
